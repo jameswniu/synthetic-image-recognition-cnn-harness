@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1458" role="img" aria-label="System map: one request, top to bottom">
+<rect width="1200" height="1458" fill="#fafafa"/>
+<rect x="0" y="0" width="6" height="1458" fill="#1b5e3f"/>
+<defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f5"/><stop offset="0.5" stop-color="#d4d4d8"/><stop offset="1" stop-color="#a1a1aa"/></linearGradient></defs>
+<text x="48" y="56" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start" letter-spacing="4">SYSTEM MAP</text>
+<text x="48" y="108" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#111111" text-anchor="start">Architecture</text>
+<text x="48" y="152" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="24" font-weight="400" fill="#3f3f46" text-anchor="start">One request, top to bottom. The queue is where uncertainty goes.</text>
+<rect x="746" y="40" width="430" height="96" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="768" y="80" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start">2 readers / 12 reason codes</text>
+<text x="768" y="116" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start">26 gates / 286 of 287</text>
+<text x="48" y="204" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">01  THE PAGE</text>
+<text x="310" y="204" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">photographed or scanned, nothing assumed</text>
+<rect x="48" y="222" width="1104" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="264" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">normalize.py</text>
+<text x="70" y="302" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">grayscale, adaptive threshold, estimated box size</text>
+<text x="70" y="358" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">small scans upscale first, coordinates map back</text>
+<text x="48" y="442" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">02  TWO READERS</text>
+<text x="310" y="442" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">independent, that is the point</text>
+<rect x="48" y="460" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="502" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">reader 1, printed lines</text>
+<text x="70" y="540" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">finds boxes by their borders</text>
+<text x="70" y="630" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">knows nothing about appraisals</text>
+<rect x="622" y="460" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="644" y="502" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">reader 2, blank form</text>
+<text x="644" y="540" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">recognizes the form,</text>
+<text x="644" y="574" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">knows where boxes belong</text>
+<text x="644" y="630" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">its value is the disagreement</text>
+<line x1="584" y1="556" x2="608" y2="556" stroke="#111111" stroke-width="2"/>
+<path d="M608,550 L618,556 L608,562 Z" fill="#111111"/>
+<text x="48" y="714" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">03  THE GATE</text>
+<text x="310" y="714" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">agreement settles, disagreement flags</text>
+<rect x="48" y="732" width="1104" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="774" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">classify.py + policy.json</text>
+<text x="70" y="812" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">ink fraction against thresholds the customer owns</text>
+<text x="70" y="868" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">same page twice, identical answer</text>
+<text x="48" y="952" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">04  THE QUEUE</text>
+<text x="310" y="952" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">2.4% of boxes, each with a reason</text>
+<rect x="48" y="970" width="530" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="1012" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">exception queue</text>
+<text x="70" y="1050" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">12 reason codes, data not log lines</text>
+<text x="70" y="1106" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">escalate.py, 7 codes reach a person</text>
+<rect x="622" y="970" width="530" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="644" y="1012" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">AI check on the crop</text>
+<text x="644" y="1050" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">off by default, a thumbnail not a page</text>
+<text x="644" y="1106" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">patch_model.py, 23K weights, 29KB</text>
+<text x="48" y="1190" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">05  THE ANSWER</text>
+<text x="310" y="1190" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">one JSON entry per box</text>
+<rect x="48" y="1208" width="1104" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="1250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">serve.py</text>
+<text x="70" y="1288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">FastAPI /detect, bbox and is_checked, evidence on request</text>
+<text x="70" y="1344" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">?explain=true carries every rejected candidate</text>
+<text x="600.0" y="1424" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="middle">every number above is reprinted by make reports · live view: deliverables/dashboard.html</text>
+</svg>

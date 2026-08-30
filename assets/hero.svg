@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 444" role="img" aria-label="Reading checkboxes off appraisal pages">
+<rect width="1200" height="444" fill="#0a0a0a"/>
+<text x="48" y="48" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#d4d4d8" text-anchor="start" letter-spacing="3">DETERMINISTIC VISION / EXCEPTION QUEUE</text>
+<rect x="0" y="140" width="64" height="4" fill="#ffffff"/>
+<text x="48" y="100" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="start">Reading checkboxes off appraisal pages</text>
+<text x="48" y="178" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="24" font-weight="400" fill="#a1a1aa" text-anchor="start">A deterministic reader, an exception queue, and a definition of correctness the customer owns.</text>
+<rect x="48" y="212" width="355" height="96" rx="12" fill="#1c1c20" stroke="#52525b"/>
+<rect x="48" y="212" width="6" height="96" rx="3" fill="#ffffff"/>
+<text x="70" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">286 of 287 found</text>
+<text x="70" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">the brief's four pages</text>
+<rect x="418" y="212" width="355" height="96" rx="12" fill="#1c1c20" stroke="#52525b"/>
+<rect x="418" y="212" width="6" height="96" rx="3" fill="#ffffff"/>
+<text x="440" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">2.4% go to a person</text>
+<text x="440" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">138 of 5,872 + reasons</text>
+<rect x="788" y="212" width="355" height="96" rx="12" fill="#1c1c20" stroke="#52525b"/>
+<rect x="788" y="212" width="6" height="96" rx="3" fill="#ffffff"/>
+<text x="810" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">36 of 39 matched</text>
+<text x="810" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">a person labelled first</text>
+<rect x="48" y="336" width="146" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
+<text x="121.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">clean up</text>
+<rect x="208" y="336" width="119" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
+<text x="267.5" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">detect</text>
+<rect x="341" y="336" width="106" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
+<text x="394.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">match</text>
+<rect x="461" y="336" width="146" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
+<text x="534.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">classify</text>
+<rect x="621" y="336" width="146" height="40" rx="2" fill="#1b5e3f"/>
+<text x="694.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">escalate</text>
+<text x="48" y="414" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#d4d4d8" text-anchor="start">52 pages damaged on purpose · every number above is reprinted by make reports</text>
+</svg>

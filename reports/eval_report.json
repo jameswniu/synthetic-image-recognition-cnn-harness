@@ -1,0 +1,140 @@
+{
+ "mode": "deterministic core only",
+ "samples": [
+  {
+   "sample": "sample_1.jpg",
+   "gold": 42,
+   "ignored": 1,
+   "pred": 42,
+   "tp": 41,
+   "fp": 0,
+   "fn": 1,
+   "precision": 1.0,
+   "recall": 0.9762,
+   "f1": 0.988,
+   "cls_acc": 0.9756,
+   "cls_wrong": [
+    [
+     196,
+     613,
+     220,
+     636
+    ]
+   ],
+   "ambiguous": 2,
+   "fp_boxes": [],
+   "fn_boxes": [
+    [
+     285,
+     188,
+     306,
+     211
+    ]
+   ],
+   "elapsed_ms": 387.9,
+   "box_side": 22,
+   "form": "form70-p1-1",
+   "registration": 1.0,
+   "witness": {
+    "projected": 118,
+    "agree": 14,
+    "template_only": 0,
+    "detect_only": 0,
+    "trusted": false
+   }
+  },
+  {
+   "sample": "sample_2.png",
+   "gold": 118,
+   "ignored": 0,
+   "pred": 118,
+   "tp": 118,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "cls_acc": 1.0,
+   "cls_wrong": [],
+   "ambiguous": 0,
+   "fp_boxes": [],
+   "fn_boxes": [],
+   "elapsed_ms": 316.3,
+   "box_side": 54,
+   "form": "form70-p1-1",
+   "registration": 1.0,
+   "witness": {
+    "projected": 118,
+    "agree": 118,
+    "template_only": 0,
+    "detect_only": 0,
+    "trusted": true
+   }
+  },
+  {
+   "sample": "sample_5.png",
+   "gold": 48,
+   "ignored": 0,
+   "pred": 48,
+   "tp": 48,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "cls_acc": 1.0,
+   "cls_wrong": [],
+   "ambiguous": 0,
+   "fp_boxes": [],
+   "fn_boxes": [],
+   "elapsed_ms": 302.3,
+   "box_side": 51,
+   "form": "form70-p1-1",
+   "registration": 1.0,
+   "witness": {
+    "projected": 118,
+    "agree": 28,
+    "template_only": 0,
+    "detect_only": 0,
+    "trusted": false
+   }
+  },
+  {
+   "sample": "sample_7.png",
+   "gold": 79,
+   "ignored": 0,
+   "pred": 79,
+   "tp": 79,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "cls_acc": 1.0,
+   "cls_wrong": [],
+   "ambiguous": 0,
+   "fp_boxes": [],
+   "fn_boxes": [],
+   "elapsed_ms": 224.1,
+   "box_side": 28,
+   "form": "form70b-p1-1",
+   "registration": 1.0,
+   "witness": {
+    "projected": 79,
+    "agree": 79,
+    "template_only": 0,
+    "detect_only": 0,
+    "trusted": true
+   }
+  }
+ ],
+ "overall": {
+  "tp": 286,
+  "fp": 0,
+  "fn": 1,
+  "precision": 1.0,
+  "recall": 0.9965,
+  "f1": 0.9983,
+  "cls_acc": 0.9965
+ }
+}

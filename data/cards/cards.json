@@ -1,0 +1,963 @@
+[
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1761,
+   902,
+   1818,
+   951
+  ],
+  "stratum": "hard-real",
+  "note": "Declining X inside a blue cell",
+  "detector_ink": 0.1491,
+  "id": "c001"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   794,
+   606,
+   852,
+   654
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1436,
+  "id": "c002"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1118,
+   2007,
+   1145,
+   2034
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c003"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   1499,
+   1457,
+   1558,
+   1505
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c004"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   2024,
+   595,
+   2053,
+   624
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.542,
+  "id": "c005"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   779,
+   608,
+   811,
+   639
+  ],
+  "stratum": "negative",
+  "note": "rejected by size consensus",
+  "detector_ink": 0.0,
+  "id": "c006"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-faint",
+  "note": "faded to 35% ink",
+  "id": "c007"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1723,
+   1148,
+   1764,
+   1202
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c008"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1332,
+   400,
+   1360,
+   429
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c009"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1761,
+   952,
+   1818,
+   1001
+  ],
+  "stratum": "hard-real",
+  "note": "Declining X inside a blue cell, row 2",
+  "detector_ink": 0.1491,
+  "id": "c010"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   1478,
+   613,
+   1501,
+   636
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c011"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   2164,
+   706,
+   2222,
+   754
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1268,
+  "id": "c012"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   464,
+   793,
+   493,
+   822
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c013"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   54,
+   54
+  ],
+  "stratum": "synthetic-radio-circle",
+  "note": "a radio circle, not a square",
+  "id": "c014"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-degraded",
+  "note": "blur then JPEG quality 22",
+  "id": "c015"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   414,
+   96,
+   437,
+   119
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c016"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   466,
+   3108,
+   524,
+   3156
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c017"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-degraded",
+  "note": "blur then JPEG quality 22",
+  "id": "c018"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-partial-mark",
+  "note": "one diagonal stroke",
+  "id": "c019"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1723,
+   3019,
+   1752,
+   3048
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.5261,
+  "id": "c020"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   282,
+   182,
+   306,
+   213
+  ],
+  "stratum": "hard-real",
+  "note": "Neighborhood Boundaries artifact square",
+  "detector_ink": 0.0,
+  "id": "c021"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1723,
+   898,
+   1764,
+   952
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c022"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-broken-border",
+  "note": "two border segments missing",
+  "id": "c023"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   401,
+   2204,
+   472,
+   2258
+  ],
+  "stratum": "negative",
+  "note": "rejected by size consensus",
+  "detector_ink": 0.0,
+  "id": "c024"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-stray-stroke",
+  "note": "handwriting passes through an empty box",
+  "id": "c025"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1505,
+   1342,
+   1532,
+   1371
+  ],
+  "stratum": "hard-real",
+  "note": "Over Supply under the watermark",
+  "detector_ink": 0.0,
+  "id": "c026"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-scribbled-out",
+  "note": "an X then dense scribble over it",
+  "id": "c027"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   601,
+   1968,
+   630,
+   1995
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c028"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   713,
+   493,
+   736,
+   514
+  ],
+  "stratum": "hard-real",
+  "note": "pen loop through No Zoning",
+  "detector_ink": 0.2235,
+  "id": "c029"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   821,
+   2044,
+   850,
+   2073
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.4943,
+  "id": "c030"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   329,
+   506,
+   387,
+   554
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1429,
+  "id": "c031"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-partial-mark",
+  "note": "one diagonal stroke",
+  "id": "c032"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   2236,
+   1152,
+   2293,
+   1201
+  ],
+  "stratum": "hard-real",
+  "note": "Declining empty in blue row",
+  "detector_ink": 0.0,
+  "id": "c033"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1761,
+   852,
+   1818,
+   901
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1491,
+  "id": "c034"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1111,
+   1652,
+   1168,
+   1701
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c035"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-stray-stroke",
+  "note": "handwriting passes through an empty box",
+  "id": "c036"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1761,
+   802,
+   1818,
+   851
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1491,
+  "id": "c037"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-circle-mark",
+  "note": "circle drawn inside the box",
+  "id": "c038"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-scribbled-out",
+  "note": "an X then dense scribble over it",
+  "id": "c039"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   353,
+   856,
+   412,
+   904
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c040"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   536,
+   556,
+   595,
+   604
+  ],
+  "stratum": "ambiguous",
+  "note": "",
+  "detector_ink": 0.1211,
+  "id": "c041"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   634,
+   478,
+   663,
+   507
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.5034,
+  "id": "c042"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-partial-mark",
+  "note": "one diagonal stroke",
+  "id": "c043"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-faint",
+  "note": "faded to 35% ink",
+  "id": "c044"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   332,
+   1096,
+   367,
+   1134
+  ],
+  "stratum": "negative",
+  "note": "rejected by size consensus",
+  "detector_ink": 0.0,
+  "id": "c045"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-broken-border",
+  "note": "two border segments missing",
+  "id": "c046"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   331,
+   491,
+   354,
+   514
+  ],
+  "stratum": "hard-real",
+  "note": "Legal Nonconforming, faint left border",
+  "detector_ink": 0.0,
+  "id": "c047"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   275,
+   613,
+   298,
+   636
+  ],
+  "stratum": "hard-real",
+  "note": "tick, Electricity Other",
+  "detector_ink": 0.2837,
+  "id": "c048"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1118,
+   1966,
+   1145,
+   1995
+  ],
+  "stratum": "hard-real",
+  "note": "Water box, thick X",
+  "detector_ink": 0.0,
+  "id": "c049"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   1122,
+   2254,
+   1194,
+   2308
+  ],
+  "stratum": "negative",
+  "note": "rejected by size consensus",
+  "detector_ink": 0.0,
+  "id": "c050"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-scribbled-out",
+  "note": "an X then dense scribble over it",
+  "id": "c051"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   1723,
+   2798,
+   1764,
+   2852
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c052"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   196,
+   643,
+   220,
+   667
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.4815,
+  "id": "c053"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1505,
+   1381,
+   1532,
+   1410
+  ],
+  "stratum": "hard-real",
+  "note": "Over 6 mths under the watermark",
+  "detector_ink": 0.0,
+  "id": "c054"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   196,
+   613,
+   220,
+   636
+  ],
+  "stratum": "hard-real",
+  "note": "faded X, Electricity Public",
+  "detector_ink": 0.1797,
+  "id": "c055"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   54,
+   54
+  ],
+  "stratum": "synthetic-radio-circle",
+  "note": "a radio circle, not a square",
+  "id": "c056"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   447,
+   674,
+   470,
+   697
+  ],
+  "stratum": "hard-real",
+  "note": "FEMA No, X exits the border",
+  "detector_ink": 0.5433,
+  "id": "c057"
+ },
+ {
+  "source": "sample_7.png",
+  "bbox": [
+   1505,
+   1303,
+   1532,
+   1332
+  ],
+  "stratum": "hard-real",
+  "note": "Declining under the watermark",
+  "detector_ink": 0.0,
+  "id": "c058"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   2225,
+   506,
+   2283,
+   554
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c059"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-faint",
+  "note": "faded to 35% ink",
+  "id": "c060"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   156,
+   96,
+   179,
+   119
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c061"
+ },
+ {
+  "source": "sample_5.png",
+  "bbox": [
+   2236,
+   902,
+   2293,
+   951
+  ],
+  "stratum": "hard-real",
+  "note": "Increasing empty inside a blue cell",
+  "detector_ink": 0.0,
+  "id": "c062"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   54
+  ],
+  "stratum": "synthetic-degraded",
+  "note": "blur then JPEG quality 22",
+  "id": "c063"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   237,
+   491,
+   260,
+   515
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.5621,
+  "id": "c064"
+ },
+ {
+  "source": "sample_2.png",
+  "bbox": [
+   310,
+   2755,
+   381,
+   2809
+  ],
+  "stratum": "negative",
+  "note": "rejected by size consensus",
+  "detector_ink": 0.0,
+  "id": "c065"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   282,
+   126,
+   306,
+   150
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.4815,
+  "id": "c066"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-rotated",
+  "note": "rotated 4 degrees",
+  "id": "c067"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   58,
+   47
+  ],
+  "stratum": "synthetic-broken-border",
+  "note": "two border segments missing",
+  "id": "c068"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   848,
+   96,
+   870,
+   119
+  ],
+  "stratum": "anchor-empty",
+  "note": "",
+  "detector_ink": 0.0,
+  "id": "c069"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   54,
+   54
+  ],
+  "stratum": "synthetic-hand-drawn",
+  "note": "box drawn by hand, no printed border",
+  "id": "c070"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   48
+  ],
+  "stratum": "synthetic-circle-mark",
+  "note": "circle drawn inside the box",
+  "id": "c071"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   54,
+   54
+  ],
+  "stratum": "synthetic-hand-drawn",
+  "note": "box drawn by hand, no printed border",
+  "id": "c072"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   58,
+   48
+  ],
+  "stratum": "synthetic-circle-mark",
+  "note": "circle drawn inside the box",
+  "id": "c073"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-rotated",
+  "note": "rotated 4 degrees",
+  "id": "c074"
+ },
+ {
+  "source": "synthetic",
+  "bbox": [
+   0,
+   0,
+   59,
+   47
+  ],
+  "stratum": "synthetic-stray-stroke",
+  "note": "handwriting passes through an empty box",
+  "id": "c075"
+ },
+ {
+  "source": "sample_1.jpg",
+  "bbox": [
+   693,
+   157,
+   716,
+   180
+  ],
+  "stratum": "anchor-filled",
+  "note": "",
+  "detector_ink": 0.5017,
+  "id": "c076"
+ }
+]

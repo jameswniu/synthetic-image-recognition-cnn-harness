@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Checkbox Booth</title>
+<style>
+  :root { --bg:#0b0d10; --panel:#14181e; --ink:#e8e6e1; --muted:#9a9891; --gold:#f5b342; --green:#3ec66d; --red:#ef5350; --grey:#8a93a3; --blue:#5aa9ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.5 -apple-system, "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width:960px; margin:0 auto; padding:28px 20px 60px; }
+  h1 { font-size:30px; margin:0 0 6px; }
+  h2 { font-size:24px; margin:0 0 12px; }
+  p { margin:0 0 12px; }
+  .muted { color:var(--muted); }
+  .panel { background:var(--panel); border:1px solid #232a33; border-radius:14px; padding:24px; }
+  .progress { height:8px; background:#232a33; border-radius:4px; margin:14px 0 20px; overflow:hidden; }
+  .progress > div { height:100%; background:var(--gold); width:0%; transition:width .15s; }
+  .card { text-align:center; }
+  .card img { max-width:100%; height:auto; image-rendering:pixelated; border:1px solid #232a33; border-radius:8px; background:#fff; }
+  .q { font-size:22px; margin:18px 0 14px; }
+  .btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:8px 0 18px; }
+  button { font:inherit; font-size:19px; padding:14px 22px; border-radius:10px; border:1px solid #2b333d; background:#1b2129; color:var(--ink); cursor:pointer; }
+  button:hover { filter:brightness(1.15); }
+  button:disabled { opacity:.4; cursor:default; }
+  .b-filled { border-color:var(--green); color:var(--green); }
+  .b-empty { border-color:var(--red); color:var(--red); }
+  .b-notbox { border-color:var(--grey); color:var(--grey); }
+  .b-unsure { border-color:var(--blue); color:var(--blue); }
+  .b-start, .b-save { background:var(--gold); color:#0b0d10; border-color:var(--gold); font-weight:600; }
+  .nav { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .chosen { font-size:17px; color:var(--muted); min-height:26px; }
+  kbd { font:15px ui-monospace, Menlo, monospace; background:#232a33; padding:2px 7px; border-radius:5px; color:var(--ink); }
+  textarea { width:100%; min-height:110px; font:inherit; font-size:17px; background:#0f1317; color:var(--ink); border:1px solid #2b333d; border-radius:10px; padding:12px; }
+  table { border-collapse:collapse; margin:10px 0 18px; font-size:18px; }
+  td { padding:4px 18px 4px 0; }
+  .ok { color:var(--green); }
+  ul { padding-left:22px; }
+  li { margin:4px 0; }
+</style>
+</head>
+<body>
+<script type="application/json" id="cards">__CARDS__</script>
+<div class="wrap" id="app"></div>
+<script>
+(function(){
+  var CARDS = JSON.parse(document.getElementById('cards').textContent);
+  var KEY = 'hvbooth-draft-v1';
+  var S = { labels: {}, notes: '', savedAt: null, version: 1 };
+  try { var d = localStorage.getItem(KEY); if (d) S = Object.assign(S, JSON.parse(d)); } catch (e) {}
+  var idx = firstUnlabeled();
+  var app = document.getElementById('app');
+  var LABELS = { F: 'Filled', E: 'Empty', N: 'Not a checkbox', U: 'Unsure' };
+
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function done(){ return Object.keys(S.labels).length; }
+  function firstUnlabeled(){ for (var i = 0; i < CARDS.length; i++) if (!S.labels[CARDS[i].id]) return i; return CARDS.length; }
+  function counts(){ var c = {F:0,E:0,N:0,U:0}; for (var k in S.labels) c[S.labels[k]]++; return c; }
+
+  function intro(){
+    app.innerHTML =
+      '<h1>The Checkbox Booth</h1>' +
+      '<p class="muted">' + CARDS.length + ' cards. Each one shows a zoomed crop of an appraisal form with one square outlined in magenta. Answer for that square only.</p>' +
+      '<div class="panel">' +
+        '<h2>Four answers</h2>' +
+        '<ul>' +
+          '<li><b>Filled</b>: someone meant to select this box (any kind of mark counts if that was the intent).</li>' +
+          '<li><b>Empty</b>: nobody selected it, even if stray ink touches it.</li>' +
+          '<li><b>Not a checkbox</b>: the outlined square is not a checkbox at all (a table cell, a letter, a rendering artifact).</li>' +
+          '<li><b>Unsure</b>: you genuinely cannot tell. These are the most valuable cards, not wasted ones.</li>' +
+        '</ul>' +
+        '<p class="muted">Keys: <kbd>F</kbd> <kbd>E</kbd> <kbd>N</kbd> <kbd>U</kbd>, and the left arrow key to go back. Your draft is kept in this browser as you go.</p>' +
+        '<p><button class="b-start" id="start">' + (done() > 0 ? 'Continue at card ' + (firstUnlabeled() + 1) : 'Start labeling') + '</button></p>' +
+      '</div>';
+    document.getElementById('start').onclick = function(){ idx = firstUnlabeled(); if (idx >= CARDS.length) idx = 0; render(); };
+  }
+
+  function render(){
+    if (idx >= CARDS.length) { finish(); return; }
+    var c = CARDS[idx], cur = S.labels[c.id];
+    app.innerHTML =
+      '<div class="nav"><span class="muted">Card ' + (idx + 1) + ' of ' + CARDS.length + '</span><span class="muted">' + done() + ' labeled</span></div>' +
+      '<div class="progress"><div style="width:' + (100 * done() / CARDS.length) + '%"></div></div>' +
+      '<div class="panel card">' +
+        '<img src="' + c.png + '" alt="crop">' +
+        '<div class="q">Is the outlined square a filled checkbox?</div>' +
+        '<div class="btns">' +
+          '<button class="b-filled" data-v="F">Filled <kbd>F</kbd></button>' +
+          '<button class="b-empty" data-v="E">Empty <kbd>E</kbd></button>' +
+          '<button class="b-notbox" data-v="N">Not a checkbox <kbd>N</kbd></button>' +
+          '<button class="b-unsure" data-v="U">Unsure <kbd>U</kbd></button>' +
+        '</div>' +
+        '<div class="chosen">' + (cur ? 'Current answer: ' + LABELS[cur] : '') + '</div>' +
+        '<div class="nav"><button id="back"' + (idx === 0 ? ' disabled' : '') + '>previous card</button><button id="skip">skip for now</button></div>' +
+      '</div>';
+    Array.prototype.forEach.call(app.querySelectorAll('button[data-v]'), function(b){ b.onclick = function(){ answer(b.getAttribute('data-v')); }; });
+    document.getElementById('back').onclick = function(){ if (idx > 0) { idx--; render(); } };
+    document.getElementById('skip').onclick = function(){ idx++; render(); };
+  }
+
+  function answer(v){ S.labels[CARDS[idx].id] = v; save(); idx++; render(); }
+
+  function finish(){
+    var c = counts(), pending = CARDS.length - done();
+    app.innerHTML =
+      '<div class="panel">' +
+        '<h2>' + (pending ? pending + ' cards still unanswered.' : 'Done. ' + CARDS.length + ' cards labeled.') + '</h2>' +
+        '<table><tr><td>Filled</td><td class="ok">' + c.F + '</td></tr><tr><td>Empty</td><td>' + c.E + '</td></tr><tr><td>Not a checkbox</td><td>' + c.N + '</td></tr><tr><td>Unsure</td><td>' + c.U + '</td></tr></table>' +
+        (pending ? '<p><button id="resume">Go to the first unanswered card</button></p>' : '') +
+        '<p>Anything about how you decided, in your own words (optional):</p>' +
+        '<textarea id="notes" placeholder="e.g. a single stroke through the box counts, a circle around the label does not...">' + (S.notes || '') + '</textarea>' +
+        '<p style="margin-top:14px"><button class="b-save" id="save">Save labels (downloads hv_gold_labels_v1.json)</button> <button id="copy">Copy as JSON</button> <button id="review">Review from card 1</button></p>' +
+        '<p class="muted" id="msg"></p>' +
+      '</div>';
+    document.getElementById('notes').oninput = function(e){ S.notes = e.target.value; save(); };
+    if (pending) document.getElementById('resume').onclick = function(){ idx = firstUnlabeled(); render(); };
+    document.getElementById('review').onclick = function(){ idx = 0; render(); };
+    document.getElementById('save').onclick = function(){
+      S.savedAt = new Date().toISOString(); save();
+      var blob = new Blob([JSON.stringify(payload(), null, 1)], { type: 'application/json' });
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hv_gold_labels_v1.json'; document.body.appendChild(a); a.click(); a.remove();
+      document.getElementById('msg').textContent = 'Saved at ' + S.savedAt;
+    };
+    document.getElementById('copy').onclick = function(){
+      navigator.clipboard.writeText(JSON.stringify(payload(), null, 1)).then(function(){ document.getElementById('msg').textContent = 'Copied.'; });
+    };
+  }
+
+  function payload(){
+    return { version: S.version, savedAt: S.savedAt, notes: S.notes, labels: S.labels,
+             cards: CARDS.map(function(c){ return { id: c.id, source: c.source, bbox: c.bbox }; }) };
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && e.target.tagName === 'TEXTAREA') return;
+    if (idx >= CARDS.length) return;
+    var k = e.key.toLowerCase();
+    if (k === 'f' || k === 'e' || k === 'n' || k === 'u') answer(k.toUpperCase());
+    else if (e.key === 'ArrowLeft' && idx > 0) { idx--; render(); }
+    else if (e.key === 'ArrowRight') { idx++; render(); }
+  });
+
+  intro();
+})();
+</script>
+</body>
+</html>

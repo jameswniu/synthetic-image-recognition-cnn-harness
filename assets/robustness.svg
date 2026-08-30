@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" role="img" aria-label="Holding up under damage">
+<rect width="1200" height="670" fill="#fafafa"/>
+<defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f5"/><stop offset="0.5" stop-color="#d4d4d8"/><stop offset="1" stop-color="#a1a1aa"/></linearGradient></defs>
+<text x="48" y="58" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="30" font-weight="700" fill="#111111" text-anchor="start">Holding up under damage</text>
+<text x="48" y="94" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#3f3f46" text-anchor="start">share of boxes sent to a person, by what was done to the page</text>
+<rect x="48" y="122" width="1104" height="470" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="510" y="172" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">shaded rows (199 boxes)</text>
+<rect x="528" y="154" width="454.0" height="24" fill="#52525b" stroke="#111111"/>
+<text x="996.0" y="172" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">9.05%</text>
+<text x="510" y="226" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">watermark (192 boxes)</text>
+<rect x="528" y="208" width="209.1" height="24" fill="#52525b" stroke="#111111"/>
+<text x="751.1342592592594" y="226" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">4.17%</text>
+<text x="510" y="280" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">stray pen strokes (192 boxes)</text>
+<rect x="528" y="262" width="156.9" height="24" fill="#52525b" stroke="#111111"/>
+<text x="698.8506944444445" y="280" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">3.12%</text>
+<text x="510" y="334" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">downscaled (584 boxes)</text>
+<rect x="528" y="316" width="146.1" height="24" fill="#52525b" stroke="#111111"/>
+<text x="688.107496194825" y="334" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2.91%</text>
+<text x="510" y="388" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">several kinds at once (2314 boxes)</text>
+<rect x="528" y="370" width="136.7" height="24" fill="#52525b" stroke="#111111"/>
+<text x="678.6512532411409" y="388" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2.72%</text>
+<text x="510" y="442" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">clean render (192 boxes)</text>
+<rect x="528" y="424" width="104.6" height="24" fill="#52525b" stroke="#111111"/>
+<text x="646.5671296296297" y="442" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2.08%</text>
+<text x="510" y="496" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">JPEG compression (579 boxes)</text>
+<rect x="528" y="478" width="104.0" height="24" fill="#52525b" stroke="#111111"/>
+<text x="646.0253310305123" y="496" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2.07%</text>
+<text x="510" y="550" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="end">rotated (773 boxes)</text>
+<rect x="528" y="532" width="51.9" height="24" fill="#52525b" stroke="#111111"/>
+<text x="593.9453787552106" y="550" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">1.03%</text>
+<text x="48" y="636" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">52 pages damaged on purpose · flag rate by damage kind · reports/telemetry.json</text>
+</svg>

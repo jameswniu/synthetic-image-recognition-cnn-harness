@@ -1,0 +1,426 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Checkbox reading, what it did and where it struggled</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fafafa; color: #111111;
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .band { background: #18181b; border-bottom: 4px solid #52525b; border-radius: 3px;
+           padding: 26px 30px 24px; margin: 26px 0 24px; }
+  h1 { font-size: 27px; margin: 0 0 8px; letter-spacing: -0.01em; color: #fff; }
+  .band-sub { color: #a1a1aa; font-size: 15px; margin: 0; }
+  .band-sub code { background: rgba(255,255,255,0.14); color: #e4e4e7; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 26px 70px; }
+  .sub { color: #3f3f46; font-size: 15px; margin: 0 0 16px; }
+  .kpis { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin: 26px 0; }
+  .kpi { grid-column: span 3; background: #fff; border: 1px solid #c7c9cf; border-radius: 3px;
+          box-shadow: inset 0 1px 0 #f5f5f5; padding: 14px 16px; }
+  .kpi:nth-child(n+5) { grid-column: span 4; }
+  .kpi-label { font-size: 14px; color: #3f3f46; }
+  .kpi-value { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 3px 0 2px; color: #18181b; }
+  .kpi-note { font-size: 13px; color: #3f3f46; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 16px; }
+  .card { background: #fff; border: 1px solid #c7c9cf; border-radius: 3px;
+           box-shadow: inset 0 1px 0 #f5f5f5; padding: 20px 22px 22px; }
+  .card.wide { grid-column: 1 / -1; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+  h2 { font-size: 18px; margin: 0 0 4px; color: #111111; }
+  .why { color: #3f3f46; font-size: 14px; margin: 0 0 14px; }
+  .chart { width: 100%; height: auto; overflow: visible; }
+  .bubbles { overflow: hidden; }
+  .lab, .val, .tick { font: 14px -apple-system, Helvetica, Arial, sans-serif; }
+  .tick { font-size: 13px; }
+  .bub { font: 600 17px -apple-system, Helvetica, Arial, sans-serif; text-anchor: middle; }
+  .bub-n { font: 15px -apple-system, Helvetica, Arial, sans-serif; text-anchor: middle; }
+  .bub-out { font: 600 15px -apple-system, Helvetica, Arial, sans-serif; }
+  .bub-out-n { font: 13px -apple-system, Helvetica, Arial, sans-serif; }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 15px;
+           border: 1px solid #c7c9cf; border-radius: 3px; }
+  tr:last-child td { border-bottom: none; }
+  th, td { text-align: left; padding: 8px 10px; }
+  th { background: #111111; color: #fff; font-weight: 600; font-size: 13.5px; }
+  th:first-child { border-radius: 2px 0 0 2px; }
+  th:last-child { border-radius: 0 2px 2px 0; }
+  td { border-bottom: 1px solid #e4e4e7; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .note ul { margin: 8px 0 0; padding-left: 18px; }
+  .note li { margin: 0 0 5px; }
+  .note { background: #fafafa; border: 1px solid #e4e4e7; border-left: 3px solid #1b5e3f; border-radius: 3px;
+           padding: 14px 18px; margin-top: 16px; font-size: 15px; }
+  .hist { border-top: 1px solid #e4e4e7; margin-top: 16px; padding-top: 14px; font-size: 15px; }
+  .hist ul { margin: 8px 0 0; padding-left: 18px; }
+  .hist li { margin: 0 0 5px; }
+  .card > ul { margin: 10px 0 0; padding-left: 20px; }
+  .card > ul > li { margin: 0 0 7px; }
+  .empty { color: #3f3f46; font-size: 15px; }
+  footer { color: #3f3f46; font-size: 14px; margin-top: 30px; }
+  code { background: #fafafa; color: #111111; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+  @media (max-width: 980px) {
+    .kpi, .kpi:nth-child(n+5) { grid-column: span 6; }
+    .split { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="wrap">
+  <header class="band">
+    <h1>Checkbox reading, what it did and where it struggled</h1>
+    <p class="band-sub">Every number on this page came out of an actual run over 61 pages and 5,872 checkboxes. None of it is a mock-up or a worked example; this is what the software did. Run <code>make dashboard</code> yourself and this exact page comes back, byte for byte; <code>make synth &amp;&amp; make telemetry</code> re-measures the damaged corpus from scratch, and <code>scripts/fetch_holdout.py</code> adds the five real appraisals.</p>
+  </header>
+  <p class="sub"><strong>What is in this run.</strong> The brief supplied 4 pages, 287 checkboxes. I made 52 more by damaging those same pages on purpose, and fetched 5 real appraisals it had never seen. That is 61 pages and 5,872 checkboxes in total, and every count below names which of those three groups it came from.</p>
+  <p class="sub">A checkbox that only one of the two reads sees is <strong>either a form that changed or a box that was missed</strong>, and no single read can tell those apart. The two reads settle only where the boxes are, not whether they are marked: one finds them by their printed borders on this page, the other projects them from the blank original of that form.</p>
+  <p class="sub"><em>A loan file never waits on us, and no page gets a silent guess. On 31 of 61 pages we double-checked every box against the blank original form; on the other 30, mostly scans I damaged, the page was too rough to line up with the original, so we read it once and labeled it read once, not double-checked. A page like that is usually just a bad scan, but it could be a newer form than the one we hold, or a page someone changed. We pass it anyway, in good faith, and the flag points the customer, ahead of time, at exactly the pages that could be an out-of-version form or fraud.</em></p>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Pages processed</div>
+      <div class="kpi-value">61</div>
+      <div class="kpi-note">52 damaged on purpose, 4 from the brief, 5 never seen</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Checkboxes read</div>
+      <div class="kpi-value">5,872</div>
+      <div class="kpi-note">1,868 of them had a mark in the box</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Boxes found</div>
+      <div class="kpi-value">286 of 287</div>
+      <div class="kpi-note">on the 4 pages from the brief only, the ones with a hand-checked answer key; 2 of those 287 went to a person</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sent to a person</div>
+      <div class="kpi-value">2.4%</div>
+      <div class="kpi-note">138 boxes out of all 5,872, across all 61 pages, each with a reason</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Time per page</div>
+      <div class="kpi-value">284 ms</div>
+      <div class="kpi-note">95 pages in 100 come back inside 457 ms</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Cost per page</div>
+      <div class="kpi-value">$0.000004</div>
+      <div class="kpi-note">no AI model runs unless a box is unclear</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Agrees with a person</div>
+      <div class="kpi-value">36 of 39</div>
+      <div class="kpi-note">close-up crops a person ruled marked or empty before any threshold was set</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card wide">
+      <h2>Why boxes went to a person</h2>
+      <p class="why">The whole review queue across all 61 pages: 138 boxes out of 5,872, grouped by what the system could not settle. On the 4 pages from the brief it was 2 boxes out of 287.</p>
+      <div class="split">
+        <div style="align-self:center">
+          <svg viewBox="3 9 583 423" class="chart bubbles" role="img" aria-label="Reason codes by frequency">
+<circle cx="310.0" cy="163.4" r="71.3" fill="#111111" fill-opacity="0.18" stroke="#111111" stroke-width="1.5"/>
+<text x="310.0" y="168.4" class="bub-n" fill="#111111">64</text>
+<circle cx="265.4" cy="353.3" r="66.7" fill="#52525b" fill-opacity="0.18" stroke="#111111" stroke-width="1.5"/>
+<text x="265.4" y="358.3" class="bub-n" fill="#111111">56</text>
+<circle cx="234.3" cy="56.5" r="35.6" fill="#71717a" fill-opacity="0.18" stroke="#111111" stroke-width="1.5"/>
+<text x="234.3" y="61.5" class="bub-n" fill="#111111">16</text>
+<circle cx="354.6" cy="277.0" r="26.7" fill="#a1a1aa" fill-opacity="0.18" stroke="#111111" stroke-width="1.5"/>
+<text x="354.6" y="282.0" class="bub-n" fill="#111111">9</text>
+<circle cx="213.7" cy="218.6" r="15.0" fill="#18181b" fill-opacity="0.18" stroke="#111111" stroke-width="1.5"/>
+<text x="213.7" y="223.6" class="bub-n" fill="#111111">1</text>
+<line x1="198.7" y1="56.5" x2="184.7" y2="56.5" stroke="#71717a" stroke-width="1" stroke-opacity="0.55"/>
+<text x="188.7" y="53.5" class="bub-out" text-anchor="end" fill="#111111">Too little ink</text>
+<text x="188.7" y="69.5" class="bub-out-n" text-anchor="end" fill="#3f3f46">16  (11%)</text>
+<line x1="198.7" y1="218.6" x2="184.7" y2="218.6" stroke="#18181b" stroke-width="1" stroke-opacity="0.55"/>
+<text x="188.7" y="215.6" class="bub-out" text-anchor="end" fill="#111111">Specks, not a stroke</text>
+<text x="188.7" y="231.6" class="bub-out-n" text-anchor="end" fill="#3f3f46">1  (1%)</text>
+<line x1="198.7" y1="353.3" x2="184.7" y2="353.3" stroke="#52525b" stroke-width="1" stroke-opacity="0.55"/>
+<text x="188.7" y="350.3" class="bub-out" text-anchor="end" fill="#111111">Expected, not found</text>
+<text x="188.7" y="366.3" class="bub-out-n" text-anchor="end" fill="#3f3f46">56  (38%)</text>
+<line x1="381.3" y1="163.4" x2="395.3" y2="163.4" stroke="#111111" stroke-width="1" stroke-opacity="0.55"/>
+<text x="391.3" y="160.4" class="bub-out" text-anchor="start" fill="#111111">Pen line through it</text>
+<text x="391.3" y="176.4" class="bub-out-n" text-anchor="start" fill="#3f3f46">64  (44%)</text>
+<line x1="381.3" y1="277.0" x2="395.3" y2="277.0" stroke="#a1a1aa" stroke-width="1" stroke-opacity="0.55"/>
+<text x="391.3" y="274.0" class="bub-out" text-anchor="start" fill="#111111">Not on the blank form</text>
+<text x="391.3" y="290.0" class="bub-out-n" text-anchor="start" fill="#3f3f46">9  (6%)</text>
+</svg>
+        </div>
+        <div>
+          <table>
+            <tr><th>What the system found</th><th>What the person is deciding</th><th class="n">Boxes</th></tr>
+            <tr><td>Pen line through it</td><td>Handwriting runs through the box, so the ink could be a real mark or a stray line passing over it. A person decides which.</td><td class="n">64</td></tr><tr><td>Expected, not found</td><td>The blank original says a checkbox belongs here, but nothing was found on the page. Either this form has changed since the blank was published, or the box is printed too faintly to see. A person looks at that spot.</td><td class="n">56</td></tr><tr><td>Too little ink</td><td>There is something in the box, but not enough to call it marked and not little enough to call it empty.</td><td class="n">16</td></tr><tr><td>Not on the blank form</td><td>The page has a checkbox that the blank original does not, which usually means a different revision of the form.</td><td class="n">9</td></tr><tr><td>Specks, not a stroke</td><td>The ink is in separate specks rather than one stroke, which can be a light tick or scanner noise.</td><td class="n">1</td></tr>
+          </table>
+          <p class="why" style="margin-top:12px"><em>Known gap: 65 of these are about position, not ink. The same missing box on 500 pages of one form is one revision to record, not 500 reviews. Grouping them is not built here.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Where the trouble concentrates</h2>
+      <p class="why">The queue is 138 boxes out of 5,872, and almost all of it is my own stress tests: 136 came from pages I damaged on purpose, the 4 pages from the brief sent 2 out of their 287, and the 5 real appraisals sent none. So 2.4% is what the queue looks like under abuse, not what it looks like on real work. Each bar is the share of that group's boxes that went to a person.</p>
+      <svg viewBox="0 0 633 132" class="chart" role="img">
+<text x="361.32000000000005" y="23" class="lab" text-anchor="end" fill="#3f3f46">Damaged pages, several flaws each (2,314 boxes)</text>
+<rect x="371.32000000000005" y="11" width="199.7" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="579.0" y="24" class="val" fill="#111111">2.72%</text>
+<text x="361.32000000000005" y="53" class="lab" text-anchor="end" fill="#3f3f46">Damaged pages, one flaw each (2,711 boxes)</text>
+<rect x="371.32000000000005" y="41" width="197.5" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="576.8" y="54" class="val" fill="#111111">2.69%</text>
+<text x="361.32000000000005" y="83" class="lab" text-anchor="end" fill="#3f3f46">The four pages from the brief (287 boxes)</text>
+<rect x="371.32000000000005" y="71" width="51.4" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="430.7" y="84" class="val" fill="#111111">0.7%</text>
+<text x="361.32000000000005" y="113" class="lab" text-anchor="end" fill="#3f3f46">Real appraisals, never seen before (560 boxes)</text>
+<rect x="371.32000000000005" y="101" width="2.0" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="381.3" y="114" class="val" fill="#111111">0%</text>
+</svg>
+      <p class="why" style="margin-top:16px">And by what kind of damage, on the pages I damaged on purpose:</p>
+      <svg viewBox="0 0 560 252" class="chart" role="img">
+<text x="263.04" y="23" class="lab" text-anchor="end" fill="#3f3f46">Shaded rows (199 boxes)</text>
+<rect x="273.04" y="11" width="225.0" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="506.0" y="24" class="val" fill="#111111">9.05%</text>
+<text x="263.04" y="53" class="lab" text-anchor="end" fill="#3f3f46">Watermark (192 boxes)</text>
+<rect x="273.04" y="41" width="103.7" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="384.7" y="54" class="val" fill="#111111">4.17%</text>
+<text x="263.04" y="83" class="lab" text-anchor="end" fill="#3f3f46">Stray pen strokes (192 boxes)</text>
+<rect x="273.04" y="71" width="77.6" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="358.6" y="84" class="val" fill="#111111">3.12%</text>
+<text x="263.04" y="113" class="lab" text-anchor="end" fill="#3f3f46">Downscaled (584 boxes)</text>
+<rect x="273.04" y="101" width="72.3" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="353.4" y="114" class="val" fill="#111111">2.91%</text>
+<text x="263.04" y="143" class="lab" text-anchor="end" fill="#3f3f46">Several kinds at once (2314 boxes)</text>
+<rect x="273.04" y="131" width="67.6" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="348.7" y="144" class="val" fill="#111111">2.72%</text>
+<text x="263.04" y="173" class="lab" text-anchor="end" fill="#3f3f46">Clean render (192 boxes)</text>
+<rect x="273.04" y="161" width="51.7" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="332.7" y="174" class="val" fill="#111111">2.08%</text>
+<text x="263.04" y="203" class="lab" text-anchor="end" fill="#3f3f46">JPEG compression (579 boxes)</text>
+<rect x="273.04" y="191" width="51.5" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="332.5" y="204" class="val" fill="#111111">2.07%</text>
+<text x="263.04" y="233" class="lab" text-anchor="end" fill="#3f3f46">Rotated (773 boxes)</text>
+<rect x="273.04" y="221" width="25.6" height="16" rx="2" fill="#52525b" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="306.6" y="234" class="val" fill="#111111">1.03%</text>
+</svg>
+    </div>
+    <div class="card">
+      <h2>Holding up under damage</h2>
+      <p class="why">I damaged the same clean pages 26 different ways, 52 pages and 5,122 boxes in all, then scored each one. Each bar is the worst result for that kind of damage, out of 1.</p>
+      <svg viewBox="0 0 560 252" class="chart" role="img">
+<text x="217.68" y="23" class="lab" text-anchor="end" fill="#3f3f46">Shaded rows behind the boxes</text>
+<rect x="227.68" y="11" width="141.2" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="376.9" y="24" class="val" fill="#111111">0.9646</text>
+<text x="217.68" y="53" class="lab" text-anchor="end" fill="#3f3f46">Several kinds at once</text>
+<rect x="227.68" y="41" width="167.0" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="402.7" y="54" class="val" fill="#111111">0.9691</text>
+<text x="217.68" y="83" class="lab" text-anchor="end" fill="#3f3f46">Stray pen strokes</text>
+<rect x="227.68" y="71" width="181.9" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="417.6" y="84" class="val" fill="#111111">0.9717</text>
+<text x="217.68" y="113" class="lab" text-anchor="end" fill="#3f3f46">Clean render, no damage</text>
+<rect x="227.68" y="101" width="211.8" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="447.5" y="114" class="val" fill="#111111">0.9769</text>
+<text x="217.68" y="143" class="lab" text-anchor="end" fill="#3f3f46">Watermark across the page</text>
+<rect x="227.68" y="131" width="211.8" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="447.5" y="144" class="val" fill="#111111">0.9769</text>
+<text x="217.68" y="173" class="lab" text-anchor="end" fill="#3f3f46">JPEG saved at quality 22</text>
+<rect x="227.68" y="161" width="226.7" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="462.4" y="174" class="val" fill="#111111">0.9795</text>
+<text x="217.68" y="203" class="lab" text-anchor="end" fill="#3f3f46">Downscaled to 50%</text>
+<rect x="227.68" y="191" width="226.7" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="462.4" y="204" class="val" fill="#111111">0.9795</text>
+<text x="217.68" y="233" class="lab" text-anchor="end" fill="#3f3f46">Rotated 1 degree</text>
+<rect x="227.68" y="221" width="270.3" height="16" rx="2" fill="#111111" fill-opacity="0.75" stroke="#111111" stroke-width="1"/>
+<text x="506.0" y="234" class="val" fill="#111111">0.9871</text>
+</svg>
+      <p class="why" style="margin-top:10px">Bars start at 0.94 so the differences are visible. The floor across every condition is 0.9646.</p>
+    </div>
+
+    <div class="card">
+      <h2>Who is the apprentice?</h2>
+      <p class="why">A small neural network trained from scratch on my own crops, 23,000 weights in a 29KB file, the only model in the system; nothing it sees leaves the building. The LLM that built this product wrote both contestants, the rules and this model, and judged them against one referee: 52 damaged pages plus the human-ruled answer keys.</p>
+      <table>
+        <tr><th>How it ran</th><th class="n">Sent to a person</th><th class="n">Settled right</th><th class="n">Settled wrong</th></tr>
+        <tr><td>Rules only, which is what ships</td><td class="n">2 of 286</td><td class="n">284</td><td class="n">0</td></tr>
+        <tr><td>The CNN alone, a test</td><td class="n">56 of 286</td><td class="n">229</td><td class="n">1</td></tr>
+        <tr><td>Both together, a test</td><td class="n">19 of 286</td><td class="n">267</td><td class="n">0</td></tr>
+      </table>
+      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, 2 against 19 against 56. Most automation at the same accuracy wins. All three run in the same third of a second on our own CPU; nothing leaves the building.</p>
+      <div class="note">
+        <p><strong>The rules won the match, so the CNN stays switched off.</strong></p>
+        <ul>
+          <li>It caught nothing the rules missed, and misread both real never-seen test boxes.</li>
+          <li>Switched on, it only adds work: 17 more boxes to people, zero errors caught.</li>
+          <li>Legibility is the invariant. The rules have it built in, every answer carries a reason a person can check, nothing extra needed. The CNN can only approach it by emitting logs, a confidence and a heat map for every box it reads, replayable forever.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>The one dial, and what it costs to move</h2>
+      <p class="why">Each dot is one checkbox, laid left to right by how much ink is inside it, and grouped by what a person ruled it. The dashed line is where the shipped policy starts calling a box marked. 49 of the 76 crops have an ink measurement; the rest were ruled on shape alone and are not plotted.</p>
+      <svg viewBox="0 0 560 230" class="chart" role="img">
+<line x1="223.7" y1="18" x2="223.7" y2="194" stroke="#111111" stroke-dasharray="4 3" stroke-width="1.5"/>
+<text x="229.7" y="14" class="tick" fill="#111111">ink 0.10, where the shipped policy calls it marked</text>
+<text x="149.64000000000001" y="52.0" class="lab" text-anchor="end" fill="#3f3f46">Filled (20)</text>
+<line x1="161.64000000000001" y1="47.0" x2="534" y2="47.0" stroke="#e4e4e7" stroke-width="1"/>
+<circle cx="161.6" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="161.6" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="236.8" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="240.3" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="250.3" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="250.8" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="254.2" cy="56.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="254.2" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="254.2" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="254.2" cy="56.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="273.2" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="460.5" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="460.5" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="468.4" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="473.0" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="474.1" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="488.1" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="498.0" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="498.8" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<circle cx="510.5" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
+<text x="149.64000000000001" y="94.0" class="lab" text-anchor="end" fill="#3f3f46">Empty (21)</text>
+<line x1="161.64000000000001" y1="89.0" x2="534" y2="89.0" stroke="#e4e4e7" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<circle cx="300.3" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
+<text x="149.64000000000001" y="136.0" class="lab" text-anchor="end" fill="#3f3f46">Not a checkbox (7)</text>
+<line x1="161.64000000000001" y1="131.0" x2="534" y2="131.0" stroke="#e4e4e7" stroke-width="1"/>
+<circle cx="161.6" cy="121.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="131.0" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="140.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="121.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="131.0" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="140.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="121.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<text x="149.64000000000001" y="178.0" class="lab" text-anchor="end" fill="#3f3f46">Unsure (1)</text>
+<line x1="161.64000000000001" y1="173.0" x2="534" y2="173.0" stroke="#e4e4e7" stroke-width="1"/>
+<circle cx="337.7" cy="163.5" r="4.5" fill="#71717a" fill-opacity="0.55" stroke="#71717a" stroke-width="1"/>
+<text x="161.6" y="224" class="tick" text-anchor="middle" fill="#3f3f46">0.00</text>
+<text x="254.7" y="224" class="tick" text-anchor="middle" fill="#3f3f46">0.15</text>
+<text x="347.8" y="224" class="tick" text-anchor="middle" fill="#3f3f46">0.30</text>
+<text x="440.9" y="224" class="tick" text-anchor="middle" fill="#3f3f46">0.45</text>
+<text x="534.0" y="224" class="tick" text-anchor="middle" fill="#3f3f46">0.60</text>
+</svg>
+      <div class="note" style="margin-top:12px">
+        <strong>How to read it.</strong>
+        <ul>
+          <li>The empty-lane dot right of the line is a pen loop crossing an empty box. There is real ink in it, so the ink test alone says marked. A second test asks whether the ink sits inside the box or runs straight through it, catches this one, and sends it to a person.</li>
+          <li>Move the line right and you miss faint real marks. Move it left and you call more empty boxes marked. Neither setting fixes a dot like that one, so where the line sits is the customer's call, in <code>policy.json</code>.</li>
+          <li>Unsure means the person labelling could not call it either, a circle in the box, a half-erased tick. Those are excluded from grading, and the system is required to send them to a person rather than decide; being confidently right on one would count against it as much as being wrong.</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="card wide">
+      <h2>The number that stopped being useful</h2>
+      <p class="why">Accuracy is agreement with a person's reading of the same boxes, and there are two honest denominators. Count everything and it is 285 of 286, flat since v2. Count only the boxes it settled without a person, the number that matters in operation, and it is 268 of 268: the one wrong answer sat in the flagged pile. The falling line below is those flags, 51 down to 2, false alarms being fixed while the answers never moved.</p>
+      <div class="split">
+        <div>
+          <p class="why" style="margin:0 0 2px">Agreement with a person, all graded boxes:</p>
+          <svg viewBox="0 0 560 190" class="chart" role="img">
+<line x1="54" y1="16.0" x2="542" y2="16.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="21.0" class="tick" text-anchor="end" fill="#3f3f46">1.000</text>
+<line x1="54" y1="86.0" x2="542" y2="86.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="91.0" class="tick" text-anchor="end" fill="#3f3f46">0.995</text>
+<line x1="54" y1="156.0" x2="542" y2="156.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="161.0" class="tick" text-anchor="end" fill="#3f3f46">0.990</text>
+<path d="M54.0,16.0 L135.3,58.0 L216.7,58.0 L298.0,58.0 L379.3,58.0 L460.7,58.0 L542.0,58.0" fill="none" stroke="#111111" stroke-width="2.5"/>
+<circle cx="54.0" cy="16.0" r="4" fill="#111111"/>
+<text x="54.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v1</text>
+<circle cx="135.3" cy="58.0" r="4" fill="#111111"/>
+<text x="135.3" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v2</text>
+<circle cx="216.7" cy="58.0" r="4" fill="#111111"/>
+<text x="216.7" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v3</text>
+<circle cx="298.0" cy="58.0" r="4" fill="#111111"/>
+<text x="298.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v4</text>
+<circle cx="379.3" cy="58.0" r="4" fill="#111111"/>
+<text x="379.3" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v5</text>
+<circle cx="460.7" cy="58.0" r="4" fill="#111111"/>
+<text x="460.7" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v6</text>
+<circle cx="542.0" cy="58.0" r="4" fill="#111111"/>
+<text x="542.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v7</text>
+</svg>
+        </div>
+        <div>
+          <p class="why" style="margin:0 0 2px">Boxes it refused to settle alone, same four pages:</p>
+          <svg viewBox="0 0 560 190" class="chart" role="img">
+<line x1="54" y1="16.0" x2="542" y2="16.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="21.0" class="tick" text-anchor="end" fill="#3f3f46">65</text>
+<line x1="54" y1="86.0" x2="542" y2="86.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="91.0" class="tick" text-anchor="end" fill="#3f3f46">32.5</text>
+<line x1="54" y1="156.0" x2="542" y2="156.0" stroke="#e4e4e7" stroke-width="1"/>
+<text x="46" y="161.0" class="tick" text-anchor="end" fill="#3f3f46">0</text>
+<path d="M54.0,46.2 L135.3,44.0 L216.7,44.0 L298.0,24.6 L379.3,147.4 L460.7,151.7 L542.0,151.7" fill="none" stroke="#111111" stroke-width="2.5"/>
+<circle cx="54.0" cy="46.2" r="4" fill="#111111"/>
+<text x="54.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v1</text>
+<circle cx="135.3" cy="44.0" r="4" fill="#111111"/>
+<text x="135.3" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v2</text>
+<circle cx="216.7" cy="44.0" r="4" fill="#111111"/>
+<text x="216.7" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v3</text>
+<circle cx="298.0" cy="24.6" r="4" fill="#111111"/>
+<text x="298.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v4</text>
+<circle cx="379.3" cy="147.4" r="4" fill="#111111"/>
+<text x="379.3" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v5</text>
+<circle cx="460.7" cy="151.7" r="4" fill="#111111"/>
+<text x="460.7" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v6</text>
+<circle cx="542.0" cy="151.7" r="4" fill="#111111"/>
+<text x="542.0" y="178" class="tick" text-anchor="middle" fill="#3f3f46">v7</text>
+</svg>
+        </div>
+      </div>
+      <div class="hist">
+        <strong>Seven versions of work, and none of it moved the score. It went into trusting the right things.</strong>
+        <ul>
+          <li>v1 graded itself against an answer key it had written, a meaningless 1.0. A person corrected the key at v2; the honest record starts there.</li>
+          <li>v4 added the second read from the blank original and the queue went UP, 52 to 61. It surfaces disagreements the first read cannot see about itself; the versions after resolve them.</li>
+          <li>v5 collapsed the queue, 61 to 4, by setting the bar where real marks sit. The old rule wanted a stroke across 70% of the box; a clean X spans about 52%, so real marks were flagged unsure by construction.</li>
+          <li>v6 caught a fake box, 4 to 2. The software had read the printed word "Att." as a checkbox, and the answer key, copied from the software's own output, agreed. The blank form says that row holds three boxes, not four; the key was fixed by hand, and a wrong-size box with letters inside is now rejected.</li>
+          <li>v7 moved the definition of a mark out of the code into <code>policy.json</code>, the settings file the customer owns. A circle, a strike-out, a thin stroke, the ink thresholds: changing them is now their edit, not our release. Nothing moved that day, and a gate asserts the shipped file still reproduces these numbers.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>What this looks like in the production pipeline</h2>
+    <p>99% right sounds fine for one checkbox, but a page compounds it. At 96 boxes a page, a 99% reader gets an entirely clean page only 0.99<sup>96</sup> = 38% of the time, so 62% of pages carry at least one wrong answer, and nobody knows which pages. The gate is what changes that: every box the system cannot settle goes to a person instead of into the file, so the leftover is not a hidden error rate, it is a review pile you can see and staff.</p>
+    <ul>
+      <li><strong>So legibility is the invariant.</strong> When you cannot know which pages are wrong, the only defence is that every answer carries its reason and its evidence, so any one of them can be pulled and checked. That never gets traded away.</li>
+      <li><strong>And automation is the optimization.</strong> Within that constraint, push the share that needs no person as high as it will go.</li>
+    </ul>
+    <div class="note">
+    <ul>
+      <li><strong>Next: turn the review pile into a feedback loop.</strong> Today a flag says box 12, page 3, and a human ruling ends there. With every box carrying its official field name, the same ruling keeps working:
+        <ol style="margin:6px 0 4px; padding-left:20px">
+          <li>A flagged box arrives named, say Flood zone, instead of box 12, page 3.</li>
+          <li>A reviewer rules it once.</li>
+          <li>The ruling flows back two ways: as a label the automation trains on, and into counts like "the flood-zone question is mismarked on one appraisal in fifty," which the customer fixes by rewording the form.</li>
+          <li>Both ends shrink tomorrow's pile, so the same hour of review clears today and buys automation for tomorrow, the steepest push up that curve available.</li>
+        </ol>
+        The missing piece is the semantic layer. The blank forms we hold are positional data only, where each box sits; they do not yet carry what each box asks. Adding that layer of meaning is roadmap item 2 and is not built here.</li>
+      <li><strong>And the expertise grows, but on a leash, because this is finance.</strong> The system does become the expert, the way a junior underwriter does: one signed-off case type at a time. Reviewers rule fifty circled boxes, the circles keep coming out marked, and it earns the right to settle circles alone on those forms, as one line in the policy file the customer holds. What it can never do is quietly start deciding a kind of box nobody ruled on.</li>
+    </ul>
+    </div>
+  </div>
+
+  <footer>
+    Built by <code>make_dashboard.py</code> from <code>telemetry.json</code>, <code>eval_report.json</code>, <code>synth_report.json</code>, <code>gold_report.json</code> and <code>data/gold_set.json</code>. No network, no dependencies, no hand-entered numbers.
+  </footer>
+</div>

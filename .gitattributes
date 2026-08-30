@@ -1,0 +1,6 @@
+labeling/*.html linguist-generated=true
+deliverables/* linguist-generated=true
+assets/* linguist-generated=true
+reports/*.json linguist-generated=true
+data/** linguist-generated=true
+*.lock linguist-generated=true

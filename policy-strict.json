@@ -1,0 +1,27 @@
+{
+  "name": "strict",
+  "_what_this_is": "A second customer, same code. This lender will not accept a tick or a single stroke as a selection and wants a person to look at it, and wants a scribbled-out box surfaced rather than quietly read as empty. They also want a wider band of uncertainty, because their file costs more to get wrong than to review.",
+  "_how_to_use": "HV_POLICY=policy-strict.json uv run python evaluate.py, or HV_POLICY=policy-strict.json make serve. Nothing in src/ changes.",
+
+  "_what_changed": "Three rulings and the width of the ambiguous band. Every other number is identical to policy.json.",
+  "thin_single_stroke": "route",
+  "stray_stroke_through_box": "empty",
+  "scribbled_or_fragmented": "route",
+
+  "ink_filled": 0.10,
+  "ambiguous_low": 0.03,
+  "ambiguous_high": 0.30,
+  "confidence_scale": 0.04,
+
+  "clear_mark_span": 0.45,
+  "clear_mark_dominance": 0.60,
+  "clear_mark_ink": 0.06,
+  "thin_mark_span": 0.55,
+  "thin_mark_ink": 0.02,
+
+  "stray_outside": 0.50,
+
+  "fragment_components": 4,
+  "fragment_largest": 0.08,
+  "fragment_ink_ceiling": 0.50
+}

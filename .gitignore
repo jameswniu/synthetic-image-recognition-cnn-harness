@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+eval_report_classifier.json
+eval_report_model.json
+data/overlays/
+data/golden/*.pdf
+data/holdout/
+*.zip
+.DS_Store
+build/
+~$*
+data/synth/

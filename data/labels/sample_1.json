@@ -1,0 +1,478 @@
+{
+ "source": "sample_1.jpg",
+ "boxes": [
+  {
+   "bbox": [
+    156,
+    96,
+    179,
+    119
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    282,
+    96,
+    306,
+    119
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    414,
+    96,
+    437,
+    119
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    693,
+    96,
+    716,
+    119
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    848,
+    96,
+    870,
+    119
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    979,
+    96,
+    1002,
+    119
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    282,
+    126,
+    306,
+    150
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    693,
+    126,
+    716,
+    150
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    156,
+    127,
+    179,
+    150
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    414,
+    127,
+    437,
+    150
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    848,
+    127,
+    870,
+    150
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    979,
+    127,
+    1002,
+    150
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    156,
+    157,
+    179,
+    180
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    282,
+    157,
+    306,
+    180
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    414,
+    157,
+    437,
+    180
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    693,
+    157,
+    716,
+    180
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    848,
+    157,
+    870,
+    180
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    979,
+    157,
+    1002,
+    180
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    285,
+    188,
+    306,
+    211
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "labeler: empty (c021)"
+  },
+  {
+   "bbox": [
+    237,
+    491,
+    260,
+    515
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    331,
+    491,
+    354,
+    514
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    843,
+    491,
+    865,
+    514
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    713,
+    493,
+    736,
+    514
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "No Zoning: a pen loop crosses the box, no selection mark"
+  },
+  {
+   "bbox": [
+    1098,
+    522,
+    1122,
+    545
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1187,
+    522,
+    1210,
+    545
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    196,
+    613,
+    220,
+    636
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "Electricity Public: scan-faded X, strokes survive only as specks"
+  },
+  {
+   "bbox": [
+    275,
+    613,
+    298,
+    636
+   ],
+   "is_checked": true,
+   "ignore": true,
+   "note": "labeler: unsure (c048)"
+  },
+  {
+   "bbox": [
+    678,
+    613,
+    701,
+    636
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    756,
+    613,
+    779,
+    636
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1387,
+    613,
+    1410,
+    636
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1478,
+    613,
+    1501,
+    636
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "reverted: booth card suspected misclick, crop shows empty box"
+  },
+  {
+   "bbox": [
+    196,
+    643,
+    220,
+    667
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    678,
+    643,
+    701,
+    667
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    756,
+    643,
+    779,
+    666
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    275,
+    644,
+    298,
+    666
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1387,
+    644,
+    1410,
+    666
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1478,
+    644,
+    1501,
+    666
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    364,
+    674,
+    387,
+    697
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    447,
+    674,
+    470,
+    697
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    680,
+    704,
+    704,
+    728
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    769,
+    704,
+    792,
+    727
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1263,
+    734,
+    1286,
+    758
+   ],
+   "is_checked": true,
+   "ignore": false,
+   "note": "seeded"
+  },
+  {
+   "bbox": [
+    1174,
+    735,
+    1197,
+    758
+   ],
+   "is_checked": false,
+   "ignore": false,
+   "note": "seeded"
+  }
+ ]
+}

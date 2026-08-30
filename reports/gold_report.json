@@ -1,0 +1,43 @@
+{
+ "cards": 39,
+ "correct": 36,
+ "accuracy": 0.9231,
+ "misses": [
+  {
+   "id": "c021",
+   "source": "sample_1.jpg",
+   "bbox": [
+    282,
+    182,
+    306,
+    213
+   ],
+   "label": "empty",
+   "found": false
+  },
+  {
+   "id": "c022",
+   "source": "sample_5.png",
+   "bbox": [
+    1723,
+    898,
+    1764,
+    952
+   ],
+   "label": "empty",
+   "found": false
+  },
+  {
+   "id": "c055",
+   "source": "sample_1.jpg",
+   "bbox": [
+    196,
+    613,
+    220,
+    636
+   ],
+   "label": "filled",
+   "found": true
+  }
+ ]
+}

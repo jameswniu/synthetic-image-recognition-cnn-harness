@@ -1,0 +1,38 @@
+[
+ {
+  "source": "data/samples/sample_1.jpg",
+  "bbox": [
+   196,
+   613,
+   220,
+   636
+  ],
+  "kind": "state",
+  "note": "detector says empty (ink 0.1797), truth says the opposite",
+  "id": "r001"
+ },
+ {
+  "source": "data/samples/sample_1.jpg",
+  "bbox": [
+   713,
+   493,
+   736,
+   514
+  ],
+  "kind": "ambiguous",
+  "note": "STRAY_STROKE",
+  "id": "r002"
+ },
+ {
+  "source": "data/samples/sample_1.jpg",
+  "bbox": [
+   285,
+   188,
+   306,
+   211
+  ],
+  "kind": "missed",
+  "note": "ground truth says a box is here; the detector found nothing",
+  "id": "r003"
+ }
+]

@@ -1,0 +1,29 @@
+[project]
+name = "hv-checkbox"
+version = "0.1.0"
+description = "Checkbox detection and classification for appraisal documents, served as POST /detect"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "opencv-python-headless>=4.10",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.12",
+    "pydantic>=2.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+train = ["torch>=2.4", "onnxruntime>=1.19", "onnx>=1.16"]
+escalate = ["anthropic>=0.69"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hv_checkbox"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

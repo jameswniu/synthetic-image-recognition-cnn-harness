@@ -1,0 +1,7 @@
+{"source": "sample_1.jpg", "cx": 287, "cy": 627, "check": "state", "expect": true, "note": "check-mark tick reads as filled via the thin-mark span rule; raw ink alone called it empty"}
+{"source": "sample_1.jpg", "cx": 731, "cy": 505, "check": "state", "expect": false, "note": "pen loop passing through the No Zoning box is stray ink, not a selection; the stroke trace sees it leave the box"}
+{"source": "sample_1.jpg", "cx": 66, "cy": 22, "check": "absent", "expect": true, "note": "hole in the solid black sidebar bar; the ring-ink filter rejects boxes surrounded by ink"}
+{"source": "sample_5.png", "cx": 1743, "cy": 925, "check": "absent", "expect": true, "note": "narrow first-column cell (41x54) next to a real box; the 0.78 aspect floor rejects it"}
+{"source": "sample_7.png", "cx": 1518, "cy": 1389, "check": "detected", "expect": true, "note": "Over 6 mths box with the red watermark overwriting its border; luminance-only line extraction keeps it"}
+{"source": "sample_2.png", "cx": 358, "cy": 530, "check": "state", "expect": true, "note": "anchor: a clean X box on the clean render stays filled whatever else changes"}
+{"source": "sample_2.png", "cx": 461, "cy": 2782, "check": "absent", "expect": true, "note": "box drawn around the printed word Att.; rejected by page height consensus plus the text-interior test. The page labels were seeded from this detector, so the invented box sat in the ground truth too and graded itself correct; witness B refusing to place it was the only independent signal"}

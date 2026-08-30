@@ -1,0 +1,20 @@
+{
+ "rules": {
+  "graded": 286,
+  "queue": 2,
+  "right": 284,
+  "wrong": 0
+ },
+ "cnn": {
+  "graded": 286,
+  "queue": 56,
+  "right": 229,
+  "wrong": 1
+ },
+ "both": {
+  "graded": 286,
+  "queue": 19,
+  "right": 267,
+  "wrong": 0
+ }
+}

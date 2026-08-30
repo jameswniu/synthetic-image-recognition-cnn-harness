@@ -1,0 +1,23 @@
+{
+ "image": "data/samples/sample_2.png",
+ "levels": [
+  {
+   "concurrency": 1,
+   "requests": 40,
+   "wall_s": 16.08,
+   "req_per_s": 2.5,
+   "p50_ms": 391.9,
+   "p95_ms": 457.4,
+   "max_ms": 767.6
+  },
+  {
+   "concurrency": 4,
+   "requests": 40,
+   "wall_s": 14.85,
+   "req_per_s": 2.7,
+   "p50_ms": 1424.0,
+   "p95_ms": 1817.3,
+   "max_ms": 1819.9
+  }
+ ]
+}

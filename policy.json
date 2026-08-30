@@ -1,0 +1,31 @@
+{
+  "name": "default",
+  "_what_this_is": "What counts as a marked box. Edit this file, re-run, and the answers change; no code is touched. POLICY.md is the prose version of the same decisions, written by the person who labelled the gold set.",
+  "_how_to_use": "make eval uses this file. To score a different one: HV_POLICY=policy-strict.json make eval. Every number published in the README was measured with this file exactly as it stands.",
+
+  "_rulings_note": "The three decisions customers actually argue about. Each takes filled, empty, or route. All three flag the box for review either way; what changes is the boolean reported alongside. route means report the raw ink lean and let the reason code speak.",
+  "thin_single_stroke": "filled",
+  "stray_stroke_through_box": "empty",
+  "scribbled_or_fragmented": "empty",
+
+  "_ink_note": "How much of the box interior has to be inked before it reads as selected, and the band around that number nobody should be confident inside. A box landing in the band is flagged rather than decided.",
+  "ink_filled": 0.10,
+  "ambiguous_low": 0.05,
+  "ambiguous_high": 0.20,
+  "confidence_scale": 0.04,
+
+  "_shape_note": "Shape evidence settles what ink quantity cannot. One dominant stroke crossing the box is a mark even when it is thin. Span is measured inside the 15 percent inset interior, whose own diagonal is 0.70 of the box diagonal, so 0.45 is a real crossing and a threshold of 0.7 would be unreachable by construction.",
+  "clear_mark_span": 0.45,
+  "clear_mark_dominance": 0.60,
+  "clear_mark_ink": 0.06,
+  "thin_mark_span": 0.55,
+  "thin_mark_ink": 0.02,
+
+  "_stray_note": "A stroke with at least this share of its pixels outside the box grown by a quarter is passing through the box rather than marking it. This is what separates a tick from handwriting crossing the page.",
+  "stray_outside": 0.50,
+
+  "_fragment_note": "Several small ink blobs with no dominant stroke: printed text sitting in a table cell, or a box that has been scribbled out. Both are cases where the control is not a plain selection.",
+  "fragment_components": 4,
+  "fragment_largest": 0.08,
+  "fragment_ink_ceiling": 0.50
+}
