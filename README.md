@@ -83,7 +83,7 @@ flowchart TB
     C{"Confident?"}:::gate
     OUT([Every box comes back answered<br/>unsure ones carry a reason]):::io
     Q["The flagged boxes<br/>nothing waits on them"]:::exc
-    L["Optional frontier check<br/>Claude reads the crop<br/>needs a key, off by default"]:::exc
+    L["Optional frontier check<br/>Claude sees one box, zoomed in<br/>needs a key, off by default"]:::exc
     H([A person edits policy.json]):::hum
 
     IN --> N
