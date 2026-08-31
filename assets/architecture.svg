@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1492" role="img" aria-label="System map: one request, top to bottom">
-<rect width="1200" height="1492" fill="#fafafa"/>
-<rect x="0" y="0" width="6" height="1492" fill="#1b5e3f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1526" role="img" aria-label="System map: one request, top to bottom">
+<rect width="1200" height="1526" fill="#fafafa"/>
+<rect x="0" y="0" width="6" height="1526" fill="#1b5e3f"/>
 <defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f5"/><stop offset="0.5" stop-color="#d4d4d8"/><stop offset="1" stop-color="#a1a1aa"/></linearGradient></defs>
 <text x="48" y="56" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start" letter-spacing="4">SYSTEM MAP</text>
 <text x="48" y="108" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#111111" text-anchor="start">Architecture</text>
@@ -36,24 +36,25 @@
 <text x="70" y="902" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">same page twice, identical answer</text>
 <rect x="622" y="732" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <text x="644" y="774" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">optional CNN second reader</text>
-<text x="644" y="812" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">scores the same crop,</text>
-<text x="644" y="846" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">switched off by default</text>
+<text x="644" y="812" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">trained here, runs on CPU,</text>
+<text x="644" y="846" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">nothing leaves the building</text>
 <text x="644" y="902" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">patch_model.py, 23K weights, 29KB</text>
 <text x="48" y="986" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">04  THE QUEUE</text>
-<text x="310" y="986" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">2.4% of boxes, each with a reason</text>
-<rect x="48" y="1004" width="530" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="310" y="986" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">2.4% of boxes, each with its reason</text>
+<rect x="48" y="1004" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <text x="70" y="1046" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">exception queue</text>
 <text x="70" y="1084" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">12 reason codes, data not log lines</text>
-<text x="70" y="1140" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">escalate.py, 7 codes reach a person</text>
-<rect x="622" y="1004" width="530" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
-<text x="644" y="1046" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">optional AI second look</text>
-<text x="644" y="1084" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">one crop, needs a key, off by default</text>
-<text x="644" y="1140" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">two voters, then a judge on a dispute</text>
-<text x="48" y="1224" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">05  THE ANSWER</text>
-<text x="310" y="1224" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">one JSON entry per box, nothing waits</text>
-<rect x="48" y="1242" width="1104" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
-<text x="70" y="1284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">serve.py</text>
-<text x="70" y="1322" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">FastAPI /detect, bbox and is_checked, evidence on request</text>
-<text x="70" y="1378" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">?explain=true carries every rejected candidate</text>
-<text x="600.0" y="1458" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="middle">every number above is reprinted by make reports</text>
+<text x="70" y="1174" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">escalate.py, 7 codes reach a person</text>
+<rect x="622" y="1004" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="644" y="1046" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">optional frontier check</text>
+<text x="644" y="1084" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">Claude reads one crop,</text>
+<text x="644" y="1118" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">needs a key, off by default</text>
+<text x="644" y="1174" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">two voters, then a judge on a dispute</text>
+<text x="48" y="1258" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">05  THE ANSWER</text>
+<text x="310" y="1258" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">one JSON entry per box, nothing waits</text>
+<rect x="48" y="1276" width="1104" height="158" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
+<text x="70" y="1318" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">serve.py</text>
+<text x="70" y="1356" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">FastAPI /detect, every box answered, evidence on request</text>
+<text x="70" y="1412" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">?explain=true carries every rejected candidate</text>
+<text x="600.0" y="1492" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="middle">every number above is reprinted by make reports</text>
 </svg>

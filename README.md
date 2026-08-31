@@ -72,7 +72,7 @@ That last point is the one that shaped the whole design. Some boxes have a right
 </p>
 
 ```mermaid
-%%{init: {"flowchart": {"curve": "linear", "nodeSpacing": 30, "rankSpacing": 52, "useMaxWidth": true}}}%%
+%%{init: {"flowchart": {"curve": "linear", "nodeSpacing": 30, "rankSpacing": 52, "useMaxWidth": true, "wrappingWidth": 420}}}%%
 flowchart TB
     IN([Appraisal page]):::io
     N["Clean up the page"]:::det
@@ -81,9 +81,9 @@ flowchart TB
     G{"Readers agree?"}:::gate
     S["Read the mark in each box"]:::det
     C{"Confident?"}:::gate
-    OUT([Every box gets an answer<br/>flagged ones say why]):::io
-    Q["Review queue<br/>read later, not now"]:::exc
-    L["Optional AI second look<br/>two models read one crop<br/>off by default"]:::exc
+    OUT([Every box comes back answered<br/>unsure ones carry a reason]):::io
+    Q["The flagged boxes<br/>nothing waits on them"]:::exc
+    L["Optional frontier check<br/>Claude reads the crop<br/>needs a key, off by default"]:::exc
     H([A person edits policy.json]):::hum
 
     IN --> N
@@ -108,7 +108,7 @@ flowchart TB
     classDef hum fill:#fafafa,stroke:#71717a,stroke-width:1px,color:#111111
 ```
 
-*Nothing waits on a person. Every box comes back in the same response, and a flagged one comes back with the reason it was flagged; the dotted lane is review that happens afterwards.*
+*Nothing waits on a person. Every box comes back in the same response, and an unsure one comes back with the reason it was flagged; the dotted lane is review that happens afterwards, on somebody else's schedule.*
 
 Two readers look at the same page independently. The first knows nothing about appraisals; it finds boxes by their printed borders. The second knows these are standard federal forms, recognizes which one it is looking at, and knows where the boxes belong. Where both agree, the answer is settled. Where they disagree, the box is flagged rather than dropped.
 
