@@ -81,9 +81,9 @@ flowchart TB
     G{"Readers agree?"}:::gate
     S["Read the mark in each box"]:::det
     C{"Confident?"}:::gate
-    OUT([An answer for every box<br/>flagged ones carry their reason]):::io
-    Q["Review queue<br/>the flagged boxes, out of band"]:::exc
-    L["Optional AI second look<br/>one crop, off by default"]:::exc
+    OUT([Every box gets an answer<br/>flagged ones say why]):::io
+    Q["Review queue<br/>read later, not now"]:::exc
+    L["Optional AI second look<br/>two models read one crop<br/>off by default"]:::exc
     H([A person edits policy.json]):::hum
 
     IN --> N
