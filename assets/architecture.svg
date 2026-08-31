@@ -35,9 +35,9 @@
 <text x="70" y="846" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">the customer owns</text>
 <text x="70" y="902" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">same page twice, identical answer</text>
 <rect x="622" y="732" width="530" height="192" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
-<text x="644" y="774" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">optional CNN second reader</text>
-<text x="644" y="812" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">trained here, runs on CPU,</text>
-<text x="644" y="846" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">nothing leaves the building</text>
+<text x="644" y="774" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">optional CNN second opinion</text>
+<text x="644" y="812" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">votes marked or empty,</text>
+<text x="644" y="846" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">trained here, stays on our CPU</text>
 <text x="644" y="902" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">patch_model.py, 23K weights, 29KB</text>
 <text x="48" y="986" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#111111" text-anchor="start" letter-spacing="2">04  THE QUEUE</text>
 <text x="310" y="986" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">2.4% of boxes, each with its reason</text>

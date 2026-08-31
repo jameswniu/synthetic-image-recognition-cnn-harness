@@ -80,9 +80,10 @@ flowchart TB
     W2["Reader 2<br/>from the blank form"]:::det
     G{"Readers agree?"}:::gate
     S["Read the mark in each box"]:::det
+    K["Optional CNN second opinion<br/>our own model, stays local<br/>off by default"]:::exc
     C{"Confident?"}:::gate
     OUT([Every box comes back answered<br/>unsure ones carry a reason]):::io
-    Q["The flagged boxes<br/>nothing waits on them"]:::exc
+    Q["The flagged boxes<br/>answered, but worth a look"]:::exc
     L["Optional frontier check<br/>Claude sees one box, zoomed in<br/>needs a key, off by default"]:::exc
     H([A person edits policy.json]):::hum
 
@@ -94,6 +95,7 @@ flowchart TB
     G -->|agree| S
     G -->|"disagree, flagged"| OUT
     S --> C
+    S -.-> K
     C -->|"99.3% settled"| OUT
     C -->|"0.7% flagged"| OUT
     OUT -.->|flagged only| Q
