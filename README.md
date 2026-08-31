@@ -81,10 +81,10 @@ flowchart TB
     G{"Readers agree?"}:::gate
     S["Read the mark in each box"]:::det
     C{"Confident?"}:::gate
-    Q["Exception queue<br/>each item carries its reason"]:::exc
-    L["AI check on the crop<br/>off by default"]:::exc
-    OUT([Checked or empty for every box]):::io
-    H([Human sets the rule]):::hum
+    OUT([An answer for every box<br/>flagged ones carry their reason]):::io
+    Q["Review queue<br/>the flagged boxes, out of band"]:::exc
+    L["Optional AI second look<br/>one crop, off by default"]:::exc
+    H([A person edits policy.json]):::hum
 
     IN --> N
     N --> W1
@@ -92,13 +92,14 @@ flowchart TB
     W1 --> G
     W2 --> G
     G -->|agree| S
-    G -->|disagree| Q
+    G -->|"disagree, flagged"| OUT
     S --> C
-    C -->|"99.3%"| OUT
-    C -->|"0.7%"| Q
-    Q --> L
-    L --> OUT
-    L --> H
+    C -->|"99.3% settled"| OUT
+    C -->|"0.7% flagged"| OUT
+    OUT -.->|flagged only| Q
+    Q -.-> L
+    Q -.-> H
+    H -.->|"next run"| S
 
     classDef io fill:#ffffff,stroke:#a1a1aa,stroke-width:1px,color:#111111
     classDef det fill:#f4f4f5,stroke:#52525b,stroke-width:1px,color:#111111
@@ -106,6 +107,8 @@ flowchart TB
     classDef exc fill:#e4e4e7,stroke:#18181b,stroke-width:1px,color:#111111
     classDef hum fill:#fafafa,stroke:#71717a,stroke-width:1px,color:#111111
 ```
+
+*Nothing waits on a person. Every box comes back in the same response, and a flagged one comes back with the reason it was flagged; the dotted lane is review that happens afterwards.*
 
 Two readers look at the same page independently. The first knows nothing about appraisals; it finds boxes by their printed borders. The second knows these are standard federal forms, recognizes which one it is looking at, and knows where the boxes belong. Where both agree, the answer is settled. Where they disagree, the box is flagged rather than dropped.
 
