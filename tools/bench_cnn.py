@@ -19,6 +19,15 @@ import hashlib
 import json
 import os
 import platform
+import subprocess
+
+
+def _sysctl(key: str) -> str:
+    """One sysctl value, or empty off macOS, so the report names the box it ran on."""
+    try:
+        return subprocess.run(["sysctl", "-n", key], capture_output=True, text=True, timeout=5).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
 import statistics
 import sys
 import time
@@ -98,6 +107,8 @@ def main() -> None:
             "system": platform.system(),
             "release": platform.mac_ver()[0] or platform.release(),
             "machine": platform.machine(),
+            "model": _sysctl("hw.model"),
+            "cpu": _sysctl("machdep.cpu.brand_string"),
             "cpu_count": os.cpu_count(),
             "python": platform.python_version(),
             "onnxruntime": ort.__version__,

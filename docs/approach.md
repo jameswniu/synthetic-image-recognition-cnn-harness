@@ -50,7 +50,7 @@ Nothing in the reading path is an AI model. That path is ordinary image processi
 
 The AI sits behind the exception queue, which on these pages holds 0.7% of boxes. Only a flagged box, cropped to a thumbnail, is ever sent to a model. Two inexpensive models look at it independently; a stronger one settles it only when they disagree. Every call is recorded, and replays come from the record, so offline behavior stays reproducible.
 
-That design is arithmetic before it is philosophy. A flagged box, zoomed in the way the escalation lane sends it, is about 107 tokens of image, measured from the real crop geometry by `make crop-tokens`. A whole page is the entire image, and a full-page answer has to list every box and its coordinates on top of that. Sending every page to a strong model pays for all of it on every page, where flagging pays only for the small fraction that is genuinely unclear, and published work on document AI finds checkbox reading is a specific weak spot for vision models. Spending more to get less is a bad trade twice over.
+That design is arithmetic before it is philosophy. A flagged box, zoomed in the way the escalation lane sends it, is about 110 tokens of image, measured from the real crop geometry by `make crop-tokens` under the API's 28 by 28 pixel patch rule. A whole page is 1,550 tokens on the standard tier and 4,752 on the high-resolution tier under the same rule, and a full-page answer has to list every box and its coordinates on top of that. Sending every page to a strong model pays for all of it on every page, where flagging pays only for the small fraction that is genuinely unclear, and published work on document AI finds checkbox reading is a specific weak spot for vision models. Spending more to get less is a bad trade twice over.
 
 There is a version of this argument that goes further and says never use a model. I do not believe that either. The faded X and the pen stroke are cases where two careful people disagree, and that is exactly where a second opinion is worth buying, so long as it cannot invent a box, cannot delete one, and cannot act without leaving a record.
 
@@ -80,7 +80,7 @@ It is also resolution-dependent, and I would rather say so than let someone find
 
 The small trained model is not yet paying for itself, and the measurement says so plainly. Switched on it changes no answer on any of the four pages, and it takes the review queue from 2 boxes to 19 by disputing 17 the rules read correctly. On one held-out page it disputes 37 of 118. A second opinion that never changes the answer and triples or quadruples the review bill is a cost with no benefit attached, so every flag rate in this repo is quoted for both configurations rather than for the flattering one. The fix is to let its disagreement count only where the deterministic read is already near a boundary, and to grade that on the queue it produces.
 
-Downscaling has a floor. The sweep stops at 0.4x, and somewhere below that the size estimate loses its footing, so the correct fix is normalizing resolution before the page arrives rather than pushing the detector further.
+Downscaling has a floor. The sweep stops at 0.4x, boxes about 21 px across, and nothing below that is measured, so the correct fix is normalizing resolution before the page arrives rather than pushing the detector further.
 
 One of the three form types has no publicly published blank, so that page runs on the first reader alone and says so in its output.
 

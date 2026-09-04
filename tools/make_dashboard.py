@@ -665,7 +665,7 @@ def main() -> None:
         <tr><td>The CNN alone, a test</td><td class="n">{cmp_r['cnn']['queue']} of {cmp_r['cnn']['graded']}</td><td class="n">{cmp_r['cnn']['right']}</td><td class="n">{cmp_r['cnn']['wrong']}</td></tr>
         <tr><td>Both together, a test</td><td class="n">{cmp_r['both']['queue']} of {cmp_r['both']['graded']}</td><td class="n">{cmp_r['both']['right']}</td><td class="n">{cmp_r['both']['wrong']}</td></tr>
       </table>
-      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, {cmp_r['rules']['queue']} against {cmp_r['both']['queue']} against {cmp_r['cnn']['queue']}. Most automation at the same accuracy wins. All three run on our own CPU, and the CNN adds {cnn_page['median_ms']:.0f} ms to a {cnn_page['boxes']}-box page (make bench-cnn). Nothing leaves the building.</p>
+      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, {cmp_r['rules']['queue']} against {cmp_r['both']['queue']} against {cmp_r['cnn']['queue']}. Most automation at the same accuracy wins. All three run on our own CPU, and the CNN adds {cnn_page['median_ms']:.1f} ms to a {cnn_page['boxes']}-box page (make bench-cnn). Nothing leaves the building.</p>
       <div class="note">
         <p><strong>The rules won the match, so the CNN stays switched off.</strong></p>
         <ul>

@@ -30,7 +30,7 @@
 <circle cx="350" cy="280" r="5" fill="#52525b"/>
 <text x="368.5" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2 of 287 flagged</text>
 <circle cx="350" cy="336" r="5" fill="#52525b"/>
-<text x="368.5" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">107 tokens a crop</text>
+<text x="368.5" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">110 tokens a crop</text>
 <rect x="609" y="24" width="274" height="352" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="609" y="24" width="274" height="8" fill="#111111"/>
 <circle cx="653" cy="82" r="24" fill="#fafafa" stroke="#111111" stroke-width="2"/>

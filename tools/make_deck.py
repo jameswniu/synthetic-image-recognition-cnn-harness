@@ -565,7 +565,7 @@ def s_governance(prs):
          plain("Hard gates\nthe response schema, the blank forms, the regression rows, the frozen answer key",
                "Hard gates\nthe answer format, the blank forms, the known hard cases, the frozen answer key"), DET_FILL, DET, size=15)
     chip(s, Inches(7.0), y + Inches(1.75), Inches(5.7), Inches(1.25),
-         "Soft gates\na number with an allowed range and a verdict; one sits outside its range today and says so", EXC_FILL, EXC, size=15)
+         "Soft gates\na number with an allowed range and a verdict; one sits outside its range and one is not yet measured against it, and both say so", EXC_FILL, EXC, size=15)
     chip(s, Inches(7.0), y + Inches(3.25), Inches(5.7), Inches(1.05),
          theirs("Humans on the loop\nQA and product write the criteria in the same file the customer edits",
                 "Humans on the loop\nQA and product write the criteria in the same file the lender edits"), HUM_FILL, HUM, size=15)
@@ -824,7 +824,7 @@ def s_apprentice(prs):
              f"CNN is confident it is right {CMP['cnn']['right']} of {CMP['cnn']['right'] + CMP['cnn']['wrong']} times, so "
              f"training worked. Its problem is confidence in the right places, {CMP['cnn']['queue']} unsure boxes where the "
              f"rules are sure and correct. The 286 graded boxes are the 287 detections on the brief pages minus the one on "
-             f"the tick the labeler ruled unsure. Scoring a {CNN_PAGE['boxes']}-box page takes it {CNN_PAGE['median_ms']:.0f} ms "
+             f"the tick the labeler ruled unsure. Scoring a {CNN_PAGE['boxes']}-box page takes it {CNN_PAGE['median_ms']:.1f} ms "
              "on CPU (make bench-cnn). make compare reprints this table from the repo.")
     return s
 

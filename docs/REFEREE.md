@@ -6,13 +6,13 @@ Built Wed 9/2 on branch referee-card at commit f79a927, and revised Fri 9/4 at c
 
 The first revision of this file listed fourteen numbers that no script or report in the repo produced. As of commit 974cf48 none of them is on a reader-facing surface. Twelve were deleted and the sentences around them rewritten. They were "$0.000004", "$0.001", "$0.009", "$0.085" and "~40x" (every cost row now states what a page costs in measured terms, CPU time and the share of boxes that would reach a model), "1,990" tokens for a page, "268 of 268" (the dashboard reads 284 of 284 from reports/compare_readers_report.json), "3.5%" (the sentence now states the flagged-box rate with the model on, 56 of 847), "-133 to +396 px" and "clean X spans 0.52" and "roughly thirteen pixels per box" (the prose says these were measured once during the build and quotes no figure), "returned zero boxes for both" cover pages (deleted, nothing scores a cover page), and "Two of those gates I checked by deliberately reverting the fix" (deleted from the README, the deck and the walkthrough). The same two build measurements survive as code comments in src/hv_checkbox/template.py line 4 and src/hv_checkbox/classify.py line 105, which are notes from the build and not reader-facing.
 
-Two were produced instead of deleted, because a small honest script could produce them. The CNN's timing now comes from tools/bench_cnn.py, which times PatchScorer.score() over the real crops of the four brief pages and writes reports/cnn_latency.json (`make bench-cnn`), and the description and the surfaces quote that file, 3.8 ms for the 118-box page and 28.9 microseconds per crop over all 287 (card 18). The "2.5 ms CPU" in the GitHub description matched nothing and the proposed replacement quotes the report. The crop token estimate now comes from tools/crop_tokens.py, which builds the exact crop src/hv_checkbox/escalate.py sends and counts its image tokens under the 750 pixels per token rule, writing reports/crop_tokens.json (`make crop-tokens`), and the median over the 287 boxes is 107 tokens (card 19), one more than the 106 that used to be typed.
+Two were produced instead of deleted, because a small honest script could produce them. The CNN's timing now comes from tools/bench_cnn.py, which times PatchScorer.score() over the real crops of the four brief pages and writes reports/cnn_latency.json (`make bench-cnn`), and the surfaces quote that file, 3.9 ms for the 118-box page and 30.4 microseconds per crop over all 287 (card 18). The "2.5 ms CPU" in the live GitHub description matched nothing, and that field still carries it until the proposed text in the section at the end of this file is applied by hand. The crop token estimate now comes from tools/crop_tokens.py, which builds the exact crop src/hv_checkbox/escalate.py sends and counts its visual tokens the way the Claude API vision doc bills them, one token per 28 by 28 pixel patch after any downscale the tier forces, writing reports/crop_tokens.json with the doc URL (`make crop-tokens`). The median over the 287 boxes is 110 tokens (card 19) against the 106 that used to be typed under an older 750 pixels per token rule, and the same script counts a whole page on both tiers, 1,550 tokens standard and 4,752 high resolution, which replaces the deleted "1,990" with two numbers that name their tier.
 
 The harvester (`python3 ~/.claude/skills/referee_card/find_claims.py .`) was run at commit 974cf48 and grepped for every removed number. None survives on a reader-facing surface outside this file.
 
 ## Mismatches
 
-None remain at commit 974cf48. The drifts the first revision listed were reconciled to one value each, so the weights read 23,381 everywhere (the badge carries the exact count and tools/check_claims.py fails the build on a difference of one), every timing line carries one instrument with its set named, 96.5% is stated as detection F1 on the 52 synthetic pages, the reason-bubble shares are labeled as shares of the 146 tags, "6.6%" is stated as 56 of 847 boxes flagged with the model on, POLICY.md counts ten unsure cards and says the tick is not routed on the shipped run, docs/EVALS.md bands reader agreement at the code's 0.75 and says the /detect latency band is unmeasured on a full form rather than in band, gold card c022 is re-ruled not-a-checkbox so the two answer keys agree, every hero and architecture number carries its set label (asserted by tools/check_claims.py), reports/bench_report.json comes from the Makefile's bench target as written, and assets/dimensions.svg and assets/alternatives.svg carry a command footer.
+None remain at the head of referee-card. The drifts the first revision listed were reconciled to one value each, so the weights read 23,381 everywhere (the badge carries the exact count and tools/check_claims.py fails the build on a difference of one), every timing line carries one instrument with its set named, 96.5% is stated as detection F1 on the 52 synthetic pages, the reason-bubble shares are labeled as shares of the 146 tags, "6.6%" is stated as 56 of 847 boxes flagged with the model on, POLICY.md counts ten unsure cards and says the tick is not routed on the shipped run, docs/EVALS.md bands reader agreement at the code's 0.75 and says the /detect latency band is unmeasured on a full form rather than in band, gold card c022 is re-ruled not-a-checkbox so the two answer keys agree, every hero and architecture number carries its set label (asserted by tools/check_claims.py), reports/bench_report.json comes from the Makefile's bench target as written, and assets/dimensions.svg and assets/alternatives.svg carry a command footer.
 
 ## Cards
 
@@ -158,7 +158,7 @@ Set       one machine (an arm64 laptop with 18 cores) and one run on Fri 9/4, ru
 Command   make telemetry (p50_ms and p95_ms in the totals), then make serve and make bench (scripts/bench.py with its defaults, writing reports/bench_report.json)
 Sibling   at concurrency 4 the same bench reads p50 193 ms and p95 209 ms, at 8 p50 398 ms and p95 439 ms, and the photographed page reads in 47 ms in-process (its telemetry row), which is why its HTTP round trip sits far below the in-process median that the 300 DPI forms dominate
 Bound     120 requests of the smallest page make the HTTP p95 the 114th fastest of 120, the previous committed run on a different day read 284 ms in-process and 392 ms over HTTP on a different page, so both numbers are properties of the box and the page they ran on, and the median of 61 pages is 86% synthetic renders of two forms
-Knob      the template scale search docs/EVALS.md line 51 names, and the 2x upscale for pages under 1,400 px wide (src/hv_checkbox/pipeline.py line 42)
+Knob      the template scale search in src/hv_checkbox/template.py, and the 2x upscale for pages under 1,400 px wide (src/hv_checkbox/pipeline.py line 42)
 ```
 
 ```
@@ -206,10 +206,10 @@ Knob      the assertion is at least, not exactly, at tests/test_tier1.py line 25
 ```
 
 ```
-Claim     "the CNN adds 4 ms to a 118-box page", "3.8 ms per 118-box page on CPU", "28.9 us per crop" (dashboard.html line 240, deck slide 14 notes, the proposed GitHub description, reports/cnn_latency.json)
-Unit      wall time of PatchScorer.score() over the boxes the rules pass found on one brief page, scoring only, the median of 30 timed passes after 5 warm-ups, and per crop is that median divided by the page's box count (sample_2.png, 118 boxes, 3.75 ms, 31.7 us per crop)
+Claim     "the CNN adds 3.9 ms to a 118-box page", "3.9 ms per 118-box page on CPU", "30.4 us per crop" (dashboard.html line 240, deck slide 14 notes, the proposed GitHub description, reports/cnn_latency.json)
+Unit      wall time of PatchScorer.score() over the boxes the rules pass found on one brief page, scoring only, the median of 30 timed passes after 5 warm-ups, and per crop is that median divided by the page's box count (sample_2.png, 118 boxes, 3.92 ms, 33.3 us per crop)
 Match     none, tools/bench_cnn.py loads models/patch-int8.onnx through the same PatchScorer the pipeline uses (6 pooled Scan sessions, POOL_WORKERS at src/hv_checkbox/patch_model.py) and times only the score call
-Set       the 4 brief pages, 287 crops, on an arm64 laptop with 18 cores (the report's machine block), 8.28 ms for all four pages, 28.9 us per crop, per page 0.94, 3.75, 1.99 and 1.60 ms
+Set       the 4 brief pages, 287 crops, on a Mac17,8 (Apple M5 Pro, 18 cores, named in the report's machine block), 8.72 ms for all four pages, 30.4 us per crop, per page 1.04, 3.92, 2.04 and 1.72 ms
 Command   make bench-cnn (uv run --extra train python tools/bench_cnn.py --out reports/cnn_latency.json)
 Sibling   the pipeline's own page time is 273 ms median in-process (card 13), so the model adds about 1.4% to the page it costs the most, and the classifier mode's p50 in reports/telemetry.json is 274 ms against 273 rules only
 Bound     one machine and one run, a number no CI chases, the previous description's "2.5 ms" matched no file, and a live pass on 2026-09-02 that timed a cold session read 27 to 59 ms per page, so a warm pooled scorer and a cold single session are different instruments
@@ -217,14 +217,14 @@ Knob      POOL_WORKERS (6 here) and the repeat count
 ```
 
 ```
-Claim     "about 107 tokens of image", "one 107-token crop", "107 tokens a crop" (README.md lines 157, 162 and 364, assets/dimensions.svg line 33, deck slide 6, docs/approach.md line 53, reports/crop_tokens.json)
-Unit      image tokens of the crop src/hv_checkbox/escalate.py crop_png builds for one box (the box grown 2.2 times its size on every side, scaled so the box is about 260 px across, a magenta outline drawn on), counted as width times height over 750, the median over every box the rules pass finds on the four brief pages, 107.3
-Match     the 750 pixels per token rule is the vendor's documented estimate for the Claude API, applied with no downscale because every crop sits far below the 1,568 px long edge, and the PNG byte size (36 to 71 KB on the two routed crops) is a separate quantity the report does not quote
-Set       287 crops on the four brief pages, per-page medians 103.0, 107.3, 107.7 and 103.0, minimum 94.5 and maximum 111.2, and the two boxes the shipped run actually routes (both on the photographed page, whose boxes are the smallest) come out at 94.5 and 98.2 because their crops are 278 by 255 and 277 by 266 px
+Claim     "about 110 tokens of image", "one 110-token crop", "110 tokens a crop" (README.md lines 157, 162 and 364, assets/dimensions.svg line 33, deck slide 6, docs/approach.md line 53, reports/crop_tokens.json)
+Unit      image tokens of the crop src/hv_checkbox/escalate.py crop_png builds for one box (the box grown 2.2 times its size on every side, scaled so the whole crop is about 260 px across and the box about a fifth of that, a magenta outline drawn on), counted as one visual token per 28 by 28 pixel patch, ceil of width over 28 times ceil of height over 28, the median over every box the rules pass finds on the four brief pages, 110
+Match     the patch rule and the tier limits are the Claude API vision doc's own (standard tier 1,568 px long edge and 1,568 tokens, high-resolution tier 2,576 px and 4,784 tokens, URL and read date in the report), a crop never downscales because it sits far below both limits, and the PNG byte size (36 to 71 KB on the two routed crops) is a separate quantity the report does not quote
+Set       287 crops on the four brief pages, per-page medians 100, 120, 110 and 100, and the two boxes the shipped run actually routes (both on the photographed page, whose boxes are the smallest) come out at 100 and 100 because their crops are 278 by 255 and 277 by 266 px, ten patches by ten
 Command   make crop-tokens (HV_CLASSIFIER=off uv run python tools/crop_tokens.py --out reports/crop_tokens.json)
-Sibling   a whole page is the entire image and is not counted here on purpose, the earlier "1,990" for a page had no rule behind it and is gone
-Bound     the rule is an estimate the vendor publishes rather than a billed count, and the number moves with the box size on the page, so a page with 60 px boxes and a page with 23 px boxes land a few tokens apart
-Knob      the 2.2 grow factor and the 260 px target in escalate.crop_png, and the 750
+Sibling   a whole page under the same rule is 1,550 tokens median on the standard tier (the tier's 1,568-token cap does the downscaling) and 4,752 on the high-resolution tier, from the same report, about fourteen and forty-three times the crop, and the tier has to be named or the page number means nothing
+Bound     the rule is the vendor's published billing rule as read on 2026-09-04 and it has changed before (the previous revision of this file used 750 pixels per token), and the crop count moves with box size, so a page with 59 px boxes and a page with 23 px boxes land 20 tokens apart
+Knob      the 2.2 grow factor and the 260 px target in escalate.crop_png, and the tier the caller is billed on
 ```
 
 ## Cited, not measured here
@@ -238,7 +238,15 @@ F1 0.88 (Tatsu YOLOv8-large, 300 documents), about 96% (Evoke YOLOv5), about 95%
 - make telemetry gives 5,872 boxes, 138 flagged (2.4%), reasons 64, 56, 16, 9, 1, with the model on 237 flagged and 176 disagreements, p50 273.2 ms and p95 300.9 ms rules only. Counts match the previous run, the timings are this run's, and the committed report is this run.
 - make compare gives queue 2, 56, 19, right 284, 229, 267, wrong 0, 1, 0, plus hard_cards with the pen loop at 0.845 queued and the faded X at 0.082 wrong. The committed report is this run.
 - make bench, the target as written, gives 120 requests of sample_1.jpg at concurrency 1 p50 50.0 ms and p95 64.4 ms, and concurrency 4 and 8 p50 193 and 398 ms. The committed report is this run, and because that page is the smallest of the four, docs/EVALS.md line 51 no longer calls the /detect band in band on its strength.
-- make bench-cnn gives 287 crops in 8.28 ms across the four pages, 28.9 us per crop, the 118-box page in 3.75 ms. The committed report is this run.
-- make crop-tokens gives a median of 107.3 tokens over 287 crops, the two routed boxes at 94.5 and 98.2. The committed report is this run.
+- make bench-cnn gives 287 crops in 8.72 ms across the four pages, 30.4 us per crop, the 118-box page in 3.92 ms. The committed report is this run.
+- make crop-tokens gives a median of 110 tokens over 287 crops under the 28-pixel patch rule, the two routed boxes at 100 and 100, and a page at 1,550 standard and 4,752 high resolution. The committed report is this run.
 - pytest -q, 26 passed. make claims, tests 26, F1 0.998, queue 2.4, weights 23,381, the three hero labels, the architecture label and the flowchart label, all OK.
 - python3 ~/.claude/skills/referee_card/find_claims.py . gives 1,047 claim-shaped snippets, none of the removed numbers among them outside this file.
+
+## GitHub description, proposed and not yet applied
+
+The live About field still reads "23K-weight CNN (ONNX, 2.5 ms CPU)". The replacement below quotes reports/cnn_latency.json and the exact weight count, and is 347 characters against the 350 GitHub allows. It changes a public surface, so it is applied by hand, never by a script.
+
+```
+Deterministic pipeline reading checkboxes off appraisal forms, with OpenCV dual-reader detection, customer-owned policy file and human exception queue. A from-scratch 23,381-weight CNN (ONNX int8, 3.9 ms per 118-box page on CPU, make bench-cnn) raced the rules and ships switched off. FastAPI, Docker, 26 test gates, F1 0.998 on the 4 brief pages.
+```

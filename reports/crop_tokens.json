@@ -1,50 +1,74 @@
 {
- "rule": "tokens = crop width * crop height / 750, the Claude API's documented image estimate; no downscale, every crop is under the 1,568 px long edge",
- "crop": "src/hv_checkbox/escalate.py crop_png: the box grown 2.2x on every side, scaled so the box is about 260 px across",
+ "rule": "each 28 by 28 pixel patch is one visual token, so an image costs ceil(w/28) times ceil(h/28), downscaled to fit the tier's long-edge and visual-token limits (standard 1,568 px and 1,568 tokens, high resolution 2,576 px and 4,784 tokens), per https://platform.claude.com/docs/en/build-with-claude/vision read 2026-09-04, resize per the reference implementation on the vision-coordinates page",
+ "crop": "src/hv_checkbox/escalate.py crop_png: the box grown 2.2x on every side, scaled so the whole crop is about 260 px across and the box about a fifth of that",
  "pages": [
   {
    "page": "sample_1.jpg",
+   "page_px": [
+    1586,
+    846
+   ],
+   "page_tokens": 1566,
+   "page_tokens_high_res": 1767,
    "boxes": 42,
    "box_px": [
     23,
     23
    ],
-   "median_tokens": 103.0,
-   "min_tokens": 94.5,
-   "max_tokens": 108.3
+   "median_tokens": 100.0,
+   "min_tokens": 100,
+   "max_tokens": 110
   },
   {
    "page": "sample_2.png",
+   "page_px": [
+    2550,
+    4200
+   ],
+   "page_tokens": 1550,
+   "page_tokens_high_res": 4752,
    "boxes": 118,
    "box_px": [
     59,
     48
    ],
-   "median_tokens": 107.3,
-   "min_tokens": 105.2,
-   "max_tokens": 109.0
+   "median_tokens": 120.0,
+   "min_tokens": 120,
+   "max_tokens": 120
   },
   {
    "page": "sample_5.png",
+   "page_px": [
+    2550,
+    4200
+   ],
+   "page_tokens": 1550,
+   "page_tokens_high_res": 4752,
    "boxes": 48,
    "box_px": [
     57,
     49
    ],
-   "median_tokens": 107.7,
-   "min_tokens": 107.7,
-   "max_tokens": 107.7
+   "median_tokens": 110.0,
+   "min_tokens": 110,
+   "max_tokens": 110
   },
   {
    "page": "sample_7.png",
+   "page_px": [
+    2550,
+    3301
+   ],
+   "page_tokens": 1530,
+   "page_tokens_high_res": 4758,
    "boxes": 79,
    "box_px": [
     29,
     29
    ],
-   "median_tokens": 103.0,
-   "min_tokens": 96.4,
-   "max_tokens": 111.2
+   "median_tokens": 100,
+   "min_tokens": 100,
+   "max_tokens": 110
   }
  ],
  "routed": [
@@ -63,7 +87,7 @@
     278,
     255
    ],
-   "tokens": 94.5
+   "tokens": 100
   },
   {
    "page": "sample_1.jpg",
@@ -81,12 +105,14 @@
     277,
     266
    ],
-   "tokens": 98.2
+   "tokens": 100
   }
  ],
  "totals": {
   "boxes": 287,
-  "median_tokens": 107.3,
-  "median_tokens_rounded": 107
+  "median_tokens": 110,
+  "median_tokens_rounded": 110,
+  "page_median_tokens": 1550,
+  "page_median_tokens_high_res": 4752
  }
 }

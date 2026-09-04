@@ -154,16 +154,16 @@ Not the smallest possible tool. The right one. A frontier model is trained to so
 
 The reading path is ordinary image processing, a median of 273 ms per page on one core measured over 61 pages, and no model at all. A model is only ever shown a single flagged box cropped to a thumbnail, and only after the deterministic readers have said they cannot settle it.
 
-The arithmetic is the whole argument. A flagged box, zoomed in the way the escalation lane sends it, is about 107 tokens of image, the median over the 287 boxes on the brief pages under the 750 pixels per token rule (`make crop-tokens` writes reports/crop_tokens.json). A whole page is the entire image, and a full-page answer has to list every box and its coordinates on top of that.
+The arithmetic is the whole argument. A flagged box, zoomed in the way the escalation lane sends it, is about 110 tokens of image, the median over the 287 boxes on the brief pages counted the way the Claude API vision doc bills them, one token per 28 by 28 pixel patch (`make crop-tokens` writes reports/crop_tokens.json with the doc URL). A whole page under the same rule, after the downscale each tier forces, is 1,550 tokens on the standard tier and 4,752 on the high-resolution tier, the median over the same four pages from the same report, and a full-page answer has to list every box and its coordinates on top of that.
 
 | Approach | What a page costs | Measured where |
 |---|---|---|
 | Ordinary image processing (what runs) | 273 ms of one CPU core, no model | `make telemetry`, the median over 61 pages |
-| AI on the boxes the deterministic core flags | one 107-token crop for 2 of 287 detections (0.7%) | `make telemetry` and `make crop-tokens`, the 4 brief pages |
+| AI on the boxes the deterministic core flags | one 110-token crop for 2 of 287 detections (0.7%) | `make telemetry` and `make crop-tokens`, the 4 brief pages |
 | AI on those plus every box the trained model disputes | 56 of 847 boxes (6.6%) on the real pages | `make telemetry` with the model on, the brief pages plus the 5 held-out |
 | Sending every page to a strong AI model instead | the whole page, every page, priced per token, and less accurate on checkboxes | published work, sourced in [EVALS.md](docs/EVALS.md) |
 
-At real volume that gap stops being a rounding error. It is also the wrong trade on quality, not only on price. Published work on document AI finds checkbox reading is a specific weak spot for vision models. A checkbox is a handful of pixels and those models are built to read words.
+At real volume a fourteen-fold gap on the image alone on the standard tier, and forty-three-fold on the high-resolution tier,, before the answer is written, stops being a rounding error. It is also the wrong trade on quality, not only on price. Published work on document AI finds checkbox reading is a specific weak spot for vision models. A checkbox is a handful of pixels and those models are built to read words.
 
 ### 3. Latency, and there are two kinds
 
@@ -361,7 +361,7 @@ For judgment on the handful of boxes where the rules honestly run out, and for n
 Everything that produces an answer is deterministic; the only non-deterministic component sits behind the exception queue and is off by default.
 
 - Deterministic: finding boxes, reading marks, matching against the known form, and every published number in this README. Same page in, same answer out, forever. A median of 273 ms of one CPU core per page over 61 pages.
-- Non-deterministic: two model readers on a flagged thumbnail, and a stronger referee only when they disagree. It sees one zoomed-in box at a time, about 107 tokens each, for 2 of 287 detections on the brief pages, or 56 of 847 boxes on the real pages if the trained model's disagreements are queued too.
+- Non-deterministic: two model readers on a flagged thumbnail, and a stronger referee only when they disagree. It sees one zoomed-in box at a time, about 110 tokens each, for 2 of 287 detections on the brief pages, or 56 of 847 boxes on the real pages if the trained model's disagreements are queued too.
 - Every model call is recorded and replayed from the record, so the same page gives the same answer offline and any decision can be audited months later.
 - Not measured: cost at real production mix. The 0.7% flag rate comes from four pages, and worse scans will flag more, which is exactly the number to watch when the volume is real.
 
