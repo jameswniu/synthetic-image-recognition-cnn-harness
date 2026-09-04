@@ -1,0 +1,55 @@
+{
+ "model": "models/patch-int8.onnx",
+ "model_sha256": "b63c8774fb82cf95bd070351e359d1d0928148b0605d194bb624f62ead6d914c",
+ "what": "scorer.score() over the rules pass's boxes on each brief page, in-process, scoring only",
+ "repeats": 30,
+ "warmups": 5,
+ "pool_workers": 6,
+ "machine": {
+  "system": "Darwin",
+  "release": "26.6",
+  "machine": "arm64",
+  "cpu_count": 18,
+  "python": "3.13.11",
+  "onnxruntime": "1.29.0"
+ },
+ "pages": [
+  {
+   "page": "sample_1.jpg",
+   "boxes": 42,
+   "median_ms": 0.94,
+   "p95_ms": 1.03,
+   "min_ms": 0.84,
+   "us_per_crop": 22.3
+  },
+  {
+   "page": "sample_2.png",
+   "boxes": 118,
+   "median_ms": 3.75,
+   "p95_ms": 3.97,
+   "min_ms": 3.58,
+   "us_per_crop": 31.7
+  },
+  {
+   "page": "sample_5.png",
+   "boxes": 48,
+   "median_ms": 1.99,
+   "p95_ms": 2.38,
+   "min_ms": 1.88,
+   "us_per_crop": 41.4
+  },
+  {
+   "page": "sample_7.png",
+   "boxes": 79,
+   "median_ms": 1.6,
+   "p95_ms": 1.8,
+   "min_ms": 1.51,
+   "us_per_crop": 20.2
+  }
+ ],
+ "totals": {
+  "boxes": 287,
+  "all_four_pages_ms": 8.28,
+  "us_per_crop": 28.9
+ }
+}

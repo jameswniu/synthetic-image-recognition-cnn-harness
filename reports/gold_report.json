@@ -1,7 +1,7 @@
 {
- "cards": 39,
+ "cards": 38,
  "correct": 36,
- "accuracy": 0.9231,
+ "accuracy": 0.9474,
  "misses": [
   {
    "id": "c021",
@@ -11,18 +11,6 @@
     182,
     306,
     213
-   ],
-   "label": "empty",
-   "found": false
-  },
-  {
-   "id": "c022",
-   "source": "sample_5.png",
-   "bbox": [
-    1723,
-    898,
-    1764,
-    952
    ],
    "label": "empty",
    "found": false

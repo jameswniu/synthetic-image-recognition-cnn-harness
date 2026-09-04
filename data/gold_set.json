@@ -310,9 +310,10 @@
     952
    ],
    "stratum": "anchor-empty",
-   "note": "",
+   "note": "narrow first-column table cell beside the real Declining box",
    "detector_ink": 0.0,
-   "label": "empty"
+   "label": "not_a_checkbox",
+   "adjudication": "re-ruled 2026-09-03 from the crop: the cell at [1723, 898, 1764, 952] is the 41 by 54 first-column cell of the shaded row, bounded by the table rule on the left and the real checkbox at x 1761 on the right, with no box border of its own. The booth answer called it an empty checkbox while data/regressions.jsonl row 4 asserts the same cell is never detected, so the two answer keys disagreed until this ruling"
   },
   {
    "id": "c023",

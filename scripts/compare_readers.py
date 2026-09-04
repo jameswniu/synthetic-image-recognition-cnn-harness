@@ -34,6 +34,11 @@ if scorer is None:
 
 rows = {k: {"graded": 0, "queue": 0, "right": 0, "wrong": 0} for k in ("rules", "cnn", "both")}
 
+# The CNN's read on the hard real gold cards, so the two boxes the prose names (the pen loop and
+# the faded X) carry a number that a report produced rather than one typed from memory.
+GOLD = json.loads((ROOT / "data" / "gold_set.json").read_text())["cards"]
+hard_cards = []
+
 
 def run_page(img, mode):
     """A real pipeline pass in the named mode; no emulation anywhere."""
@@ -74,7 +79,8 @@ for lab_path in sorted((ROOT / "data" / "labels").glob("*.json")):
     # The CNN alone reads the rules pass's geometry; its uncertainty band is its queue.
     matched = [(b, next((x[1] for x in truth if _iou((b.x1, b.y1, b.x2, b.y2), x[0]) >= 0.5), None)) for b in boxes]
     matched = [(b, t) for b, t in matched if t is not None]
-    for prob, (b, t) in zip([float(x) for x in scorer.score(page, [b for b, _ in matched])], matched):
+    probs = [float(x) for x in scorer.score(page, [b for b, _ in matched])]
+    for prob, (b, t) in zip(probs, matched):
         rows["cnn"]["graded"] += 1
         if 0.10 < prob < 0.90:
             rows["cnn"]["queue"] += 1
@@ -82,9 +88,21 @@ for lab_path in sorted((ROOT / "data" / "labels").glob("*.json")):
             rows["cnn"]["right"] += 1
         else:
             rows["cnn"]["wrong"] += 1
+    for card in GOLD:
+        if card["source"] != img_file.name or card.get("stratum") != "hard-real" or card["label"] not in ("filled", "empty"):
+            continue
+        cx, cy = (card["bbox"][0] + card["bbox"][2]) / 2, (card["bbox"][1] + card["bbox"][3]) / 2
+        hit = next(((b, p) for (b, _), p in zip(matched, probs) if abs(b.cx - cx) + abs(b.cy - cy) < 18), None)
+        if hit is None:
+            continue  # a card the detector never finds (c021) has no crop to score
+        b, p = hit
+        want = card["label"] == "filled"
+        verdict = "queued" if 0.10 < p < 0.90 else ("right" if (p >= 0.5) == want else "wrong")
+        hard_cards.append({"id": card["id"], "note": card["note"], "label": card["label"], "cnn_p_filled": round(p, 3), "verdict": verdict})
 
     _, boxes_b, _ = run_page(img, "both")
     grade(rows["both"], boxes_b, truth)
 
+rows["hard_cards"] = hard_cards
 (ROOT / "reports" / "compare_readers_report.json").write_text(json.dumps(rows, indent=1))
 print(json.dumps(rows, indent=1))

@@ -1,0 +1,92 @@
+{
+ "rule": "tokens = crop width * crop height / 750, the Claude API's documented image estimate; no downscale, every crop is under the 1,568 px long edge",
+ "crop": "src/hv_checkbox/escalate.py crop_png: the box grown 2.2x on every side, scaled so the box is about 260 px across",
+ "pages": [
+  {
+   "page": "sample_1.jpg",
+   "boxes": 42,
+   "box_px": [
+    23,
+    23
+   ],
+   "median_tokens": 103.0,
+   "min_tokens": 94.5,
+   "max_tokens": 108.3
+  },
+  {
+   "page": "sample_2.png",
+   "boxes": 118,
+   "box_px": [
+    59,
+    48
+   ],
+   "median_tokens": 107.3,
+   "min_tokens": 105.2,
+   "max_tokens": 109.0
+  },
+  {
+   "page": "sample_5.png",
+   "boxes": 48,
+   "box_px": [
+    57,
+    49
+   ],
+   "median_tokens": 107.7,
+   "min_tokens": 107.7,
+   "max_tokens": 107.7
+  },
+  {
+   "page": "sample_7.png",
+   "boxes": 79,
+   "box_px": [
+    29,
+    29
+   ],
+   "median_tokens": 103.0,
+   "min_tokens": 96.4,
+   "max_tokens": 111.2
+  }
+ ],
+ "routed": [
+  {
+   "page": "sample_1.jpg",
+   "bbox": [
+    713,
+    493,
+    736,
+    514
+   ],
+   "reasons": [
+    "STRAY_STROKE"
+   ],
+   "crop_px": [
+    278,
+    255
+   ],
+   "tokens": 94.5
+  },
+  {
+   "page": "sample_1.jpg",
+   "bbox": [
+    196,
+    613,
+    220,
+    636
+   ],
+   "reasons": [
+    "INK_AMBIGUOUS",
+    "FRAGMENTED_MARK"
+   ],
+   "crop_px": [
+    277,
+    266
+   ],
+   "tokens": 98.2
+  }
+ ],
+ "totals": {
+  "boxes": 287,
+  "median_tokens": 107.3,
+  "median_tokens_rounded": 107
+ }
+}

@@ -1,7 +1,7 @@
 PY := uv run python
 NAME := hv_takehome_james_niu
 
-.PHONY: sync serve test claims claims-fresh eval eval-classifier reports policy-demo telemetry compare dashboard preview deck deck-render walkthrough overlays cards docker-build docker-run smoke zip
+.PHONY: sync serve test claims claims-fresh eval eval-classifier reports policy-demo telemetry compare bench-cnn crop-tokens dashboard preview deck deck-render walkthrough overlays cards docker-build docker-run smoke zip
 
 sync:
 	uv sync --extra dev
@@ -49,6 +49,16 @@ telemetry:
 # The three-reader verdict table on the brief's answer key: rules, the CNN alone, both together.
 compare:
 	uv run --extra train python scripts/compare_readers.py
+
+# The only CNN timing the README quotes: the shipped int8 model scored over the real crops of the
+# four brief pages, in-process, scoring only, with the machine named in the report. Not part of
+# `reports` on purpose, because a timing is a property of the box it ran on and CI never chases one.
+bench-cnn:
+	uv run --extra train python tools/bench_cnn.py --out reports/cnn_latency.json
+
+# The crop the escalation lane sends, measured in image tokens from the real crop geometry.
+crop-tokens:
+	HV_CLASSIFIER=off $(PY) tools/crop_tokens.py --out reports/crop_tokens.json
 
 # The operator view, built from reports/telemetry.json. Self-contained, opens with no server.
 dashboard:

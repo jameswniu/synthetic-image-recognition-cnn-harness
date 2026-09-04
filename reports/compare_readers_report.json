@@ -16,5 +16,91 @@
   "queue": 19,
   "right": 267,
   "wrong": 0
- }
+ },
+ "hard_cards": [
+  {
+   "id": "c029",
+   "note": "pen loop through No Zoning",
+   "label": "empty",
+   "cnn_p_filled": 0.845,
+   "verdict": "queued"
+  },
+  {
+   "id": "c047",
+   "note": "Legal Nonconforming, faint left border",
+   "label": "empty",
+   "cnn_p_filled": 0.0,
+   "verdict": "right"
+  },
+  {
+   "id": "c055",
+   "note": "faded X, Electricity Public",
+   "label": "filled",
+   "cnn_p_filled": 0.082,
+   "verdict": "wrong"
+  },
+  {
+   "id": "c057",
+   "note": "FEMA No, X exits the border",
+   "label": "filled",
+   "cnn_p_filled": 0.991,
+   "verdict": "right"
+  },
+  {
+   "id": "c001",
+   "note": "Declining X inside a blue cell",
+   "label": "filled",
+   "cnn_p_filled": 0.964,
+   "verdict": "right"
+  },
+  {
+   "id": "c010",
+   "note": "Declining X inside a blue cell, row 2",
+   "label": "filled",
+   "cnn_p_filled": 0.93,
+   "verdict": "right"
+  },
+  {
+   "id": "c033",
+   "note": "Declining empty in blue row",
+   "label": "empty",
+   "cnn_p_filled": 0.287,
+   "verdict": "queued"
+  },
+  {
+   "id": "c062",
+   "note": "Increasing empty inside a blue cell",
+   "label": "empty",
+   "cnn_p_filled": 0.249,
+   "verdict": "queued"
+  },
+  {
+   "id": "c026",
+   "note": "Over Supply under the watermark",
+   "label": "empty",
+   "cnn_p_filled": 0.0,
+   "verdict": "right"
+  },
+  {
+   "id": "c049",
+   "note": "Water box, thick X",
+   "label": "empty",
+   "cnn_p_filled": 0.0,
+   "verdict": "right"
+  },
+  {
+   "id": "c054",
+   "note": "Over 6 mths under the watermark",
+   "label": "empty",
+   "cnn_p_filled": 0.0,
+   "verdict": "right"
+  },
+  {
+   "id": "c058",
+   "note": "Declining under the watermark",
+   "label": "empty",
+   "cnn_p_filled": 0.0,
+   "verdict": "right"
+  }
+ ]
 }

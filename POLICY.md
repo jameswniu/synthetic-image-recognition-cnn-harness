@@ -9,7 +9,11 @@ the escalation lane. The labeled set itself is `data/gold_set.json`, frozen, nev
 Anchors came back clean: every confident filled anchor confirmed, the negatives (letter holes,
 narrow cells, sidebar artifacts) all ruled not-a-checkbox. Two anchor cards came back filled where
 the 6x crop shows a plainly empty box; they are recorded as answered, flagged as suspected
-misclicks, and excluded from hard grading pending the labeler's confirmation.
+misclicks, and excluded from hard grading pending the labeler's confirmation. One more anchor,
+c022, came back as an empty checkbox where the crop shows the narrow first-column cell of a shaded
+row on the market addendum, beside the real box and with no border of its own. It was re-ruled
+not-a-checkbox on 2026-09-03, which is what regression row 4 already asserted about that cell, so
+the hard-graded set is 38 cards.
 
 1. An intentional mark of any shape selects the box. Every one of the detector's ambiguous-band
    reads (ink between 3% and 35%) that showed a deliberate mark was ruled filled, six of six,
