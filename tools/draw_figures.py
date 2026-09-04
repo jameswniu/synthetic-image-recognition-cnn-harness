@@ -95,6 +95,7 @@ def numbers() -> dict:
     tel = report("reports/telemetry.json", {}) or {}
     gold = report("reports/gold_report.json", {}) or {}
     bench = report("reports/bench_report.json", {}) or {}
+    tokens = report("reports/crop_tokens.json", {}) or {}
     ov = ev.get("overall", {})
     det = (tel.get("modes", {}).get("deterministic core only", {}) or {}).get("totals", {})
     samples = ev.get("samples", [])
@@ -102,7 +103,12 @@ def numbers() -> dict:
         raise SystemExit("a report is present but carries no measurements; refusing to draw figures from it.")
     gold_boxes = sum(s.get("gold", 0) for s in samples)
     cls_correct = sum(round(s.get("cls_acc", 0) * s.get("tp", 0)) for s in samples)
-    p95 = (bench.get("levels") or [{}])[0].get("p95_ms", 0)
+    sample_flagged = sum(s.get("ambiguous", 0) for s in samples)
+    sample_pred = sum(s.get("pred", 0) for s in samples)
+    # Two timing instruments, never mixed on one line: the in-process pair (median and p95 of
+    # detect_with_page over the whole corpus, reports/telemetry.json) and the HTTP pair (p50 and
+    # p95 of POST /detect at concurrency 1, reports/bench_report.json, one page repeated).
+    http = (bench.get("levels") or [{}])[0]
     return {
         "found": f"{ov.get('tp', 0)} of {gold_boxes}",
         "marks": f"{cls_correct} of {ov.get('tp', 0)}",
@@ -112,9 +118,16 @@ def numbers() -> dict:
         "boxes": det.get("boxes", 0),
         "pages": det.get("pages", 0),
         "p50": f"{det.get('p50_ms', 0):.0f} ms",
-        "p95": f"{p95:.0f} ms",
+        "p95": f"{det.get('p95_ms', 0):.0f} ms",
+        "http_p50": f"{http.get('p50_ms', 0):.0f} ms",
+        "http_p95": f"{http.get('p95_ms', 0):.0f} ms",
+        "http_n": http.get("requests", 0),
+        "http_image": Path(bench.get("image", "")).name,
         "gold": f"{gold.get('correct', 0)} of {gold.get('cards', 0)}",
-        "flag_pct_sample": "0.7%",
+        "sample_flagged": sample_flagged,
+        "sample_pred": sample_pred,
+        "sample_pages": len(samples),
+        "tokens": tokens.get("totals", {}).get("median_tokens_rounded", 0),
     }
 
 
@@ -132,6 +145,12 @@ def fit(s: str, size: float, box_w: float, inner_pad: float = 22, bold: bool = F
     est = len(str(s)) * size * (0.62 if bold else 0.58)
     room = box_w - 2 * inner_pad
     assert est <= room, f'"{s}" is too wide for its card: estimated {est:.0f} units, {room:.0f} available'
+
+
+def fit_mono(s: str, size: float, avail: float) -> None:
+    """The same guard for a mono footer: 0.62 em per character, deliberately over-estimated."""
+    est = len(str(s)) * size * 0.62
+    assert est <= avail, f'"{s}" is too wide for its figure: estimated {est:.0f} units, {avail:.0f} available'
 
 
 def rim_defs() -> str:
@@ -171,8 +190,8 @@ def hero() -> str:
     s.append(text(48, 178, "A deterministic reader, an exception queue, and a definition of correctness the customer owns.", 24, SILVER_LO))
     chips = [
         (f"{n['found']} found", "the brief's four pages"),
-        (f"{n['flag_pct']} go to a person", f"{n['flagged']} of {n['boxes']:,} + reasons"),
-        (f"{n['gold']} matched", "a person labelled first"),
+        (f"{n['flag_pct']} go to a person", f"{n['flagged']} of {n['boxes']:,}, {n['pages']} pages"),
+        (f"{n['gold']} matched", "human rulings, gold set"),
     ]
     x = 48
     for title, sub in chips:
@@ -196,7 +215,9 @@ def hero() -> str:
             s.append(f'<rect x="{x}" y="{py}" width="{w}" height="{ph}" rx="2" fill="none" stroke="{GRAY400}" stroke-width="1.5"/>')
             s.append(mono(x + w / 2, py + 27, stage, 22, PAPER, "middle"))
         x += w + 14
-    s.append(mono(48, 414, "52 pages damaged on purpose · every number above is reprinted by make reports", 22, SILVER))
+    foot = "52 pages damaged on purpose · reprinted by make reports and evaluate.py --gold"
+    fit_mono(foot, 22, W - 96)
+    s.append(mono(48, 414, foot, 22, SILVER))
     s.append("</svg>")
     return "\n".join(s) + "\n"
 
@@ -204,16 +225,16 @@ def hero() -> str:
 def dimensions() -> str:
     """The four dimensions as one figure, so the section opens with a picture rather than a wall."""
     n = numbers()
-    W, H = 1200, 400
+    W, H = 1200, 444
     cols = [
         ("1", "Accuracy", "whose definition?", INK,
-         [f"{n['found']} found", "set in policy.json", "same answer always"]),
+         [f"{n['found']} found", f"on {n['sample_pages']} brief pages", "set in policy.json", "same answer always"]),
         ("2", "Cost", "right size of tool", GRAY600,
-         ["$0.000004 a page", "no model in path", "a crop, not a page"]),
+         [f"{n['p50']} of one core", "no model in path", f"{n['sample_flagged']} of {n['sample_pred']} flagged", f"{n['tokens']} tokens a crop"]),
         ("3", "Latency", "two kinds of it", INK,
-         [f"{n['p50']} median", f"{n['p95']} p95, local", "operator dashboard"]),
+         [f"{n['p50']} median", f"{n['p95']} p95", f"one core, {n['pages']} pages", "operator dashboard"]),
         ("4", "Governance", "how little model", GRAY600,
-         ["docs never leave", "hard + soft gates", "criteria QA edits"]),
+         ["docs never leave", "hard + soft gates", "criteria QA edits", "26 test gates"]),
     ]
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="Four dimensions">']
     s.append(f'<rect width="{W}" height="{H}" fill="{GRAY50}"/>')
@@ -237,6 +258,9 @@ def dimensions() -> str:
             s.append(f'<circle cx="{x + 34:.0f}" cy="{y - 8}" r="5" fill="{colour}"/>')
             s.append(text(x + 52, y, line, 22, INK))
             y += 56
+    foot = "eval_report, telemetry and crop_tokens under reports/ · make figures"
+    fit_mono(foot, 22, W - 96)
+    s.append(mono(48, H - 24, foot, 22, GRAY700))
     s.append("</svg>")
     return "\n".join(s) + "\n"
 
@@ -244,11 +268,11 @@ def dimensions() -> str:
 def alternatives() -> str:
     """A, B and C side by side. The check and cross shapes carry the verdict; ink passes, grey fails."""
     n = numbers()
-    W, H = 1200, 420
+    W, H = 1200, 464
     cols = [
         ("A", "This", INK, [
-            (f"{n['found']} boxes, movable", True),
-            ("$0.000004 a page, local", True),
+            (f"{n['found']}, brief pages", True),
+            (f"{n['p50']} a page, one core", True),
             ("run twice, identical", True),
             ("customer defines a mark", True),
             ("gates you can look up", True),
@@ -256,7 +280,7 @@ def alternatives() -> str:
         ]),
         ("B", "OCR + trained model", GRAY600, [
             ("F1 0.88 to 0.96, frozen", True),
-            ("~$0.010/page, round trip", False),
+            ("$10 per 1,000 pages", False),
             ("same page twice, yes", True),
             ("training defines a mark", False),
             ("no gates to look up", False),
@@ -264,7 +288,7 @@ def alternatives() -> str:
         ]),
         ("C", "Frontier, full page", GRAY600, [
             ("known checkbox weak spot", False),
-            ("~$0.085/page, 40x more", False),
+            ("whole page, every page", False),
             ("same page twice, no", False),
             ("the model defines a mark", False),
             ("no gates", False),
@@ -293,6 +317,9 @@ def alternatives() -> str:
             s.append(f'<path d="{glyph}" transform="translate({x + 36:.0f},{y - 8})" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>')
             s.append(text(x + 56, y, line, 22, INK))
             y += 42
+    foot = "A: make reports, 4 brief pages · B, C: docs/EVALS.md sources · make figures"
+    fit_mono(foot, 22, W - 96)
+    s.append(mono(48, H - 24, foot, 22, GRAY700))
     s.append("</svg>")
     return "\n".join(s) + "\n"
 
@@ -325,6 +352,7 @@ def bar_panel(title: str, sub: str, rows: list[tuple[str, float, str]], foot: st
         s.append(f'<rect x="{plot_x}" y="{y - 10}" width="{bw:.1f}" height="24" fill="{GRAY600}" stroke="{INK}"/>')
         s.append(text(plot_x + bw + 14, y + 8, shown, 22, INK))
         y += row_h
+    fit_mono(foot, 22, W - 96)
     s.append(mono(48, H - 34, foot, 22, GRAY700))
     s.append("</svg>")
     return "\n".join(s) + "\n"

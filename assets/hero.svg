@@ -11,11 +11,11 @@
 <rect x="418" y="212" width="355" height="96" rx="12" fill="#1c1c20" stroke="#52525b"/>
 <rect x="418" y="212" width="6" height="96" rx="3" fill="#ffffff"/>
 <text x="440" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">2.4% go to a person</text>
-<text x="440" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">138 of 5,872 + reasons</text>
+<text x="440" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">138 of 5,872, 61 pages</text>
 <rect x="788" y="212" width="355" height="96" rx="12" fill="#1c1c20" stroke="#52525b"/>
 <rect x="788" y="212" width="6" height="96" rx="3" fill="#ffffff"/>
-<text x="810" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">36 of 39 matched</text>
-<text x="810" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">a person labelled first</text>
+<text x="810" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" text-anchor="start">36 of 38 matched</text>
+<text x="810" y="284" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#a1a1aa" text-anchor="start">human rulings, gold set</text>
 <rect x="48" y="336" width="146" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
 <text x="121.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">clean up</text>
 <rect x="208" y="336" width="119" height="40" rx="2" fill="none" stroke="#a1a1aa" stroke-width="1.5"/>
@@ -26,5 +26,5 @@
 <text x="534.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">classify</text>
 <rect x="621" y="336" width="146" height="40" rx="2" fill="#1b5e3f"/>
 <text x="694.0" y="363" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#ffffff" text-anchor="middle">escalate</text>
-<text x="48" y="414" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#d4d4d8" text-anchor="start">52 pages damaged on purpose · every number above is reprinted by make reports</text>
+<text x="48" y="414" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#d4d4d8" text-anchor="start">52 pages damaged on purpose · reprinted by make reports and evaluate.py --gold</text>
 </svg>

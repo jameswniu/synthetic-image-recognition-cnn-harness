@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-label="Three ways to build this">
-<rect width="1200" height="420" fill="#fafafa"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 464" role="img" aria-label="Three ways to build this">
+<rect width="1200" height="464" fill="#fafafa"/>
 <defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f5"/><stop offset="0.5" stop-color="#d4d4d8"/><stop offset="1" stop-color="#a1a1aa"/></linearGradient></defs>
 <rect x="24" y="24" width="372" height="372" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="24" y="24" width="372" height="8" fill="#111111"/>
@@ -8,10 +8,10 @@
 <text x="106.0" y="86" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#111111" text-anchor="start">This</text>
 <circle cx="60" cy="140" r="9" fill="#1b5e3f"/>
 <path d="M-4,0 L-1,3 L5,-4" transform="translate(60,140)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<text x="80.0" y="148" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">286 of 287 boxes, movable</text>
+<text x="80.0" y="148" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">286 of 287, brief pages</text>
 <circle cx="60" cy="182" r="9" fill="#1b5e3f"/>
 <path d="M-4,0 L-1,3 L5,-4" transform="translate(60,182)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<text x="80.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">$0.000004 a page, local</text>
+<text x="80.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">273 ms a page, one core</text>
 <circle cx="60" cy="224" r="9" fill="#1b5e3f"/>
 <path d="M-4,0 L-1,3 L5,-4" transform="translate(60,224)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 <text x="80.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">run twice, identical</text>
@@ -34,7 +34,7 @@
 <text x="470.0" y="148" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">F1 0.88 to 0.96, frozen</text>
 <circle cx="450" cy="182" r="9" fill="#a1a1aa"/>
 <path d="M-4,-4 L4,4 M4,-4 L-4,4" transform="translate(450,182)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<text x="470.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">~$0.010/page, round trip</text>
+<text x="470.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">$10 per 1,000 pages</text>
 <circle cx="450" cy="224" r="9" fill="#1b5e3f"/>
 <path d="M-4,0 L-1,3 L5,-4" transform="translate(450,224)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 <text x="470.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">same page twice, yes</text>
@@ -57,7 +57,7 @@
 <text x="860.0" y="148" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">known checkbox weak spot</text>
 <circle cx="840" cy="182" r="9" fill="#a1a1aa"/>
 <path d="M-4,-4 L4,4 M4,-4 L-4,4" transform="translate(840,182)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<text x="860.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">~$0.085/page, 40x more</text>
+<text x="860.0" y="190" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">whole page, every page</text>
 <circle cx="840" cy="224" r="9" fill="#a1a1aa"/>
 <path d="M-4,-4 L4,4 M4,-4 L-4,4" transform="translate(840,224)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 <text x="860.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">same page twice, no</text>
@@ -70,4 +70,5 @@
 <circle cx="840" cy="350" r="9" fill="#a1a1aa"/>
 <path d="M-4,-4 L4,4 M4,-4 L-4,4" transform="translate(840,350)" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 <text x="860.0" y="358" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">whole pages to the vendor</text>
+<text x="48" y="440" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">A: make reports, 4 brief pages · B, C: docs/EVALS.md sources · make figures</text>
 </svg>

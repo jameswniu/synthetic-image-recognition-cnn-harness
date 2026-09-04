@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-label="Four dimensions">
-<rect width="1200" height="400" fill="#fafafa"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 444" role="img" aria-label="Four dimensions">
+<rect width="1200" height="444" fill="#fafafa"/>
 <defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f5"/><stop offset="0.5" stop-color="#d4d4d8"/><stop offset="1" stop-color="#a1a1aa"/></linearGradient></defs>
 <rect x="24" y="24" width="274" height="352" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="24" y="24" width="274" height="8" fill="#111111"/>
@@ -11,9 +11,11 @@
 <circle cx="58" cy="168" r="5" fill="#111111"/>
 <text x="76.0" y="176" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">286 of 287 found</text>
 <circle cx="58" cy="224" r="5" fill="#111111"/>
-<text x="76.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">set in policy.json</text>
+<text x="76.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">on 4 brief pages</text>
 <circle cx="58" cy="280" r="5" fill="#111111"/>
-<text x="76.0" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">same answer always</text>
+<text x="76.0" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">set in policy.json</text>
+<circle cx="58" cy="336" r="5" fill="#111111"/>
+<text x="76.0" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">same answer always</text>
 <rect x="316" y="24" width="274" height="352" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="316" y="24" width="274" height="8" fill="#52525b"/>
 <circle cx="360" cy="82" r="24" fill="#fafafa" stroke="#52525b" stroke-width="2"/>
@@ -22,11 +24,13 @@
 <text x="398.5" y="106" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#3f3f46" text-anchor="start">right size of tool</text>
 <rect x="338" y="132" width="230" height="1" fill="#e4e4e7"/>
 <circle cx="350" cy="168" r="5" fill="#52525b"/>
-<text x="368.5" y="176" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">$0.000004 a page</text>
+<text x="368.5" y="176" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">273 ms of one core</text>
 <circle cx="350" cy="224" r="5" fill="#52525b"/>
 <text x="368.5" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">no model in path</text>
 <circle cx="350" cy="280" r="5" fill="#52525b"/>
-<text x="368.5" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">a crop, not a page</text>
+<text x="368.5" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">2 of 287 flagged</text>
+<circle cx="350" cy="336" r="5" fill="#52525b"/>
+<text x="368.5" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">107 tokens a crop</text>
 <rect x="609" y="24" width="274" height="352" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="609" y="24" width="274" height="8" fill="#111111"/>
 <circle cx="653" cy="82" r="24" fill="#fafafa" stroke="#111111" stroke-width="2"/>
@@ -35,11 +39,13 @@
 <text x="691.0" y="106" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#3f3f46" text-anchor="start">two kinds of it</text>
 <rect x="631" y="132" width="230" height="1" fill="#e4e4e7"/>
 <circle cx="643" cy="168" r="5" fill="#111111"/>
-<text x="661.0" y="176" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">284 ms median</text>
+<text x="661.0" y="176" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">273 ms median</text>
 <circle cx="643" cy="224" r="5" fill="#111111"/>
-<text x="661.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">457 ms p95, local</text>
+<text x="661.0" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">301 ms p95</text>
 <circle cx="643" cy="280" r="5" fill="#111111"/>
-<text x="661.0" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">operator dashboard</text>
+<text x="661.0" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">one core, 61 pages</text>
+<circle cx="643" cy="336" r="5" fill="#111111"/>
+<text x="661.0" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">operator dashboard</text>
 <rect x="902" y="24" width="274" height="352" fill="#ffffff" stroke="url(#rim)" stroke-width="1.75"/>
 <rect x="902" y="24" width="274" height="8" fill="#52525b"/>
 <circle cx="946" cy="82" r="24" fill="#fafafa" stroke="#52525b" stroke-width="2"/>
@@ -53,4 +59,7 @@
 <text x="953.5" y="232" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">hard + soft gates</text>
 <circle cx="936" cy="280" r="5" fill="#52525b"/>
 <text x="953.5" y="288" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">criteria QA edits</text>
+<circle cx="936" cy="336" r="5" fill="#52525b"/>
+<text x="953.5" y="344" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#111111" text-anchor="start">26 test gates</text>
+<text x="48" y="420" font-family="SFMono-Regular,Menlo,Consolas,Liberation Mono,monospace" font-size="22" fill="#3f3f46" text-anchor="start">eval_report, telemetry and crop_tokens under reports/ · make figures</text>
 </svg>
