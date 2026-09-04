@@ -50,6 +50,10 @@ def report(name: str):
 EV = report("reports/eval_report.json")
 TEL = report("reports/telemetry.json")
 GOLD = report("reports/gold_report.json")
+CMP = report("reports/compare_readers_report.json")
+HARD = {c["id"]: c for c in CMP.get("hard_cards", [])}
+if "c029" not in HARD or "c055" not in HARD:
+    raise SystemExit("compare_readers_report.json carries no hard-card reads: run `make compare` first")
 OV = EV.get("overall", {})
 DET_T = (TEL.get("modes", {}).get("deterministic core only", {}) or {}).get("totals", {})
 if not OV.get("tp") or not DET_T.get("boxes") or not GOLD.get("cards"):
@@ -302,7 +306,6 @@ def main() -> None:
     bullet(doc, f"The four labelled pages from the brief: {FOUND} boxes found, {RIGHT} marks read right.", level=2)
     bullet(doc, "The blank official forms, where any mark reported is a mistake with no argument.", level=2)
     bullet(doc, f"The close-up crops a person ruled before any threshold was tuned: {GOLD.get('correct', 0)} of {GOLD.get('cards', 0)} hard-graded cards agree.", level=2)
-    bullet(doc, "Two gates were verified by reverting their fix and watching them fail, because a green test that would pass anyway is worse than no test.", level=1)
     bullet(doc, f"runs every page in the repo: {PAGES} pages, {BOXES:,} checkboxes.", level=1, lead="make telemetry", mono_lead=True)
     bullet(doc, f"{FLAGGED} boxes carry a reason into the queue in the default mode.", level=2)
     bullet(doc, "deliverables/dashboard.html is that telemetry drawn as the operator view: one file, no server.", level=2)
@@ -312,10 +315,10 @@ def main() -> None:
     h1(doc, "Who is the apprentice?",
        "A small model trained from scratch, raced against the rules on the brief's answer key, and left switched off.")
     bullet(doc, "races three readers over the brief's answer key: the rules, the CNN alone, and both together.", level=1, lead="make compare", mono_lead=True)
-    bullet(doc, "Rules only, which is what ships, sends 2 of 286 boxes to a person and settles everything else without an error.", level=2)
-    bullet(doc, "The CNN alone sends 56 and gets one settled box wrong; both together send 19, right on every box they settle.", level=2)
+    bullet(doc, f"Rules only, which is what ships, sends {CMP['rules']['queue']} of {CMP['rules']['graded']} graded boxes to a person and settles everything else without an error. The {CMP['rules']['graded']} graded boxes are the 287 detections on the brief pages minus the one on the tick the labeler ruled unsure.", level=2)
+    bullet(doc, f"The CNN alone sends {CMP['cnn']['queue']} and gets {CMP['cnn']['wrong']} settled box wrong. Both together send {CMP['both']['queue']}, right on every box they settle.", level=2)
     bullet(doc, "Verdict: rules only. They differ in how much they hand to people, and most automation at the same accuracy wins, so the CNN stays switched off.", level=1)
-    bullet(doc, "It caught nothing the rules missed and misread both real never-seen test boxes; switched on, it only adds work.", level=1)
+    bullet(doc, f"It caught nothing the rules missed. On the two hard boxes on the photographed page it settled neither, queuing the empty pen loop at p(filled) {HARD['c029']['cnn_p_filled']:.3f} and reading the filled faded X as empty at {HARD['c055']['cnn_p_filled']:.3f}. Switched on, it only adds work.", level=1)
     bullet(doc, "Legibility is the invariant. The rules have it built in, every answer carries a checkable reason; the CNN can only approach it by emitting logs, a confidence and a heat map per box, replayable forever.", level=1)
 
     # ---------------------------------------------------------------- limits
@@ -326,7 +329,7 @@ def main() -> None:
     bullet(doc, "Four real pages is not a benchmark.", level=2)
     bullet(doc, "The page labels were seeded by the software before correction, and that shortcut hid an invented box.", level=2)
     bullet(doc, "Rejecting a candidate is resolution-dependent: at half size the invented box survives.", level=2)
-    bullet(doc, "Raced against the rules on the brief's answer key, the trained classifier sent 56 boxes to a person where the rules sent 2, so it ships switched off (make compare reprints the table).", level=2)
+    bullet(doc, f"Raced against the rules on the brief's answer key, the trained classifier sent {CMP['cnn']['queue']} boxes to a person where the rules sent {CMP['rules']['queue']}, so it ships switched off (make compare reprints the table).", level=2)
     bullet(doc, "One place per kind of debt, instead of comments scattered through the source.", level=1)
 
     para(doc, "Companions: README.md for the run-and-verify surface, docs/approach.md for the approach writeup, "

@@ -101,11 +101,33 @@ EV = report("reports/eval_report.json", {}) or {}
 TEL = report("reports/telemetry.json", {}) or {}
 GOLD = report("reports/gold_report.json", {}) or {}
 CMP = report("reports/compare_readers_report.json", {}) or {}
+SYN = report("reports/synth_report.json", []) or []
+BENCH = report("reports/bench_report.json", {}) or {}
+TOK = report("reports/crop_tokens.json", {}) or {}
+CNN_LAT = report("reports/cnn_latency.json", {}) or {}
 DET_T = (TEL.get("modes", {}).get("deterministic core only", {}) or {}).get("totals", {})
 CLF_T = (TEL.get("modes", {}).get("deterministic core + patch classifier", {}) or {}).get("totals", {})
 OV = EV.get("overall", {})
 if not OV.get("tp") or not DET_T.get("boxes") or not GOLD.get("cards") or not CMP.get("rules"):
     raise SystemExit("a report is present but carries no measurements; refusing to build decks from it.")
+HARD = {c["id"]: c for c in CMP.get("hard_cards", [])}
+if "c029" not in HARD or "c055" not in HARD:
+    raise SystemExit("compare_readers_report.json carries no hard-card reads: run `make compare` first")
+HTTP = (BENCH.get("levels") or [{}])[0]
+if not HTTP.get("requests"):
+    raise SystemExit("bench_report.json carries no HTTP level: run `make serve` and `make bench` first")
+HTTP_PAGE = {"sample_1.jpg": "the photographed page, the smallest of the four"}.get(Path(BENCH.get("image", "")).name, Path(BENCH.get("image", "")).name)
+SYN_FLOOR = min((r["f1"] for r in SYN), default=None)
+if SYN_FLOOR is None:
+    raise SystemExit("synth_report.json is empty: score the synthetic set first")
+TOKENS = TOK.get("totals", {}).get("median_tokens_rounded")
+if not TOKENS:
+    raise SystemExit("crop_tokens.json carries no median: run `make crop-tokens` first")
+CNN_PAGE = max(CNN_LAT.get("pages", [{"boxes": 0}]), key=lambda r: r["boxes"])
+if not CNN_PAGE.get("boxes"):
+    raise SystemExit("cnn_latency.json carries no page timings: run `make bench-cnn` first")
+SAMPLE_PRED = sum(s.get("pred", 0) for s in EV.get("samples", []))
+SAMPLE_FLAGGED = sum(s.get("ambiguous", 0) for s in EV.get("samples", []))
 
 
 def _grouped(field: str) -> dict[str, tuple[int, int]]:
@@ -409,7 +431,7 @@ def s_arch(prs):
     routed = round(100 * DET_T.get("flag_rate", 0), 1)
     textbox(s, M, H - Inches(1.15), W - 2 * M, Inches(0.9),
             [f"{100 - routed:.1f}% of boxes never leave the top row. {routed:.1f}% carry a reason code "
-             f"into the queue. Nothing in the top row is a model."],
+             f"into the queue, measured over {DET_T.get('pages', 0)} pages. Nothing in the top row is a model."],
             size=16, color=MUTED)
     notes(s, "The top row is ordinary image processing and it is where almost everything is settled. "
              "Two readers find the boxes independently: one from the printed lines, one from the blank federal "
@@ -471,20 +493,24 @@ def s_accuracy_demo(prs, dense: bool):
 def s_cost(prs):
     s = blank(prs)
     y = heading(s, "2. Cost, by using the right size of tool", "Not the smallest tool. The right one.")
+    real_boxes = sum(pg.get("boxes", 0) for pg in TEL["modes"]["deterministic core + patch classifier"]["pages"] if pg.get("corpus") in ("sample", "holdout"))
+    real_flagged = sum(pg.get("flagged", 0) for pg in TEL["modes"]["deterministic core + patch classifier"]["pages"] if pg.get("corpus") in ("sample", "holdout"))
     table(s, M, y + Inches(0.2), W - 2 * M, [
-        ["approach", "cost per page", "note"],
-        ["ordinary image processing (what runs)", "$0.000004", "0.30 s of one CPU core, no model"],
-        ["AI on boxes the core flags", "$0.001", "at the measured 0.7% flag rate"],
-        ["AI on those plus every model dispute", "$0.009", "at the measured 6.6% flag rate"],
-        [theirs("every page to a frontier model", "every page to the biggest AI model"), "$0.085", "about 40x more, and weaker on checkboxes"],
-    ], col_w=[3.0, 1.2, 2.6], size=15)
+        ["approach", "what a page costs", "measured where"],
+        ["ordinary image processing (what runs)", f"{DET_T.get('p50_ms', 0):.0f} ms of one CPU core, no model", f"make telemetry, median over {DET_T.get('pages', 0)} pages"],
+        ["AI on boxes the core flags", f"one {TOKENS}-token crop for {SAMPLE_FLAGGED} of {SAMPLE_PRED} detections", "make telemetry and make crop-tokens, the 4 brief pages"],
+        ["AI on those plus every model dispute", f"{real_flagged} of {real_boxes} boxes on the real pages", "make telemetry with the model on, brief plus held-out"],
+        [theirs("every page to a frontier model", "every page to the biggest AI model"), "the whole page, every page, priced per token", "published work, docs/EVALS.md"],
+    ], col_w=[3.0, 2.2, 2.6], size=14)
     textbox(s, M, y + Inches(2.5), W - 2 * M, Inches(2.2), [
         plain("A frontier model is trained to solve an enormous range of problems, and a loan file pays for none of them.",
               "The biggest AI models are trained to solve an enormous range of problems, and a loan file pays for none of them."),
-        theirs("A cropped checkbox is about 106 tokens of image. A whole page is about 1,990, and the answer runs to "
-               "thousands more because it has to list every box and its coordinates.",
-               "A model bills by the token, and a cropped checkbox is about 106 of them. A whole page is about 1,990, and "
-               "the answer runs to thousands more because it has to list every box and its coordinates."),
+        theirs(f"A flagged box, zoomed in the way the escalation lane sends it, is about {TOKENS} tokens of image, the median over "
+               f"the {TOK['totals']['boxes']} boxes on the brief pages. A whole page is the entire image, and the answer has to "
+               "list every box and its coordinates on top of that.",
+               f"A model bills by the token, and a flagged box, zoomed in the way we send it, is about {TOKENS} of them, the median "
+               f"over the {TOK['totals']['boxes']} boxes on the brief pages. A whole page is the entire image, and the answer has to "
+               "list every box and its coordinates on top of that."),
         "We do not pay for intelligence we do not use.",
     ], size=17)
     notes(s, "The arithmetic is the whole argument. At real volume that gap stops being a rounding error, and "
@@ -498,10 +524,12 @@ def s_latency(prs):
     y = heading(s, "3. Latency, and there are two kinds")
     textbox(s, M, y + Inches(0.2), Inches(6.1), Inches(4.4), [
         "The kind the page waits for",
-        plain(f"{DET_T.get('p50_ms', 0):.0f} ms median, p95 457 ms through the HTTP service, measured over "
-              f"{DET_T.get('pages', 0)} pages. No network call in the path at all. Nothing waits on a vendor.",
-              f"About a third of a second a page, and under half a second for 95 pages in every 100, measured over "
-              f"{DET_T.get('pages', 0)} pages. No network call in the path at all. Nothing waits on a vendor."),
+        plain(f"{DET_T.get('p50_ms', 0):.0f} ms median and {DET_T.get('p95_ms', 0):.0f} ms p95 in-process, measured over "
+              f"{DET_T.get('pages', 0)} pages. Through the HTTP service, {HTTP['requests']} requests of {HTTP_PAGE} come back at "
+              f"p50 {HTTP['p50_ms']:.0f} ms and p95 {HTTP['p95_ms']:.0f} ms. No network call in the path at all. Nothing waits on a vendor.",
+              f"A median of {DET_T.get('p50_ms', 0):.0f} ms a page, and {DET_T.get('p95_ms', 0):.0f} ms for 95 pages in every 100, measured "
+              f"in-process over {DET_T.get('pages', 0)} pages. Through the HTTP service, {HTTP['requests']} requests of {HTTP_PAGE} come back "
+              f"at a median of {HTTP['p50_ms']:.0f} ms. No network call in the path at all. Nothing waits on a vendor."),
         "",
         "It also improves on its own, which a model-first design does not. Every behaviour we understand well "
         "enough to describe becomes a rule, and a rule costs microseconds. The queue is meant to shrink.",
@@ -553,8 +581,8 @@ def s_abc(prs):
     table(s, M, y + Inches(0.15), W - 2 * M, [
         ["", "A. this", "B. OCR plus a trained detector", theirs("C. whole page to a frontier model", "C. whole page to the biggest AI model")],
         ["accuracy here", "286 of 287", theirs("F1 0.88 to 0.96 published", "88% to 96% in published results"), "documented weak spot on checkboxes"],
-        ["cost per page", "$0.000004", "about $0.010", "about $0.085"],
-        ["latency", "0.30 s, local", "a vendor round trip", "seconds, and variable"],
+        ["what a page costs", f"{DET_T.get('p50_ms', 0):.0f} ms of one core, no model", "$10 per 1,000 pages, Azure list price", "the whole page, priced per token"],
+        ["latency", f"{DET_T.get('p50_ms', 0):.0f} ms median, local", "a vendor round trip", "seconds, and variable"],
         ["same page twice", "byte-identical", "yes, weights are frozen", "no"],
         ["who defines a mark", theirs("the customer, in a file", "the lender, in a file"), "whoever labelled the training set", "the model"],
         ["changing that", theirs("edit policy.json", "edit one settings file"), "relabel and retrain", "reword the prompt and hope"],
@@ -589,10 +617,10 @@ def s_results(prs):
         "The wrong mark is the faded ink, which the system flags as unclear rather than deciding. Counted "
         "strictly, an unclear answer counts against it.",
         "",
-        plain(f"Across {DET_T.get('pages', 0)} pages and {DET_T.get('boxes', 0):,} boxes, including 52 damaged on "
-              f"purpose, the floor under every damage condition is F1 0.965.",
-              f"Across {DET_T.get('pages', 0)} pages and {DET_T.get('boxes', 0):,} boxes, including 52 damaged on "
-              f"purpose, it never drops below 96.5% correct under any kind of damage."),
+        plain(f"On the 52 pages damaged on purpose, detection F1 never drops below {SYN_FLOOR:.3f} under any kind of "
+              f"damage, and shading is the floor.",
+              f"On the 52 pages damaged on purpose, the box-finding score, F1, never drops below {SYN_FLOOR:.3f} under any "
+              f"kind of damage, and shading is the floor."),
     ], size=15, bold_first=True)
     notes(s, "Four real pages cannot prove much on their own, which is why the synthetic corpus and the "
              "held-out appraisals exist. The held-out ones came from three offices that were never used while "
@@ -634,8 +662,7 @@ def s_verify(prs):
                           "Disagreeing with a picture takes seconds."),
         ("?explain=true", "One box: the ink, the confidence, the reason codes, which form matched, how far the "
                           "two readers agreed, and every candidate it threw away with why."),
-        ("make eval  ·  make test", "Reprints the results table from scratch and runs 26 gates. Two of those "
-                                    "gates I checked by reverting the fix and confirming they fail."),
+        ("make eval  ·  make test", "Reprints the results table from scratch and runs 26 gates."),
         ("scripts/fetch_holdout.py --score", "Five completed appraisals from three offices, fetched and scored live."),
     ]
     yy = y + Inches(0.1)
@@ -649,10 +676,8 @@ def s_verify(prs):
         + f"{DET_T.get('flagged', 0)} boxes out of {DET_T.get('boxes', 0):,}, each carrying a reason, "
         + theirs("instead of a person re-reading every page.", "instead of re-reading every page."),
     ], size=16, color=MUTED)
-    notes(s, "A green test that would pass anyway is worse than no test, so two of the gates were verified by "
-             "deliberately breaking the fix and watching them fail. The rejected-candidates field is the one I "
-             "would check first, because rejection is the only place the system removes something instead of "
-             "flagging it.")
+    notes(s, "The rejected-candidates field is the one I would check first, because rejection is the only place "
+             "the system removes something instead of flagging it.")
     return s
 
 
@@ -780,22 +805,27 @@ def s_apprentice(prs):
     ], col_w=[2.6, 1.4, 1.1, 1.1], size=13)
     textbox(s, M, y + Inches(1.7), tw, Inches(1.4), [
         "Verdict: rules only.",
-        f"All three are nearly errorless; they differ in how much they hand to people, "
+        f"All three are nearly errorless on the {CMP['rules']['graded']} graded boxes, the 287 detections on the "
+        f"brief pages minus the tick ruled unsure. They differ in how much they hand to people, "
         f"{CMP['rules']['queue']} against {CMP['both']['queue']} against {CMP['cnn']['queue']}. "
         "Most automation at the same accuracy wins."], size=16, color=MUTED, bold_first=True)
     rx = M + tw + Inches(0.5)
     textbox(s, rx, y, W - rx - M, Inches(4.6), [
         "The rules won the match, so the CNN stays switched off.",
-        "It caught nothing the rules missed, and misread both real never-seen test boxes.",
-        "Switched on, it only adds work: 17 more boxes to people, zero errors caught.",
+        f"It caught nothing the rules missed. On the two hard boxes on the photographed page it settled neither, "
+        f"queuing the empty pen loop at p(filled) {HARD['c029']['cnn_p_filled']:.3f} and reading the filled faded X as "
+        f"empty at {HARD['c055']['cnn_p_filled']:.3f}.",
+        f"Switched on, it only adds work: {CMP['both']['queue'] - CMP['rules']['queue']} more boxes to people, zero errors caught.",
         "Legibility is the invariant. The rules have it built in; the CNN can only approach it by "
         "emitting logs, a confidence and a heat map per box, replayable forever.",
     ], size=15, space=10, bold_first=True)
-    notes(s, "The LLM that built the product wrote both contestants, the rules and this 29KB model, and "
+    notes(s, "The LLM that built the product wrote both contestants, the rules and this 23,381-weight model, and "
              "judged them against one referee: 52 damaged pages plus the hand-ruled answer keys. When the "
-             "CNN is confident it is right 229 of 230 times, so training worked; its problem is confidence "
-             "in the right places, 56 unsure boxes where the rules are sure and correct. make compare "
-             "reprints this table from the repo.")
+             f"CNN is confident it is right {CMP['cnn']['right']} of {CMP['cnn']['right'] + CMP['cnn']['wrong']} times, so "
+             f"training worked. Its problem is confidence in the right places, {CMP['cnn']['queue']} unsure boxes where the "
+             f"rules are sure and correct. The 286 graded boxes are the 287 detections on the brief pages minus the one on "
+             f"the tick the labeler ruled unsure. Scoring a {CNN_PAGE['boxes']}-box page takes it {CNN_PAGE['median_ms']:.0f} ms "
+             "on CPU (make bench-cnn). make compare reprints this table from the repo.")
     return s
 
 
@@ -848,7 +878,7 @@ def s_iterations(prs):
         ["v3", theirs("tier-1 gates, synthetic generator, sweeps", "hard gates, synthetic pages, damage sweeps"),
          theirs("hash() is process-salted, so synthesis was not reproducible", "Python's hash() changes between runs, so the synthetic pages did not reproduce")],
         ["v4", theirs("monotone line alignment for the second reader", "line-by-line alignment for the second reader"),
-         theirs("the best global scale fit is off by up to 396 px across vendors", "one page-wide scale is off by up to 396 px between form vendors")],
+         theirs("the best global scale fit is off by hundreds of pixels across vendors", "one page-wide scale is off by hundreds of pixels between form vendors")],
         ["v5", theirs("span-ceiling fix, gold set folded in, classifier", "an unreachable threshold fixed, 76 crops folded in, small model"),
          theirs("a 0.7 span threshold was unreachable by construction", "no real mark could ever reach the 0.7 span threshold")],
         ["v6", "size consensus plus an interior text test", "ground truth seeded from the system under test hides its own errors"],
@@ -877,7 +907,7 @@ def s_why_b_c(prs):
         theirs("It pays frontier prices to read something a hundred pixels wide, and gives up determinism to do it.",
                "It pays top prices to read something a hundred pixels wide, and gives up the same answer twice to do it."),
         "Published work finds checkbox reading is a specific weakness of vision models rather than a strength, "
-        "which is the wrong place to spend forty times the money.",
+        "which is the wrong place to spend the most money.",
         theirs("And it puts whole customer pages in a third party's hands to answer a question that never needed to "
                "leave the building.",
                "And it puts whole pages of a lender's file in a third party's hands to answer a question that never needed to "
