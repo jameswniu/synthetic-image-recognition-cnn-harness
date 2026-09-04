@@ -427,6 +427,7 @@ def main() -> None:
     gold = (load("data/gold_set.json", {}) or {}).get("cards", [])
     gold_rep = load("reports/gold_report.json", {})
     bench = load("reports/bench_report.json", {})
+    cnn_lat = load("reports/cnn_latency.json")
 
     det = tel["modes"]["deterministic core only"]
     clf = tel["modes"]["deterministic core + patch classifier"]
@@ -520,16 +521,31 @@ def main() -> None:
     assert abs(it_acc[-1][1] - 285 / 286) < 1e-3, f"the 285-of-286 claim drifted: {it_acc[-1]}"
 
     overall = ev.get("overall", {})
-    p50 = (bench.get("levels") or [{}])[0].get("p50_ms", dt["p50_ms"])
-    p95 = (bench.get("levels") or [{}])[0].get("p95_ms", dt["p95_ms"])
+    # Two timing instruments, never mixed on one line: the in-process median and p95 over the
+    # whole corpus (telemetry.json), and the HTTP round trip of one page repeated (bench_report.json).
+    http = (bench.get("levels") or [{}])[0]
+    if not http.get("requests"):
+        raise SystemExit("bench_report.json carries no HTTP level: run `make serve` and `make bench` first")
+    # The bench target times the brief's photographed page, the smallest of the four, so the HTTP pair is
+    # named with its page and never stands in for a full form.
+    http_page = {"sample_1.jpg": "the photographed page, the smallest of the four"}.get(Path(bench.get("image", "")).name, Path(bench.get("image", "")).name)
+    http_note = f"over HTTP, {http['requests']} requests of {http_page}, p50 {http['p50_ms']:.0f} ms and p95 {http['p95_ms']:.0f} ms"
+    routed_total = sum(pg.get("routed", 0) for pg in det["pages"])
+    n_tags = sum(dt["reasons"].values())
+    hard = {c["id"]: c for c in cmp_r.get("hard_cards", [])}
+    if "c029" not in hard or "c055" not in hard:
+        raise SystemExit("compare_readers_report.json carries no hard-card reads: run `make compare` first")
+    if not cnn_lat:
+        raise SystemExit("cnn_latency.json missing: run `make bench-cnn` first")
+    cnn_page = max(cnn_lat["pages"], key=lambda r: r["boxes"])
 
     kpis = "\n".join([
         kpi("Pages processed", f"{dt['pages']}", f"{n_synth} damaged on purpose, {n_sample} from the brief, {n_hold} never seen"),
         kpi("Checkboxes read", f"{dt['boxes']:,}", f"{dt['checked']:,} of them had a mark in the box"),
-        kpi("Boxes found", f"{overall.get('tp', 0)} of {overall.get('tp', 0) + overall.get('fn', 0)}", f"on the {n_sample} pages from the brief only, the ones with a hand-checked answer key; {sample_q} of those {b_sample} went to a person"),
+        kpi("Boxes found", f"{overall.get('tp', 0)} of {overall.get('tp', 0) + overall.get('fn', 0)}", f"on the {n_sample} pages from the brief only, the ones with a hand-checked answer key, and {sample_q} of those {b_sample} detections went to a person"),
         kpi("Sent to a person", f"{100 * dt['flag_rate']:.1f}%", f"{dt['flagged']} boxes out of all {dt['boxes']:,}, across all {dt['pages']} pages, each with a reason"),
-        kpi("Time per page", f"{dt['p50_ms']:.0f} ms", f"95 pages in 100 come back inside {p95:.0f} ms"),
-        kpi("Cost per page", "$0.000004", "no AI model runs unless a box is unclear"),
+        kpi("Time per page", f"{dt['p50_ms']:.0f} ms", f"median in-process over {dt['pages']} pages, 95 in 100 inside {dt['p95_ms']:.0f} ms. Separately, {http_note}"),
+        kpi("Would reach a model", f"{routed_total} of {dt['boxes']:,}", "only with the AI check switched on, one zoomed-in box at a time. It is off, so this run made no model call"),
         kpi("Agrees with a person", f"{gold_rep.get('correct', 0)} of {gold_rep.get('cards', 0)}", "close-up crops a person ruled marked or empty before any threshold was set"),
     ])
 
@@ -600,7 +616,7 @@ def main() -> None:
     <h1>Checkbox reading, what it did and where it struggled</h1>
     <p class="band-sub">Every number on this page came out of an actual run over {dt['pages']} pages and {dt['boxes']:,} checkboxes. None of it is a mock-up or a worked example; this is what the software did. Run <code>make dashboard</code> yourself and this exact page comes back, byte for byte; <code>make synth &amp;&amp; make telemetry</code> re-measures the damaged corpus from scratch, and <code>scripts/fetch_holdout.py</code> adds the five real appraisals.</p>
   </header>
-  <p class="sub"><strong>What is in this run.</strong> The brief supplied {n_sample} pages, {b_sample} checkboxes. I made {n_synth} more by damaging those same pages on purpose, and fetched {n_hold} real appraisals it had never seen. That is {dt['pages']} pages and {dt['boxes']:,} checkboxes in total, and every count below names which of those three groups it came from.</p>
+  <p class="sub"><strong>What is in this run.</strong> The brief supplied {n_sample} pages, {b_sample} checkboxes. I made {n_synth} more by drawing marks into the two blank federal forms and damaging them on purpose, and fetched {n_hold} real appraisals it had never seen. That is {dt['pages']} pages and {dt['boxes']:,} checkboxes in total, and every count below names which of those three groups it came from.</p>
   <p class="sub">A checkbox that only one of the two reads sees is <strong>either a form that changed or a box that was missed</strong>, and no single read can tell those apart. The two reads settle only where the boxes are, not whether they are marked: one finds them by their printed borders on this page, the other projects them from the blank original of that form.</p>
   <p class="sub"><em>A loan file never waits on us, and no page gets a silent guess. On {dt['trusted_pages']} of {dt['pages']} pages we double-checked every box against the blank original form; on the other {dt['pages'] - dt['trusted_pages']}, mostly scans I damaged, the page was too rough to line up with the original, so we read it once and labeled it read once, not double-checked. A page like that is usually just a bad scan, but it could be a newer form than the one we hold, or a page someone changed. We pass it anyway, in good faith, and the flag points the customer, ahead of time, at exactly the pages that could be an out-of-version form or fraud.</em></p>
 
@@ -611,7 +627,7 @@ def main() -> None:
   <div class="grid">
     <div class="card wide">
       <h2>Why boxes went to a person</h2>
-      <p class="why">The whole review queue across all {dt['pages']} pages: {dt['flagged']} boxes out of {dt['boxes']:,}, grouped by what the system could not settle. On the {n_sample} pages from the brief it was {sample_q} boxes out of {b_sample}.</p>
+      <p class="why">The whole review queue across all {dt['pages']} pages: {dt['flagged']} boxes out of {dt['boxes']:,}, grouped by what the system could not settle. Those {dt['flagged']} boxes carry {n_tags} reason tags between them, since a box can carry more than one, and every share in the picture is of those {n_tags} tags. On the {n_sample} pages from the brief it was {sample_q} of {b_sample} detections.</p>
       <div class="split">
         <div style="align-self:center">
           {bubbles(dt["reasons"], w=580, h=430)}
@@ -642,18 +658,18 @@ def main() -> None:
 
     <div class="card">
       <h2>Who is the apprentice?</h2>
-      <p class="why">A small neural network trained from scratch on my own crops, 23,000 weights in a 29KB file, the only model in the system; nothing it sees leaves the building. The LLM that built this product wrote both contestants, the rules and this model, and judged them against one referee: 52 damaged pages plus the human-ruled answer keys.</p>
+      <p class="why">A small neural network trained from scratch on my own crops, 23,381 weights in a 29KB file, the only model in the system, and nothing it sees leaves the building. The LLM that built this product wrote both contestants, the rules and this model, and judged them against one referee: 52 damaged pages plus the human-ruled answer keys. The 286 graded boxes below are the 287 detections on the brief pages minus the one sitting on the tick the labeler ruled unsure, which no key can grade.</p>
       <table>
         <tr><th>How it ran</th><th class="n">Sent to a person</th><th class="n">Settled right</th><th class="n">Settled wrong</th></tr>
         <tr><td>Rules only, which is what ships</td><td class="n">{cmp_r['rules']['queue']} of {cmp_r['rules']['graded']}</td><td class="n">{cmp_r['rules']['right']}</td><td class="n">{cmp_r['rules']['wrong']}</td></tr>
         <tr><td>The CNN alone, a test</td><td class="n">{cmp_r['cnn']['queue']} of {cmp_r['cnn']['graded']}</td><td class="n">{cmp_r['cnn']['right']}</td><td class="n">{cmp_r['cnn']['wrong']}</td></tr>
         <tr><td>Both together, a test</td><td class="n">{cmp_r['both']['queue']} of {cmp_r['both']['graded']}</td><td class="n">{cmp_r['both']['right']}</td><td class="n">{cmp_r['both']['wrong']}</td></tr>
       </table>
-      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, {cmp_r['rules']['queue']} against {cmp_r['both']['queue']} against {cmp_r['cnn']['queue']}. Most automation at the same accuracy wins. All three run in the same third of a second on our own CPU; nothing leaves the building.</p>
+      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, {cmp_r['rules']['queue']} against {cmp_r['both']['queue']} against {cmp_r['cnn']['queue']}. Most automation at the same accuracy wins. All three run on our own CPU, and the CNN adds {cnn_page['median_ms']:.0f} ms to a {cnn_page['boxes']}-box page (make bench-cnn). Nothing leaves the building.</p>
       <div class="note">
         <p><strong>The rules won the match, so the CNN stays switched off.</strong></p>
         <ul>
-          <li>It caught nothing the rules missed, and misread both real never-seen test boxes.</li>
+          <li>It caught nothing the rules missed, and on the two hard boxes on the photographed page it settled neither: it queued the empty pen loop at p(filled) {hard['c029']['cnn_p_filled']:.3f} and read the filled faded X as empty at {hard['c055']['cnn_p_filled']:.3f}.</li>
           <li>Switched on, it only adds work: {cmp_r['both']['queue'] - cmp_r['rules']['queue']} more boxes to people, zero errors caught.</li>
           <li>Legibility is the invariant. The rules have it built in, every answer carries a reason a person can check, nothing extra needed. The CNN can only approach it by emitting logs, a confidence and a heat map for every box it reads, replayable forever.</li>
         </ul>
@@ -677,7 +693,7 @@ def main() -> None:
 
     <div class="card wide">
       <h2>The number that stopped being useful</h2>
-      <p class="why">Accuracy is agreement with a person's reading of the same boxes, and there are two honest denominators. Count everything and it is 285 of 286, flat since v2. Count only the boxes it settled without a person, the number that matters in operation, and it is 268 of 268: the one wrong answer sat in the flagged pile. The falling line below is those flags, 51 down to 2, false alarms being fixed while the answers never moved.</p>
+      <p class="why">Accuracy is agreement with a person's reading of the same boxes, and there are two honest denominators. Count everything and it is 285 of 286, flat since v2. Count only the boxes it settled without a person, the number that matters in operation, and it is {cmp_r['rules']['right']} of {cmp_r['rules']['right'] + cmp_r['rules']['wrong']}: the one wrong answer sat in the flagged pile. The falling line below is those flags, 51 down to 2, false alarms being fixed while the answers never moved.</p>
       <div class="split">
         <div>
           <p class="why" style="margin:0 0 2px">Agreement with a person, all graded boxes:</p>
@@ -693,7 +709,7 @@ def main() -> None:
         <ul>
           <li>v1 graded itself against an answer key it had written, a meaningless 1.0. A person corrected the key at v2; the honest record starts there.</li>
           <li>v4 added the second read from the blank original and the queue went UP, 52 to 61. It surfaces disagreements the first read cannot see about itself; the versions after resolve them.</li>
-          <li>v5 collapsed the queue, 61 to 4, by setting the bar where real marks sit. The old rule wanted a stroke across 70% of the box; a clean X spans about 52%, so real marks were flagged unsure by construction.</li>
+          <li>v5 collapsed the queue, 61 to 4, by setting the bar where real marks sit. The old rule wanted a stroke across 70% of the box, which no clean X reaches, so real marks were flagged unsure by construction.</li>
           <li>v6 caught a fake box, 4 to 2. The software had read the printed word "Att." as a checkbox, and the answer key, copied from the software's own output, agreed. The blank form says that row holds three boxes, not four; the key was fixed by hand, and a wrong-size box with letters inside is now rejected.</li>
           <li>v7 moved the definition of a mark out of the code into <code>policy.json</code>, the settings file the customer owns. A circle, a strike-out, a thin stroke, the ink thresholds: changing them is now their edit, not our release. Nothing moved that day, and a gate asserts the shipped file still reproduces these numbers.</li>
         </ul>
@@ -724,7 +740,7 @@ def main() -> None:
   </div>
 
   <footer>
-    Built by <code>make_dashboard.py</code> from <code>telemetry.json</code>, <code>eval_report.json</code>, <code>synth_report.json</code>, <code>gold_report.json</code> and <code>data/gold_set.json</code>. No network, no dependencies, no hand-entered numbers.
+    Built by <code>make_dashboard.py</code> from <code>telemetry.json</code>, <code>eval_report.json</code>, <code>synth_report.json</code>, <code>gold_report.json</code>, <code>compare_readers_report.json</code>, <code>bench_report.json</code>, <code>cnn_latency.json</code> and <code>data/gold_set.json</code>. No network, no dependencies, no hand-entered numbers.
   </footer>
 </div>
 """

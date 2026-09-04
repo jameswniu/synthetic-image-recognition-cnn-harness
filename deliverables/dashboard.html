@@ -65,7 +65,7 @@
     <h1>Checkbox reading, what it did and where it struggled</h1>
     <p class="band-sub">Every number on this page came out of an actual run over 61 pages and 5,872 checkboxes. None of it is a mock-up or a worked example; this is what the software did. Run <code>make dashboard</code> yourself and this exact page comes back, byte for byte; <code>make synth &amp;&amp; make telemetry</code> re-measures the damaged corpus from scratch, and <code>scripts/fetch_holdout.py</code> adds the five real appraisals.</p>
   </header>
-  <p class="sub"><strong>What is in this run.</strong> The brief supplied 4 pages, 287 checkboxes. I made 52 more by damaging those same pages on purpose, and fetched 5 real appraisals it had never seen. That is 61 pages and 5,872 checkboxes in total, and every count below names which of those three groups it came from.</p>
+  <p class="sub"><strong>What is in this run.</strong> The brief supplied 4 pages, 287 checkboxes. I made 52 more by drawing marks into the two blank federal forms and damaging them on purpose, and fetched 5 real appraisals it had never seen. That is 61 pages and 5,872 checkboxes in total, and every count below names which of those three groups it came from.</p>
   <p class="sub">A checkbox that only one of the two reads sees is <strong>either a form that changed or a box that was missed</strong>, and no single read can tell those apart. The two reads settle only where the boxes are, not whether they are marked: one finds them by their printed borders on this page, the other projects them from the blank original of that form.</p>
   <p class="sub"><em>A loan file never waits on us, and no page gets a silent guess. On 31 of 61 pages we double-checked every box against the blank original form; on the other 30, mostly scans I damaged, the page was too rough to line up with the original, so we read it once and labeled it read once, not double-checked. A page like that is usually just a bad scan, but it could be a newer form than the one we hold, or a page someone changed. We pass it anyway, in good faith, and the flag points the customer, ahead of time, at exactly the pages that could be an out-of-version form or fraud.</em></p>
 
@@ -83,7 +83,7 @@
     <div class="kpi">
       <div class="kpi-label">Boxes found</div>
       <div class="kpi-value">286 of 287</div>
-      <div class="kpi-note">on the 4 pages from the brief only, the ones with a hand-checked answer key; 2 of those 287 went to a person</div>
+      <div class="kpi-note">on the 4 pages from the brief only, the ones with a hand-checked answer key, and 2 of those 287 detections went to a person</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Sent to a person</div>
@@ -92,17 +92,17 @@
     </div>
     <div class="kpi">
       <div class="kpi-label">Time per page</div>
-      <div class="kpi-value">284 ms</div>
-      <div class="kpi-note">95 pages in 100 come back inside 457 ms</div>
+      <div class="kpi-value">273 ms</div>
+      <div class="kpi-note">median in-process over 61 pages, 95 in 100 inside 301 ms. Separately, over HTTP, 120 requests of the photographed page, the smallest of the four, p50 50 ms and p95 64 ms</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Cost per page</div>
-      <div class="kpi-value">$0.000004</div>
-      <div class="kpi-note">no AI model runs unless a box is unclear</div>
+      <div class="kpi-label">Would reach a model</div>
+      <div class="kpi-value">138 of 5,872</div>
+      <div class="kpi-note">only with the AI check switched on, one zoomed-in box at a time. It is off, so this run made no model call</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Agrees with a person</div>
-      <div class="kpi-value">36 of 39</div>
+      <div class="kpi-value">36 of 38</div>
       <div class="kpi-note">close-up crops a person ruled marked or empty before any threshold was set</div>
     </div>
   </div>
@@ -110,7 +110,7 @@
   <div class="grid">
     <div class="card wide">
       <h2>Why boxes went to a person</h2>
-      <p class="why">The whole review queue across all 61 pages: 138 boxes out of 5,872, grouped by what the system could not settle. On the 4 pages from the brief it was 2 boxes out of 287.</p>
+      <p class="why">The whole review queue across all 61 pages: 138 boxes out of 5,872, grouped by what the system could not settle. Those 138 boxes carry 146 reason tags between them, since a box can carry more than one, and every share in the picture is of those 146 tags. On the 4 pages from the brief it was 2 of 287 detections.</p>
       <div class="split">
         <div style="align-self:center">
           <svg viewBox="3 9 583 423" class="chart bubbles" role="img" aria-label="Reason codes by frequency">
@@ -230,18 +230,18 @@
 
     <div class="card">
       <h2>Who is the apprentice?</h2>
-      <p class="why">A small neural network trained from scratch on my own crops, 23,000 weights in a 29KB file, the only model in the system; nothing it sees leaves the building. The LLM that built this product wrote both contestants, the rules and this model, and judged them against one referee: 52 damaged pages plus the human-ruled answer keys.</p>
+      <p class="why">A small neural network trained from scratch on my own crops, 23,381 weights in a 29KB file, the only model in the system, and nothing it sees leaves the building. The LLM that built this product wrote both contestants, the rules and this model, and judged them against one referee: 52 damaged pages plus the human-ruled answer keys. The 286 graded boxes below are the 287 detections on the brief pages minus the one sitting on the tick the labeler ruled unsure, which no key can grade.</p>
       <table>
         <tr><th>How it ran</th><th class="n">Sent to a person</th><th class="n">Settled right</th><th class="n">Settled wrong</th></tr>
         <tr><td>Rules only, which is what ships</td><td class="n">2 of 286</td><td class="n">284</td><td class="n">0</td></tr>
         <tr><td>The CNN alone, a test</td><td class="n">56 of 286</td><td class="n">229</td><td class="n">1</td></tr>
         <tr><td>Both together, a test</td><td class="n">19 of 286</td><td class="n">267</td><td class="n">0</td></tr>
       </table>
-      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, 2 against 19 against 56. Most automation at the same accuracy wins. All three run in the same third of a second on our own CPU; nothing leaves the building.</p>
+      <p class="why" style="margin-top:8px"><strong>Verdict: rules only.</strong> All three are nearly errorless on the brief's answer key; they differ in how much they hand to people, 2 against 19 against 56. Most automation at the same accuracy wins. All three run on our own CPU, and the CNN adds 4 ms to a 118-box page (make bench-cnn). Nothing leaves the building.</p>
       <div class="note">
         <p><strong>The rules won the match, so the CNN stays switched off.</strong></p>
         <ul>
-          <li>It caught nothing the rules missed, and misread both real never-seen test boxes.</li>
+          <li>It caught nothing the rules missed, and on the two hard boxes on the photographed page it settled neither: it queued the empty pen loop at p(filled) 0.845 and read the filled faded X as empty at 0.082.</li>
           <li>Switched on, it only adds work: 17 more boxes to people, zero errors caught.</li>
           <li>Legibility is the invariant. The rules have it built in, every answer carries a reason a person can check, nothing extra needed. The CNN can only approach it by emitting logs, a confidence and a heat map for every box it reads, replayable forever.</li>
         </ul>
@@ -276,7 +276,7 @@
 <circle cx="498.0" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
 <circle cx="498.8" cy="47.0" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
 <circle cx="510.5" cy="37.5" r="4.5" fill="#111111" fill-opacity="0.55" stroke="#111111" stroke-width="1"/>
-<text x="149.64000000000001" y="94.0" class="lab" text-anchor="end" fill="#3f3f46">Empty (21)</text>
+<text x="149.64000000000001" y="94.0" class="lab" text-anchor="end" fill="#3f3f46">Empty (20)</text>
 <line x1="161.64000000000001" y1="89.0" x2="534" y2="89.0" stroke="#e4e4e7" stroke-width="1"/>
 <circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
 <circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
@@ -297,9 +297,8 @@
 <circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
 <circle cx="161.6" cy="98.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
 <circle cx="161.6" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
-<circle cx="161.6" cy="89.0" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
 <circle cx="300.3" cy="79.5" r="4.5" fill="#52525b" fill-opacity="0.55" stroke="#52525b" stroke-width="1"/>
-<text x="149.64000000000001" y="136.0" class="lab" text-anchor="end" fill="#3f3f46">Not a checkbox (7)</text>
+<text x="149.64000000000001" y="136.0" class="lab" text-anchor="end" fill="#3f3f46">Not a checkbox (8)</text>
 <line x1="161.64000000000001" y1="131.0" x2="534" y2="131.0" stroke="#e4e4e7" stroke-width="1"/>
 <circle cx="161.6" cy="121.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
 <circle cx="161.6" cy="131.0" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
@@ -308,6 +307,7 @@
 <circle cx="161.6" cy="131.0" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
 <circle cx="161.6" cy="140.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
 <circle cx="161.6" cy="121.5" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
+<circle cx="161.6" cy="131.0" r="4.5" fill="#a1a1aa" fill-opacity="0.55" stroke="#a1a1aa" stroke-width="1"/>
 <text x="149.64000000000001" y="178.0" class="lab" text-anchor="end" fill="#3f3f46">Unsure (1)</text>
 <line x1="161.64000000000001" y1="173.0" x2="534" y2="173.0" stroke="#e4e4e7" stroke-width="1"/>
 <circle cx="337.7" cy="163.5" r="4.5" fill="#71717a" fill-opacity="0.55" stroke="#71717a" stroke-width="1"/>
@@ -330,7 +330,7 @@
 
     <div class="card wide">
       <h2>The number that stopped being useful</h2>
-      <p class="why">Accuracy is agreement with a person's reading of the same boxes, and there are two honest denominators. Count everything and it is 285 of 286, flat since v2. Count only the boxes it settled without a person, the number that matters in operation, and it is 268 of 268: the one wrong answer sat in the flagged pile. The falling line below is those flags, 51 down to 2, false alarms being fixed while the answers never moved.</p>
+      <p class="why">Accuracy is agreement with a person's reading of the same boxes, and there are two honest denominators. Count everything and it is 285 of 286, flat since v2. Count only the boxes it settled without a person, the number that matters in operation, and it is 284 of 284: the one wrong answer sat in the flagged pile. The falling line below is those flags, 51 down to 2, false alarms being fixed while the answers never moved.</p>
       <div class="split">
         <div>
           <p class="why" style="margin:0 0 2px">Agreement with a person, all graded boxes:</p>
@@ -390,7 +390,7 @@
         <ul>
           <li>v1 graded itself against an answer key it had written, a meaningless 1.0. A person corrected the key at v2; the honest record starts there.</li>
           <li>v4 added the second read from the blank original and the queue went UP, 52 to 61. It surfaces disagreements the first read cannot see about itself; the versions after resolve them.</li>
-          <li>v5 collapsed the queue, 61 to 4, by setting the bar where real marks sit. The old rule wanted a stroke across 70% of the box; a clean X spans about 52%, so real marks were flagged unsure by construction.</li>
+          <li>v5 collapsed the queue, 61 to 4, by setting the bar where real marks sit. The old rule wanted a stroke across 70% of the box, which no clean X reaches, so real marks were flagged unsure by construction.</li>
           <li>v6 caught a fake box, 4 to 2. The software had read the printed word "Att." as a checkbox, and the answer key, copied from the software's own output, agreed. The blank form says that row holds three boxes, not four; the key was fixed by hand, and a wrong-size box with letters inside is now rejected.</li>
           <li>v7 moved the definition of a mark out of the code into <code>policy.json</code>, the settings file the customer owns. A circle, a strike-out, a thin stroke, the ink thresholds: changing them is now their edit, not our release. Nothing moved that day, and a gate asserts the shipped file still reproduces these numbers.</li>
         </ul>
@@ -421,6 +421,6 @@
   </div>
 
   <footer>
-    Built by <code>make_dashboard.py</code> from <code>telemetry.json</code>, <code>eval_report.json</code>, <code>synth_report.json</code>, <code>gold_report.json</code> and <code>data/gold_set.json</code>. No network, no dependencies, no hand-entered numbers.
+    Built by <code>make_dashboard.py</code> from <code>telemetry.json</code>, <code>eval_report.json</code>, <code>synth_report.json</code>, <code>gold_report.json</code>, <code>compare_readers_report.json</code>, <code>bench_report.json</code>, <code>cnn_latency.json</code> and <code>data/gold_set.json</code>. No network, no dependencies, no hand-entered numbers.
   </footer>
 </div>
