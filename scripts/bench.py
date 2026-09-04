@@ -61,7 +61,11 @@ def main() -> None:
         rows.append(r)
         print(r)
     if args.report:
-        Path(args.report).write_text(json.dumps({"image": args.image, "levels": rows}, indent=1))
+        # The report names the page relative to the repo, so a run from a different checkout path
+        # produces the same file and a reader can find the page it timed.
+        image = Path(args.image).resolve()
+        shown = str(image.relative_to(ROOT)) if image.is_relative_to(ROOT) else args.image
+        Path(args.report).write_text(json.dumps({"image": shown, "levels": rows}, indent=1))
 
 
 if __name__ == "__main__":

@@ -1,23 +1,32 @@
 {
- "image": "data/samples/sample_2.png",
+ "image": "data/samples/sample_1.jpg",
  "levels": [
   {
    "concurrency": 1,
-   "requests": 40,
-   "wall_s": 16.08,
-   "req_per_s": 2.5,
-   "p50_ms": 391.9,
-   "p95_ms": 457.4,
-   "max_ms": 767.6
+   "requests": 120,
+   "wall_s": 6.28,
+   "req_per_s": 19.1,
+   "p50_ms": 50.0,
+   "p95_ms": 64.4,
+   "max_ms": 81.5
   },
   {
    "concurrency": 4,
-   "requests": 40,
-   "wall_s": 14.85,
-   "req_per_s": 2.7,
-   "p50_ms": 1424.0,
-   "p95_ms": 1817.3,
-   "max_ms": 1819.9
+   "requests": 120,
+   "wall_s": 5.81,
+   "req_per_s": 20.7,
+   "p50_ms": 192.6,
+   "p95_ms": 208.7,
+   "max_ms": 210.2
+  },
+  {
+   "concurrency": 8,
+   "requests": 120,
+   "wall_s": 6.02,
+   "req_per_s": 19.9,
+   "p50_ms": 397.9,
+   "p95_ms": 438.5,
+   "max_ms": 443.0
   }
  ]
 }

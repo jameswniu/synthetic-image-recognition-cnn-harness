@@ -18,7 +18,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 648.8,
+     "elapsed_ms": 622.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -42,7 +42,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 280.0,
+     "elapsed_ms": 290.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -66,7 +66,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 282.7,
+     "elapsed_ms": 276.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -90,7 +90,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 283.6,
+     "elapsed_ms": 276.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -114,7 +114,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 289.7,
+     "elapsed_ms": 288.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -137,7 +137,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 245.9,
+     "elapsed_ms": 260.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -160,7 +160,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 229.3,
+     "elapsed_ms": 243.3,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -183,7 +183,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 229.8,
+     "elapsed_ms": 234.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -206,7 +206,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 226.8,
+     "elapsed_ms": 226.2,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -232,7 +232,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 184.3,
+     "elapsed_ms": 177.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 117,
@@ -256,7 +256,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 287.8,
+     "elapsed_ms": 279.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 114,
@@ -282,7 +282,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 157.6,
+     "elapsed_ms": 159.8,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 114,
@@ -306,7 +306,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 280.5,
+     "elapsed_ms": 281.1,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -331,7 +331,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 277.3,
+     "elapsed_ms": 279.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -354,7 +354,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 284.9,
+     "elapsed_ms": 273.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -377,7 +377,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 297.4,
+     "elapsed_ms": 274.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -400,7 +400,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 288.2,
+     "elapsed_ms": 275.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -423,7 +423,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 287.4,
+     "elapsed_ms": 273.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -447,7 +447,7 @@
       "MISSING_IN_DETECT": 1
      },
      "rejected": {},
-     "elapsed_ms": 289.4,
+     "elapsed_ms": 275.8,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 76,
@@ -470,7 +470,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 237.6,
+     "elapsed_ms": 229.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -495,7 +495,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 227.7,
+     "elapsed_ms": 229.4,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -518,7 +518,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 225.0,
+     "elapsed_ms": 225.2,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -541,7 +541,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 227.0,
+     "elapsed_ms": 240.1,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -567,7 +567,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 174.4,
+     "elapsed_ms": 175.4,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 78,
@@ -590,7 +590,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 295.5,
+     "elapsed_ms": 280.8,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -616,7 +616,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 154.5,
+     "elapsed_ms": 151.9,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 77,
@@ -641,7 +641,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 284.0,
+     "elapsed_ms": 280.8,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 70,
@@ -665,7 +665,7 @@
       "INK_AMBIGUOUS": 3
      },
      "rejected": {},
-     "elapsed_ms": 286.8,
+     "elapsed_ms": 280.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -690,7 +690,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 70.8,
+     "elapsed_ms": 60.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -713,7 +713,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 347.6,
+     "elapsed_ms": 282.1,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 117,
@@ -734,7 +734,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 274.2,
+     "elapsed_ms": 230.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -760,7 +760,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 368.7,
+     "elapsed_ms": 278.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -784,7 +784,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 288.5,
+     "elapsed_ms": 187.8,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -810,7 +810,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 329.1,
+     "elapsed_ms": 280.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -835,7 +835,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 181.4,
+     "elapsed_ms": 146.1,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -861,7 +861,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 275.2,
+     "elapsed_ms": 237.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -885,7 +885,7 @@
       "STRAY_STROKE": 2
      },
      "rejected": {},
-     "elapsed_ms": 201.3,
+     "elapsed_ms": 192.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -912,7 +912,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 151.2,
+     "elapsed_ms": 180.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 112,
@@ -936,7 +936,7 @@
       "INK_AMBIGUOUS": 1
      },
      "rejected": {},
-     "elapsed_ms": 284.1,
+     "elapsed_ms": 260.1,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -961,7 +961,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 387.9,
+     "elapsed_ms": 313.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -985,7 +985,7 @@
       "INK_AMBIGUOUS": 1
      },
      "rejected": {},
-     "elapsed_ms": 333.0,
+     "elapsed_ms": 316.9,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 75,
@@ -1008,7 +1008,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 122.7,
+     "elapsed_ms": 128.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1035,7 +1035,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 152.4,
+     "elapsed_ms": 132.3,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 74,
@@ -1056,7 +1056,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 235.6,
+     "elapsed_ms": 234.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 24,
@@ -1081,7 +1081,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 85.1,
+     "elapsed_ms": 85.6,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1105,7 +1105,7 @@
       "INK_AMBIGUOUS": 3
      },
      "rejected": {},
-     "elapsed_ms": 289.7,
+     "elapsed_ms": 273.8,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 24,
@@ -1128,7 +1128,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 149.1,
+     "elapsed_ms": 135.3,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1149,7 +1149,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 286.0,
+     "elapsed_ms": 275.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -1170,7 +1170,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 304.4,
+     "elapsed_ms": 273.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -1191,7 +1191,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 299.5,
+     "elapsed_ms": 269.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -1214,7 +1214,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 313.4,
+     "elapsed_ms": 284.7,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 78,
@@ -1235,7 +1235,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 245.6,
+     "elapsed_ms": 227.4,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1262,7 +1262,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 47.2,
+     "elapsed_ms": 47.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 14,
@@ -1286,7 +1286,7 @@
       "SIZE_CONSENSUS": 6,
       "TEXT_LIKE_SIZE_OUTLIER": 1
      },
-     "elapsed_ms": 314.1,
+     "elapsed_ms": 300.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -1307,7 +1307,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 290.1,
+     "elapsed_ms": 298.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 28,
@@ -1330,7 +1330,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 229.3,
+     "elapsed_ms": 228.1,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 79,
@@ -1353,7 +1353,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 8
      },
-     "elapsed_ms": 295.8,
+     "elapsed_ms": 277.0,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -1376,7 +1376,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 4
      },
-     "elapsed_ms": 283.5,
+     "elapsed_ms": 273.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 68,
@@ -1399,7 +1399,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 286.2,
+     "elapsed_ms": 278.0,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -1422,7 +1422,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 290.4,
+     "elapsed_ms": 296.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -1443,7 +1443,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 313.6,
+     "elapsed_ms": 293.8,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -1466,9 +1466,9 @@
      "EXTRA_BOX": 9,
      "FRAGMENTED_MARK": 1
     },
-    "p50_ms": 283.5,
-    "p95_ms": 347.6,
-    "mean_ms": 258.9,
+    "p50_ms": 273.2,
+    "p95_ms": 300.9,
+    "mean_ms": 245.0,
     "trusted_pages": 31
    }
   },
@@ -1490,7 +1490,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 643.5,
+     "elapsed_ms": 635.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1515,7 +1515,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 281.3,
+     "elapsed_ms": 287.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1540,7 +1540,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 284.0,
+     "elapsed_ms": 276.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1565,7 +1565,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 279.7,
+     "elapsed_ms": 286.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1590,7 +1590,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 286.1,
+     "elapsed_ms": 309.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1614,7 +1614,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 227.2,
+     "elapsed_ms": 252.4,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1638,7 +1638,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 232.7,
+     "elapsed_ms": 243.3,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1662,7 +1662,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 237.5,
+     "elapsed_ms": 247.4,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1686,7 +1686,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 229.4,
+     "elapsed_ms": 245.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1713,7 +1713,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 179.8,
+     "elapsed_ms": 205.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 117,
@@ -1738,7 +1738,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 291.7,
+     "elapsed_ms": 323.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 114,
@@ -1765,7 +1765,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 162.0,
+     "elapsed_ms": 174.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 114,
@@ -1790,7 +1790,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 282.9,
+     "elapsed_ms": 298.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1816,7 +1816,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 285.6,
+     "elapsed_ms": 283.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -1840,7 +1840,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 281.8,
+     "elapsed_ms": 274.0,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -1864,7 +1864,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 278.7,
+     "elapsed_ms": 284.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -1888,7 +1888,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 277.9,
+     "elapsed_ms": 277.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -1912,7 +1912,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 276.4,
+     "elapsed_ms": 317.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -1937,7 +1937,7 @@
       "MISSING_IN_DETECT": 1
      },
      "rejected": {},
-     "elapsed_ms": 280.0,
+     "elapsed_ms": 332.8,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 76,
@@ -1961,7 +1961,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 226.9,
+     "elapsed_ms": 266.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -1987,7 +1987,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 228.0,
+     "elapsed_ms": 240.0,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2011,7 +2011,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 227.6,
+     "elapsed_ms": 242.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2035,7 +2035,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 235.7,
+     "elapsed_ms": 232.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2062,7 +2062,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 175.6,
+     "elapsed_ms": 192.6,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 78,
@@ -2086,7 +2086,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 281.9,
+     "elapsed_ms": 291.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -2113,7 +2113,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 159.8,
+     "elapsed_ms": 161.3,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 77,
@@ -2164,7 +2164,7 @@
       "INK_AMBIGUOUS": 3
      },
      "rejected": {},
-     "elapsed_ms": 275.2,
+     "elapsed_ms": 277.1,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -2190,7 +2190,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 61.9,
+     "elapsed_ms": 61.0,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2214,7 +2214,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 281.7,
+     "elapsed_ms": 280.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 117,
@@ -2235,7 +2235,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 228.3,
+     "elapsed_ms": 229.4,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2262,7 +2262,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 296.5,
+     "elapsed_ms": 280.3,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -2287,7 +2287,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 197.8,
+     "elapsed_ms": 191.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 113,
@@ -2314,7 +2314,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 287.8,
+     "elapsed_ms": 278.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2340,7 +2340,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 144.7,
+     "elapsed_ms": 148.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2367,7 +2367,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 237.7,
+     "elapsed_ms": 234.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -2392,7 +2392,7 @@
       "STRAY_STROKE": 2
      },
      "rejected": {},
-     "elapsed_ms": 182.3,
+     "elapsed_ms": 182.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -2419,7 +2419,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 143.3,
+     "elapsed_ms": 141.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 112,
@@ -2444,7 +2444,7 @@
       "INK_AMBIGUOUS": 1
      },
      "rejected": {},
-     "elapsed_ms": 237.9,
+     "elapsed_ms": 235.1,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2470,7 +2470,7 @@
       "STRAY_STROKE": 1
      },
      "rejected": {},
-     "elapsed_ms": 288.1,
+     "elapsed_ms": 277.2,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 115,
@@ -2494,7 +2494,7 @@
       "INK_AMBIGUOUS": 1
      },
      "rejected": {},
-     "elapsed_ms": 282.0,
+     "elapsed_ms": 275.3,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 75,
@@ -2519,7 +2519,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 117.9,
+     "elapsed_ms": 117.1,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2547,7 +2547,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 125.7,
+     "elapsed_ms": 122.3,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 74,
@@ -2570,7 +2570,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 220.3,
+     "elapsed_ms": 220.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 24,
@@ -2596,7 +2596,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 84.2,
+     "elapsed_ms": 83.8,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2621,7 +2621,7 @@
       "INK_AMBIGUOUS": 3
      },
      "rejected": {},
-     "elapsed_ms": 279.2,
+     "elapsed_ms": 279.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 24,
@@ -2646,7 +2646,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 132.4,
+     "elapsed_ms": 131.3,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2669,7 +2669,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 279.1,
+     "elapsed_ms": 280.7,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -2692,7 +2692,7 @@
       "CLASSIFIER_DISAGREE": 3
      },
      "rejected": {},
-     "elapsed_ms": 276.2,
+     "elapsed_ms": 274.0,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 27,
@@ -2713,7 +2713,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 278.1,
+     "elapsed_ms": 274.1,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 26,
@@ -2737,7 +2737,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 293.2,
+     "elapsed_ms": 279.2,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 78,
@@ -2760,7 +2760,7 @@
       "CLASSIFIER_DISAGREE": 1
      },
      "rejected": {},
-     "elapsed_ms": 226.1,
+     "elapsed_ms": 224.9,
      "matched_form": null,
      "registration": null,
      "witness_agree": null,
@@ -2788,7 +2788,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 44.4,
+     "elapsed_ms": 42.1,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 14,
@@ -2814,7 +2814,7 @@
       "SIZE_CONSENSUS": 6,
       "TEXT_LIKE_SIZE_OUTLIER": 1
      },
-     "elapsed_ms": 293.9,
+     "elapsed_ms": 289.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2837,7 +2837,7 @@
       "CLASSIFIER_DISAGREE": 2
      },
      "rejected": {},
-     "elapsed_ms": 278.7,
+     "elapsed_ms": 275.6,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 28,
@@ -2860,7 +2860,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 1
      },
-     "elapsed_ms": 226.5,
+     "elapsed_ms": 221.1,
      "matched_form": "form70b-p1-1",
      "registration": 1.0,
      "witness_agree": 79,
@@ -2885,7 +2885,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 8
      },
-     "elapsed_ms": 285.4,
+     "elapsed_ms": 278.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2908,7 +2908,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 4
      },
-     "elapsed_ms": 282.9,
+     "elapsed_ms": 279.5,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 68,
@@ -2931,7 +2931,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 290.0,
+     "elapsed_ms": 280.4,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2954,7 +2954,7 @@
      "rejected": {
       "SIZE_CONSENSUS": 2
      },
-     "elapsed_ms": 291.2,
+     "elapsed_ms": 279.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2975,7 +2975,7 @@
      "routed": 0,
      "reasons": {},
      "rejected": {},
-     "elapsed_ms": 289.3,
+     "elapsed_ms": 297.9,
      "matched_form": "form70-p1-1",
      "registration": 1.0,
      "witness_agree": 118,
@@ -2999,9 +2999,9 @@
      "EXTRA_BOX": 9,
      "FRAGMENTED_MARK": 1
     },
-    "p50_ms": 276.4,
-    "p95_ms": 293.2,
-    "mean_ms": 243.6,
+    "p50_ms": 274.1,
+    "p95_ms": 317.5,
+    "mean_ms": 247.4,
     "trusted_pages": 31
    }
   }
