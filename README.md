@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/tests-26_green-18181b" alt="tests 26 green">
   <img src="https://img.shields.io/badge/eval-F1_0.998-52525b" alt="eval F1 0.998">
   <img src="https://img.shields.io/badge/queue-2.4%25_with_reasons-1b5e3f" alt="queue 2.4 percent with reasons">
-  <img src="https://img.shields.io/badge/model-23K_weights_ONNX-52525b" alt="model 23K weights ONNX">
+  <img src="https://img.shields.io/badge/model-23,381_weights_ONNX-52525b" alt="model 23,381 weights ONNX">
   <img src="https://img.shields.io/badge/license-Apache--2.0-71717a" alt="license Apache 2.0">
 </p>
 

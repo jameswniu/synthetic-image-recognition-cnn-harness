@@ -1,9 +1,10 @@
 """Fail the build when a README badge says something the repo no longer measures.
 
 The badge wall at the top of README.md hard-codes four numbers: how many tests are green, the
-eval F1, the share of boxes sent to a person, and the size of the model. Each of those is a
-claim, and a claim that nothing rechecks is a claim that drifts. This gate recomputes what it
-can and exits nonzero on the first mismatch, so a stale badge fails CI instead of shipping.
+eval F1, the share of boxes sent to a person, and the size of the model. The hero's alt text on
+line 2 carries three more, each with the set it was measured on. Each of those is a claim, and a
+claim that nothing rechecks is a claim that drifts. This gate recomputes what it can and exits
+nonzero on the first mismatch, so a stale badge fails CI instead of shipping.
 
 Two layers, selected by a mode argument, because the two ways a badge goes stale are different
 defects. `committed` is the consistency layer: it reads the reports out of HEAD with git show,
@@ -54,7 +55,7 @@ def badge_claims() -> dict[str, str]:
         "tests": r"img\.shields\.io/badge/tests-(\d+)_green",
         "f1": r"img\.shields\.io/badge/eval-F1_([0-9.]+)-",
         "queue": r"img\.shields\.io/badge/queue-([0-9.]+)%25",
-        "weights": r"img\.shields\.io/badge/model-(\d+)K_weights",
+        "weights": r"img\.shields\.io/badge/model-([\d,]+)_weights",
     }
     claims = {}
     for name, pat in patterns.items():
@@ -63,6 +64,15 @@ def badge_claims() -> dict[str, str]:
             raise SystemExit(f"README.md carries no {name} badge matching {pat}; the wall changed shape, update this gate with it.")
         claims[name] = m.group(1)
     return claims
+
+
+def hero_alt() -> str:
+    """The hero's alt text, the one sentence of numbers a reader gets before any picture loads."""
+    text = (ROOT / "README.md").read_text()
+    m = re.search(r'<img src="assets/hero\.svg" alt="([^"]*)"', text)
+    if not m:
+        raise SystemExit("README.md carries no hero image with an alt text; the banner changed shape, update this gate with it.")
+    return m.group(1)
 
 
 def committed_report(path: str) -> dict:
@@ -105,8 +115,8 @@ def queue_of(totals: dict) -> float:
     return float(f"{100 * totals['flag_rate']:.1f}")
 
 
-def measured_weights_k() -> int:
-    """Parameters in the shipped model, in thousands rounded down, summed from its tensors."""
+def measured_weights() -> int:
+    """Parameters in the shipped model, exactly, summed over every initializer tensor."""
     import onnx
 
     model = onnx.load(str(ROOT / "models" / "patch-int8.onnx"))
@@ -116,7 +126,7 @@ def measured_weights_k() -> int:
         for d in init.dims:
             n *= d
         count += n
-    return count // 1000
+    return count
 
 
 def main() -> None:
@@ -134,19 +144,44 @@ def main() -> None:
             print(f"{name}: claim FAIL (badge {badge}, measured {measured})")
             failed = True
 
+    def check_text(name: str, wanted: str, where: str, text: str) -> None:
+        nonlocal failed
+        if wanted in text:
+            print(f"{name}: claim OK ({wanted})")
+        else:
+            print(f"{name}: claim FAIL ({where} does not carry {wanted!r})")
+            failed = True
+
+    def check_labels(ev: dict, gold: dict, queue: float) -> None:
+        """Every hero number names its set, and the queue rate carries its page count wherever
+        an architecture figure states it, so a reader never has to guess which corpus a number
+        came from."""
+        alt = hero_alt()
+        tp, fn = ev["overall"]["tp"], ev["overall"]["fn"]
+        check_text("hero found", f"{tp} of {tp + fn} boxes found on the four brief pages", "the hero alt text", alt)
+        check_text("hero queue", f"{queue:.1f}% sent to a person across {ADVERTISED_PAGES} pages", "the hero alt text", alt)
+        check_text("hero gold", f"{gold['correct']} of {gold['cards']} human rulings matched", "the hero alt text", alt)
+        arch = (ROOT / "assets" / "architecture.svg").read_text()
+        check_text("architecture queue", f"{queue:.1f}% of boxes across {ADVERTISED_PAGES} pages", "assets/architecture.svg", arch)
+        readme = (ROOT / "README.md").read_text()
+        check_text("mermaid queue", f'"{queue:.1f}% flagged, {ADVERTISED_PAGES} pages"', "the README flowchart", readme)
+
     if mode == "committed":
         totals = totals_of(committed_report("reports/telemetry.json"))
         if totals["pages"] != ADVERTISED_PAGES or totals["boxes"] != ADVERTISED_BOXES:
             print(f"claim FAIL (queue measured on {totals['pages']} pages / {totals['boxes']:,} boxes, "
                   f"advertised {ADVERTISED_PAGES} / {ADVERTISED_BOXES:,})")
             sys.exit(1)
+        ev = committed_report("reports/eval_report.json")
         check("tests", int(claims["tests"]), measured_tests())
-        check("eval F1", float(claims["f1"]), f1_of(committed_report("reports/eval_report.json")))
+        check("eval F1", float(claims["f1"]), f1_of(ev))
         check("queue %", float(claims["queue"]), queue_of(totals))
-        check("weights K", int(claims["weights"]), measured_weights_k())
+        check("weights", int(claims["weights"].replace(",", "")), measured_weights())
+        check_labels(ev, committed_report("reports/gold_report.json"), queue_of(totals))
     else:
         totals = totals_of(working_report("reports/telemetry.json"))
-        check("eval F1", float(claims["f1"]), f1_of(working_report("reports/eval_report.json")))
+        ev = working_report("reports/eval_report.json")
+        check("eval F1", float(claims["f1"]), f1_of(ev))
         got = (totals["pages"], totals["boxes"], totals["flagged"])
         want = (HERMETIC_PAGES, HERMETIC_BOXES, HERMETIC_FLAGGED)
         if got == want:
@@ -155,7 +190,10 @@ def main() -> None:
             print(f"queue flags: claim FAIL (measured {got[0]} pages / {got[1]:,} boxes / {got[2]} flagged, "
                   f"expected {want[0]} / {want[1]:,} / {want[2]})")
             failed = True
-        check("weights K", int(claims["weights"]), measured_weights_k())
+        check("weights", int(claims["weights"].replace(",", "")), measured_weights())
+        # The hermetic run cannot re-derive the 61-page queue share, so the labels are checked
+        # against the badge's own figure, which the committed layer already bound to telemetry.
+        check_labels(ev, working_report("reports/gold_report.json"), float(claims["queue"]))
 
     if failed:
         sys.exit(1)
