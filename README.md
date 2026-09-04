@@ -163,7 +163,7 @@ The arithmetic is the whole argument. A flagged box, zoomed in the way the escal
 | AI on those plus every box the trained model disputes | 56 of 847 boxes (6.6%) on the real pages | `make telemetry` with the model on, the brief pages plus the 5 held-out |
 | Sending every page to a strong AI model instead | the whole page, every page, priced per token, and less accurate on checkboxes | published work, sourced in [EVALS.md](docs/EVALS.md) |
 
-At real volume a fourteen-fold gap on the image alone on the standard tier, and forty-three-fold on the high-resolution tier,, before the answer is written, stops being a rounding error. It is also the wrong trade on quality, not only on price. Published work on document AI finds checkbox reading is a specific weak spot for vision models. A checkbox is a handful of pixels and those models are built to read words.
+At real volume a fourteen-fold gap on the image alone on the standard tier, and forty-three-fold on the high-resolution tier, before the answer is written, stops being a rounding error. It is also the wrong trade on quality, not only on price. Published work on document AI finds checkbox reading is a specific weak spot for vision models. A checkbox is a handful of pixels and those models are built to read words.
 
 ### 3. Latency, and there are two kinds
 
