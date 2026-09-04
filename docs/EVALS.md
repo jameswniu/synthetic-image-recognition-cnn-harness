@@ -42,13 +42,13 @@ self-set against this project's own baseline and the general-document anchors ab
 | Detection F1, synthetic sweeps at rotation up to 5 deg, JPEG down to q22, pen, shading, watermark | at or above 0.95 | worst 0.965 (shading) | in band |
 | Detection F1, scale sweep down to 0.5x (boxes ~27 px) | at or above 0.95; 0.4x reported honestly | 0.980 at 0.5x; 0.990 at 0.4x after the small-page upscale fix | in band |
 | Classification accuracy on matched boxes, real samples | at or above 0.97 | 0.976 / 1.000 / 1.000 / 1.000 (overall 0.997) | in band |
-| Classification accuracy on gold cards (hard-graded rulings) | at or above 0.90; unsure cards excluded and required to route | 39 hard-graded cards, agreement 0.9231 | in band |
+| Classification accuracy on gold cards (hard-graded rulings) | at or above 0.90; unsure cards excluded and required to route | 38 hard-graded cards, agreement 0.9474 (36 of 38) | in band |
 | Ambiguity rate on clean renders, deterministic core | at or below 3% of boxes | 0 of 118 on the clean URAR render | in band |
 | Ambiguity rate across the whole 61-page corpus, deterministic core | at or below 5% of boxes | 138 of 5,872 (2.4%); 0 of 560 on the held-out real appraisals | in band |
 | Hardest single damage condition, share of boxes routed | at or below 12% | shading at 9.05%, against 1.03% for rotation | in band |
 | Ambiguity rate, same render with the patch classifier on | at or below 3% of boxes | 15 of 118 (12.7%) | OUT OF BAND, see the roadmap: the model disputes boxes the rule read correctly and changes no answer |
-| Witness agreement (structure vs template) on same-form pages | at or above 0.9 snap rate | 118/118 and 79/79; partial crop and unmatched form correctly fail the trust gate | in band |
-| Latency, full page through `/detect` | p95 at or below 400 ms per page single-worker | p50 392 ms, p95 457 ms | ITERATE: the register scale search dominates; coarse-to-fine search is the queued fix |
+| Witness agreement (structure vs template) on same-form pages | at or above 0.75 of projected slots agreeing, the min_agree the code trusts at (src/hv_checkbox/template.py) | 118/118 and 79/79; partial crop and unmatched form correctly fail the trust gate | in band |
+| Latency, full page through `/detect` | p95 at or below 400 ms per page single-worker | in-process p95 301 ms over 61 pages, mostly full 300 DPI forms (reports/telemetry.json), and over HTTP p50 50 ms and p95 64 ms for 120 requests of the photographed page, the smallest of the four (reports/bench_report.json), re-measured 2026-09-04 | NOT MEASURED against this band: the committed bench, `make bench` as written, times the smallest page, so a full form through `/detect` has no committed reading at this commit, and the in-process p95 is a different instrument. Bench a 118-box page through the service before calling this row in band |
 | Judge lane | disputes adjudicated with recorded votes; replay reproduces every verdict | implemented and off; no live credential was spent before freeze, so `judge_votes.json` ships empty | stated honestly |
 
 ## The loop

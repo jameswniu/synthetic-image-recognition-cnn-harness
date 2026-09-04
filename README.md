@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Reading checkboxes off appraisal pages. A deterministic reader, an exception queue, and a definition of correctness the customer owns. 286 of 287 boxes found, 2.4% sent to a person, 36 of 39 human rulings matched." width="100%">
+  <img src="assets/hero.svg" alt="Reading checkboxes off appraisal pages. A deterministic reader, an exception queue, and a definition of correctness the customer owns. 286 of 287 boxes found on the four brief pages, 2.4% sent to a person across 61 pages, 36 of 38 human rulings matched." width="100%">
 </p>
 
 *Fail open, fail loud: read what is certain, queue what is not, and let the customer own the definition of a mark.*
@@ -96,8 +96,8 @@ flowchart TB
     G -->|"disagree, flagged"| OUT
     S --> C
     S -.-> K
-    C -->|"99.3% settled"| OUT
-    C -->|"0.7% flagged"| OUT
+    C -->|"97.6% settled, 61 pages"| OUT
+    C -->|"2.4% flagged, 61 pages"| OUT
     OUT -.->|flagged only| Q
     Q -.-> L
     Q -.-> H
@@ -152,22 +152,22 @@ Reliability is the other half of the same dimension, and it is cheap here becaus
 
 Not the smallest possible tool. The right one. A frontier model is trained to solve an enormous range of problems, and a loan file pays for none of them. Reading a hundred-pixel square needs none of that capability, so buying it for every page is paying for other people's problems.
 
-The reading path is ordinary image processing: about three tenths of a second per page on one core, roughly four millionths of a dollar, and no model at all. A model is only ever shown a single flagged box cropped to a thumbnail, and only after the deterministic readers have said they cannot settle it.
+The reading path is ordinary image processing, a median of 273 ms per page on one core measured over 61 pages, and no model at all. A model is only ever shown a single flagged box cropped to a thumbnail, and only after the deterministic readers have said they cannot settle it.
 
-The arithmetic is the whole argument. A cropped checkbox is about 106 tokens of image. A whole page is about 1,990, and a full-page answer runs to thousands more, because it has to list every box and its coordinates.
+The arithmetic is the whole argument. A flagged box, zoomed in the way the escalation lane sends it, is about 107 tokens of image, the median over the 287 boxes on the brief pages under the 750 pixels per token rule (`make crop-tokens` writes reports/crop_tokens.json). A whole page is the entire image, and a full-page answer has to list every box and its coordinates on top of that.
 
-| Approach | Cost per page | Notes |
+| Approach | What a page costs | Measured where |
 |---|---|---|
-| Ordinary image processing (what runs) | ~$0.000004 | 0.30 s of one CPU core |
-| AI on boxes the deterministic core flags | ~$0.001 | at the measured 0.7% flag rate |
-| AI on those plus every box the trained model disputes | ~$0.009 | at the measured 6.6% flag rate |
-| Sending every page to a strong AI model instead | ~$0.085 | ~40x more, and less accurate on checkboxes |
+| Ordinary image processing (what runs) | 273 ms of one CPU core, no model | `make telemetry`, the median over 61 pages |
+| AI on the boxes the deterministic core flags | one 107-token crop for 2 of 287 detections (0.7%) | `make telemetry` and `make crop-tokens`, the 4 brief pages |
+| AI on those plus every box the trained model disputes | 56 of 847 boxes (6.6%) on the real pages | `make telemetry` with the model on, the brief pages plus the 5 held-out |
+| Sending every page to a strong AI model instead | the whole page, every page, priced per token, and less accurate on checkboxes | published work, sourced in [EVALS.md](docs/EVALS.md) |
 
 At real volume that gap stops being a rounding error. It is also the wrong trade on quality, not only on price. Published work on document AI finds checkbox reading is a specific weak spot for vision models. A checkbox is a handful of pixels and those models are built to read words.
 
 ### 3. Latency, and there are two kinds
 
-The technical kind is what the page waits for. Three tenths of a second of local CPU, p50 392 ms and p95 457 ms measured through the HTTP service, with no network call in the path at all. Nothing here waits on a vendor.
+The technical kind is what the page waits for. A median of 273 ms of local CPU per page and a p95 of 301 ms, measured in-process over 61 pages, and through the HTTP service p50 50 ms and p95 64 ms for 120 requests of the photographed page, the smallest of the four, with no network call in the path at all. Nothing here waits on a vendor.
 
 That number also improves on its own, which a model-first design does not. Every behaviour we come to understand well enough to describe becomes a rule, and a rule costs microseconds. The escalation lane is meant to shrink: what starts as a model call ends as a named reason code with a threshold behind it. Code does not get slower, and it does not get repriced.
 
@@ -196,8 +196,8 @@ There are two obvious alternatives and they fail in opposite directions. One is 
 | | A, this | B, OCR plus a trained detector | C, whole page to a frontier model |
 |---|---|---|---|
 | Accuracy on these pages | 286 of 287, and movable by the customer | F1 0.88 to ~0.96 published, fixed at training time | documented weak spot on checkboxes |
-| Cost per page | ~$0.000004 | ~$0.010 at $10 per 1,000 pages | ~$0.085 |
-| Latency | 0.30 s, local, no network | a vendor round trip | seconds, and variable |
+| What a page costs | 273 ms of one CPU core, no model | $10 per 1,000 pages at Azure's list price | the whole page to a vendor, priced per token |
+| Latency | 273 ms median, local, no network | a vendor round trip | seconds, and variable |
 | Same page twice | byte-identical | yes, the weights are frozen | no |
 | Who defines a mark | the customer, in a file | whoever labeled the training set | the model |
 | Changing that definition | edit `policy.json` | relabel and retrain | reword the prompt and hope |
@@ -206,7 +206,7 @@ There are two obvious alternatives and they fail in opposite directions. One is 
 
 B does not lose on accuracy, which is fine. It loses because the definition of a mark is frozen inside the weights. A customer who wants circles counted cannot have that without a labeling round and a retrain, and there is nowhere to look up why any single box was read the way it was. It is a black box with no user-definable acceptance criteria and no gates, so the only way to argue with it is to build another one.
 
-C loses differently. It pays frontier prices to read something a hundred pixels wide, and gives up determinism to do it. Published work finds checkbox reading is a specific weakness of vision models rather than a strength, which is the wrong place to spend forty times the money. And it puts whole customer pages in a third party's hands to answer a question that never needed to leave the building.
+C loses differently. It pays frontier prices to read something a hundred pixels wide, and gives up determinism to do it. Published work finds checkbox reading is a specific weakness of vision models rather than a strength, which is the wrong place to spend the most money. And it puts whole customer pages in a third party's hands to answer a question that never needed to leave the building.
 
 A wins here for reasons that are specific to here, and it is worth naming them so the boundary is visible. This problem has a small number of standardized federal forms, a hard requirement to explain any answer later, and customers who disagree with each other about what counts. That combination is exactly where deterministic wins. On a corpus of thousands of unseen layouts with no explainability requirement, C would be the right call and this would be over-engineering.
 
@@ -224,7 +224,7 @@ The table below is the deterministic core, and `make eval` runs the evaluation h
 
 The two imperfections are both honest and both explained. The miss is a checkbox printed so faintly that the labeling session called it a box and the software cannot see it at all. The wrong mark is the faded ink from the picture above, which the system flags as unclear rather than deciding; counted strictly, an unclear answer counts against it here.
 
-Because four real pages cannot prove much on their own, the system is also tested against synthetic data it generates itself: the blank federal forms with marks drawn in, then damaged on purpose. Rotated up to five degrees, shrunk until boxes are 21 pixels across, compressed to visible artifacts, stamped with watermarks, scribbled across, and printed over shaded bands. It never drops below 96.5% correct through any of it.
+Because four real pages cannot prove much on their own, the system is also tested against synthetic data it generates itself: the blank federal forms with marks drawn in, then damaged on purpose. Rotated up to five degrees, shrunk until boxes are 21 pixels across, compressed to visible artifacts, stamped with watermarks, scribbled across, and printed over shaded bands. Detection F1 on those 52 synthetic pages never drops below 0.965 through any of it, and shading is the floor.
 
 <p align="center">
   <img src="assets/robustness.svg" alt="Horizontal bars of the share of boxes sent to a person for each kind of damage, shaded rows the hardest condition and rotation the easiest" width="100%">
@@ -234,7 +234,7 @@ Because four real pages cannot prove much on their own, the system is also teste
 
 Switching the trained model on changes no answer at all: the same 286 boxes found, the same 285 marks read correctly. What it changes is the review queue, from 2 boxes to 19, because it disagrees on 17 boxes the deterministic reader got right. On this evidence it is not yet earning the review time it asks for, so the honest figure to carry into a cost conversation is both numbers, not the flattering one. Narrowing its disagreement to boxes where the deterministic read is already near a boundary is the cheapest fix on the roadmap.
 
-Two timings, because they measure different things. The reading itself takes a median of 284 ms, measured over all 61 pages. A full round trip through the HTTP service is p50 392 ms and p95 457 ms on a single worker, and the difference is the web layer, not the reading.
+Two timings, because they measure different things. The reading itself takes a median of 273 ms per page, p95 301 ms, measured in-process over all 61 pages. A full round trip through the HTTP service is p50 50 ms and p95 64 ms for 120 requests of the photographed page on a single worker (`make bench`), and that page is the smallest of the four, so the two numbers differ by the page as much as by the web layer.
 
 ## Pages it had never seen
 
@@ -251,8 +251,6 @@ Four pages cannot tell you whether something generalizes, so after the system wa
 The four standard appraisals returned 118 boxes each, which is exactly the number on the blank federal form, from three different offices in three different years. The interesting row is the last one. That is a condominium report, a different federal form the system has no blank copy of and had never encountered. It read the page anyway, found all 88 boxes, and got every mark right on inspection.
 
 What it did with the form question is worth being exact about, because it is not a clean win. It matched the condominium page to the standard form and scored that match a perfect 1.0, which is simply wrong. What caught it is the layer behind that: the two readers agreed on only 68 of the 118 positions the standard form expects, so the reading was marked untrusted and the second reader was dropped for that page. The form matcher was confidently wrong and the check behind it held. That is the behaviour I want on a page nobody taught it, and it is also a reminder that a confidence score is not a safety mechanism.
-
-Two of those PDFs open on a photograph cover page rather than the form. The system returned zero boxes for both, which is the correct answer and not a given.
 
 These pages carry no box-by-box labels, so this is a spot check by eye rather than a scored result, and it is described that way on purpose. What it establishes is narrow and worth having: the system holds up on documents from offices it has never seen, and it degrades honestly on a form nobody taught it.
 
@@ -278,7 +276,7 @@ Three things on that page are worth reading before anyone asks:
 
 - The held-out real appraisals flagged nothing at all. The queue comes almost entirely from pages that were damaged deliberately, which is what a robustness corpus is for.
 - Shading is the hardest single condition, at 9.05% of boxes flagged against 1.03% for rotation. If real scans start looking like that, the queue is where it shows up first.
-- The trained model disputes 6.6% of boxes on real pages and 3.5% on the synthetic pages it was trained against. It is noisiest exactly where the documents are real, and it changes no answer either way.
+- With the trained model switched on, the real pages flag 56 of 847 boxes (6.6%) where the rules alone flag 2 of 847. It is noisiest exactly where the documents are real, and it changes no answer either way.
 
 With real volume the same counts do something more useful. Joined to the form's official field names, they say which questions confuse the people filling the form in, which the customer can fix by changing the form rather than by reviewing more documents. That join needs the template registry to carry field names, which is item 2 on [the roadmap](docs/ROADMAP.md) and is not built here.
 
@@ -299,10 +297,10 @@ Four places, and each one is a command you can run rather than a claim you have 
 
 - Look at what it saw. `make overlays` draws every box on all four pages, green for checked, red for empty, amber for held back. This is the cheapest way to disagree with the system, and it is how I confirmed the box it had invented around a printed word was really there on the page.
 - Ask it about one box. Adding `?explain=true` returns the ink fraction, the confidence, the reason codes behind any flag, which form it matched, how far the two readers agreed, and every candidate it threw away with why. I would check that last field first, because rejection is the only place this system removes something instead of flagging it.
-- Re-run the scoreboard. `make eval` reprints the results table above from scratch, and `make test` runs the 26 gates. Two of those gates I checked by deliberately reverting the fix and confirming they fail, because a green test that would pass anyway is worse than no test.
+- Re-run the scoreboard. `make eval` reprints the results table above from scratch, and `make test` runs the 26 gates.
 - Try pages nobody tuned on. `uv run python scripts/fetch_holdout.py --score` fetches five completed appraisals from three unrelated offices and scores them live.
 
-In production the place a person looks is the exception queue, and that is the whole point of the shape. Two boxes out of 287 here, each carrying a reason code, instead of a person re-reading 287.
+In production the place a person looks is the exception queue, and that is the whole point of the shape. Two of 287 detections on the brief pages here, each carrying a reason code, instead of a person re-reading 287.
 
 - Not measured: how often a reviewer disagrees with a box the system was confident about. Sampling only the flagged ones can tell you the queue is working but never that it is catching enough, so that check has to sample the confident answers too.
 
@@ -350,7 +348,7 @@ Because OCR reads text, and a checkbox is not text. Handing a page to an OCR eng
 
 For judgment on the handful of boxes where the rules honestly run out, and for nothing else.
 
-- On these pages that is 0.7% of boxes: faded ink, a stray pen stroke, a mark that is neither clearly present nor clearly absent.
+- On the four brief pages that is 2 of 287 detections (0.7%): faded ink, a stray pen stroke, a mark that is neither clearly present nor clearly absent.
 - Those cases are not a bug to engineer away. Two careful people disagree on them, which is precisely why a second opinion is worth paying for there and nowhere else.
 - The model never gets to invent a box or delete one. It can only settle a question about a box the deterministic part already found and already flagged.
 - Not measured: how often the model actually agrees with the human ruling on those cases, because that needs live calls the submission does not make. The machinery to run and replay that comparison is built and documented.
@@ -362,8 +360,8 @@ For judgment on the handful of boxes where the rules honestly run out, and for n
 
 Everything that produces an answer is deterministic; the only non-deterministic component sits behind the exception queue and is off by default.
 
-- Deterministic: finding boxes, reading marks, matching against the known form, and every published number in this README. Same page in, same answer out, forever. About four millionths of a dollar per page.
-- Non-deterministic: two model readers on a flagged thumbnail, and a stronger referee only when they disagree. About a tenth of a cent per page at the deterministic core's flag rate, and nine tenths of a cent if the trained model's disagreements are queued too.
+- Deterministic: finding boxes, reading marks, matching against the known form, and every published number in this README. Same page in, same answer out, forever. A median of 273 ms of one CPU core per page over 61 pages.
+- Non-deterministic: two model readers on a flagged thumbnail, and a stronger referee only when they disagree. It sees one zoomed-in box at a time, about 107 tokens each, for 2 of 287 detections on the brief pages, or 56 of 847 boxes on the real pages if the trained model's disagreements are queued too.
 - Every model call is recorded and replayed from the record, so the same page gives the same answer offline and any decision can be audited months later.
 - Not measured: cost at real production mix. The 0.7% flag rate comes from four pages, and worse scans will flag more, which is exactly the number to watch when the volume is real.
 

@@ -29,9 +29,9 @@ the hard-graded set is 38 cards.
    across the three shapes. They are boundary cases by policy: excluded from hard grading, required
    to sit in the ambiguous band or route, never confidently decided either way.
 5. The check-mark tick is unsure by the labeler's ruling. The pipeline reads it as a contained
-   dominant stroke and reports filled with moderate confidence, and it stays in the routed set so
-   the escalation lane or a reviewer sees it; that treatment is consistent with the filled-leaning
-   band and the unsure ruling both.
+   dominant stroke and reports filled with moderate confidence, and on the shipped run it is not
+   routed: the two boxes routed on that page are the pen loop and the faded X. The page label marks
+   the tick ignore, so it sits outside every scored count, and a regression row holds its read.
 6. Hand-drawn boxes are checkboxes (one filled, one empty, as drawn). Print quality does not decide
    control-hood by itself.
 7. Degradation can destroy a checkbox. Two of three heavily faded or JPEG-crushed cards were ruled
@@ -43,7 +43,7 @@ the hard-graded set is 38 cards.
 
 ## Boundary set
 
-Nine cards were ruled unsure (the tick, the circles, the partial strokes, the radio circles, one
+Ten cards were ruled unsure (the tick, the circles, the partial strokes, the radio circles, one
 broken-border card). They are excluded from hard accuracy grading; a good system sits near the
 threshold on them or routes them, and being confidently wrong in either direction counts against it.
 
